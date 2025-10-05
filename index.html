@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧩 LEAD PHP INTERVIEW CHEAT SHEET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .tab-button:hover {
+            color: #495057;
+            background: rgba(0,123,255,0.1);
+        }
+
+        .tab-button.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .phase-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+            transition: background 0.2s ease;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .example {
+            background: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .lead-tip {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-style: italic;
+            color: #e65100;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .tab-button {
+                padding: 12px 15px;
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .coming-soon h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧩 LEAD PHP INTERVIEW CHEAT SHEET</h1>
+            <p>PHP + Laravel + MySQLi - Complete Lead-Level Interview Preparation Guide</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openTab('phase1')">Phase 1: PHP Basics</button>
+                <button class="tab-button" onclick="openTab('phase2')">Phase 2: OOP & Advanced PHP</button>
+                <button class="tab-button" onclick="openTab('phase3')">Phase 3: Advanced PHP (Project Level)</button>
+                <button class="tab-button" onclick="openTab('phase4')">Phase 4: PHP in Framework Context</button>
+                <button class="tab-button" onclick="openTab('phase5')">Phase 5: System Design & Scalability</button>
+                <button class="tab-button" onclick="openTab('phase6')">Phase 6: Lead / Architect Interview Prep</button>
+                <button class="tab-button" onclick="openTab('laravel')">Laravel Lead Cheat Sheet</button>
+                <button class="tab-button" onclick="openTab('mysqli')">MySQLi Lead Cheat Sheet</button>
+                <button class="tab-button" onclick="openTab('interview')">Interview Mastery Guide</button>
+            </div>
+        </div>
+
+        <!-- Phase 1 Content -->
+        <div id="phase1" class="tab-content active">
+            <h2 class="phase-title">PHASE 1 — PHP BASICS (Lead-Level Brush-Up)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Simple Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Execution Flow</td>
+                            <td class="definition"><strong>Easy:</strong> PHP is like a waiter - takes your order (request), goes to kitchen (server), processes it, brings back food (HTML response)</td>
+                            <td><div class="example"><strong>Real-world:</strong> User clicks "Login" → PHP checks database → Shows dashboard or error</div></td>
+                            <td><div class="lead-tip">Master request-response cycle - it's the foundation of everything</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Variables & Constants</td>
+                            <td class="definition"><strong>Easy:</strong> Variables = Shopping cart (can change items), Constants = Store address (never changes)</td>
+                            <td><div class="example"><strong>Real-world:</strong> $userName = "John"; (changes per user) vs define('DB_HOST', 'localhost'); (always same)</div></td>
+                            <td><div class="lead-tip">Constants for configs, DB credentials, API keys - they protect critical data</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Operators</td>
+                            <td class="definition"><strong>Easy:</strong> Mathematical symbols that compare/calculate - like calculator buttons (+, -, =, >)</td>
+                            <td><div class="example"><strong>Real-world:</strong> if($age >= 18 && $hasLicense) { echo "Can drive"; } // Age check + license verification</div></td>
+                            <td><div class="lead-tip">=== vs == : "123" == 123 (true) but "123" === 123 (false) - type matters!</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Control Statements</td>
+                            <td class="definition"><strong>Easy:</strong> Traffic lights of programming - control which code runs when (if green, go; if red, stop)</td>
+                            <td><div class="example"><strong>Real-world:</strong> if($userRole === 'admin') { showAdminPanel(); } else { showUserDashboard(); } // Different views per role</div></td>
+                            <td><div class="lead-tip">Use switch for multiple conditions, foreach for arrays - cleaner than nested ifs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Functions</td>
+                            <td class="definition"><strong>Easy:</strong> Pre-packaged coffee machine - put ingredients in, get coffee out. Reusable code blocks you can call anytime</td>
+                            <td><div class="example"><strong>Real-world:</strong> function sendWelcomeEmail($user) { // Code to send email } - Call it whenever user registers</div></td>
+                            <td><div class="lead-tip">Single Responsibility Principle - One function, one job. Makes testing easy</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Arrays</td>
+                            <td class="definition"><strong>Easy:</strong> Shopping list or bookshelf - organized collection of items you can access by position or name</td>
+                            <td><div class="example"><strong>Real-world:</strong> $user = ['name'=>'John', 'email'=>'john@example.com', 'orders'=>[1,2,3]]; // User profile with order history</div></td>
+                            <td><div class="lead-tip">array_map() for transforming arrays, array_filter() for removing items - powerful tools</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Strings</td>
+                            <td class="definition"><strong>Easy:</strong> Text messages on your phone - you can read, edit, combine, or split them</td>
+                            <td><div class="example"><strong>Real-world:</strong> $message = "Hello " . $userName . "! Your order #" . $orderId . " is confirmed."; // Personalized email</div></td>
+                            <td><div class="lead-tip">String interpolation: "Hello $name" is faster than "Hello " . $name - use double quotes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Include/Require</td>
+                            <td class="definition"><strong>Easy:</strong> LEGO blocks - include brings optional blocks, require brings essential blocks (crashes if missing)</td>
+                            <td><div class="example"><strong>Real-world:</strong> require_once 'config.php'; // Must have DB connection or site dies</div></td>
+                            <td><div class="lead-tip">require vs include: require stops execution on failure, include continues - use require for critical files</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Sessions/Cookies</td>
+                            <td class="definition"><strong>Easy:</strong> Sessions = Hotel key (temporary, server remembers you), Cookies = Loyalty card (persistent, browser remembers)</td>
+                            <td><div class="example"><strong>Real-world:</strong> $_SESSION['cart'] stores shopping items, $_COOKIE['theme'] remembers dark/light mode preference</div></td>
+                            <td><div class="lead-tip">Session hijacking risk - always regenerate session IDs after login, use secure/httponly flags</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Superglobals</td>
+                            <td class="definition"><strong>Easy:</strong> Emergency phone numbers - always available, contain user data from forms, URLs, server info</td>
+                            <td><div class="example"><strong>Real-world:</strong> $_POST['email'] from login form, $_GET['page'] from URL, $_SERVER['HTTP_USER_AGENT'] for browser detection</div></td>
+                            <td><div class="lead-tip">SECURITY FIRST: Never trust $_GET/$_POST directly - filter_var(), htmlspecialchars() everything!</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phase 2 Content -->
+        <div id="phase2" class="tab-content">
+            <h2 class="phase-title">PHASE 2 — OBJECT-ORIENTED PHP</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Simple Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Class & Object</td>
+                            <td class="definition"><strong>Easy:</strong> Class = Cookie cutter (design), Object = Actual cookie (real thing). Blueprint vs the thing you use</td>
+                            <td><div class="example"><strong>Real-world:</strong> class Car { } → $myCar = new Car(); // Car design vs John's actual car</div></td>
+                            <td><div class="lead-tip">OOP = Real world modeling - think objects, not procedures. Makes complex apps manageable</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Constructor/Destructor</td>
+                            <td class="definition"><strong>Easy:</strong> Constructor = Hotel check-in (setup when created), Destructor = Check-out (cleanup when done)</td>
+                            <td><div class="example"><strong>Real-world:</strong> __construct() opens DB connection, __destruct() closes it automatically</div></td>
+                            <td><div class="lead-tip">Constructor for initialization, Destructor for cleanup - prevents memory leaks and resource issues</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Access Modifiers</td>
+                            <td class="definition"><strong>Easy:</strong> Public = Public park (anyone can use), Private = Your bedroom (only you), Protected = Family room (you + children)</td>
+                            <td><div class="example"><strong>Real-world:</strong> private $password (only this class), protected $salary (this + child classes), public function login() (anyone)</div></td>
+                            <td><div class="lead-tip">Encapsulation principle - hide internal logic, expose only what's needed. Security + maintainability</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Inheritance</td>
+                            <td class="definition"><strong>Easy:</strong> Family tree - child inherits traits from parent but can add their own (Son gets dad's height + his own skills)</td>
+                            <td><div class="example"><strong>Real-world:</strong> class Admin extends User { } // Admin inherits login but adds banUser() method</div></td>
+                            <td><div class="lead-tip">Composition over inheritance - "Has-a" vs "Is-a". Use when it makes logical sense, not just to reuse code</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Polymorphism</td>
+                            <td class="definition"><strong>Easy:</strong> Same word, different meanings - "Drive" means different things for cars, screws, or golf balls</td>
+                            <td><div class="example"><strong>Real-world:</strong> interface Payment { pay(); } - CreditCard.pay() vs PayPal.pay() vs Crypto.pay() (same method, different implementations)</div></td>
+                            <td><div class="lead-tip">Code to interface, not implementation - makes your code flexible for future changes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Interfaces / Abstract</td>
+                            <td class="definition"><strong>Easy:</strong> Interface = Job contract (must implement these methods), Abstract = Partial blueprint (some methods done, some not)</td>
+                            <td><div class="example"><strong>Real-world:</strong> interface Logger { log(); } - FileLogger, DBLogger, EmailLogger all must have log() method</div></td>
+                            <td><div class="lead-tip">Interfaces for contracts, abstracts for partial implementations. Forces consistency across team</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Traits</td>
+                            <td class="definition"><strong>Easy:</strong> LEGO power-ups - add extra abilities to any class without inheritance (flying cape you can attach to any character)</td>
+                            <td><div class="example"><strong>Real-world:</strong> trait Loggable { } - Both User and Product classes can use Loggable to add logging without inheriting from same parent</div></td>
+                            <td><div class="lead-tip">Traits vs Inheritance: Use traits for horizontal code reuse, inheritance for vertical "is-a" relationships</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Static Keyword</td>
+                            <td class="definition"><strong>Easy:</strong> Class-owned property - like company car (belongs to company, not individual employees)</td>
+                            <td><div class="example"><strong>Real-world:</strong> User::$totalUsers (shared across all users), vs $user->name (specific to each user)</div></td>
+                            <td><div class="lead-tip">Memory efficient but hard to test - use for utilities, avoid for data that changes per object</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Final Keyword</td>
+                            <td class="definition"><strong>Easy:</strong> Locked box - once you declare something final, no one can change or override it (security seal)</td>
+                            <td><div class="example"><strong>Real-world:</strong> final class DatabaseConnection {} - prevents accidental changes to critical database logic</div></td>
+                            <td><div class="lead-tip">Use final for core business logic classes - prevents junior devs from accidentally breaking critical functionality</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Magic Methods</td>
+                            <td class="definition"><strong>Easy:</strong> Auto-pilot features in your car - automatically triggered when you do certain actions (__get when accessing property)</td>
+                            <td><div class="example"><strong>Real-world:</strong> __call() catches undefined method calls, __toString() converts object to string when echoed</div></td>
+                            <td><div class="lead-tip">Powerful but dangerous - use sparingly, document well. Great for ORMs and flexible APIs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Namespaces</td>
+                            <td class="definition"><strong>Easy:</strong> Apartment building addresses - App\Controllers\User vs App\Models\User (different floors, same name)</td>
+                            <td><div class="example"><strong>Real-world:</strong> namespace App\Services; class PaymentService {} - avoids conflicts with other PaymentService classes</div></td>
+                            <td><div class="lead-tip">PSR-4 standard: directory structure matches namespace. Essential for large applications</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Dependency Injection</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant kitchen - each chef gets tools they need (knives, pans) passed to them, not searching for them</td>
+                            <td><div class="example"><strong>Real-world:</strong> class OrderService { __construct(PaymentGateway $gateway) } - dependencies provided, not created inside</div></td>
+                            <td><div class="lead-tip">Inversion of Control - makes testing easy, code flexible. Constructor > Setter > Method injection</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Design Patterns</td>
+                            <td class="definition"><strong>Easy:</strong> Cooking recipes - proven solutions to common problems (Singleton = one chef per kitchen, Factory = pizza maker)</td>
+                            <td><div class="example"><strong>Real-world:</strong> Strategy Pattern: Different payment methods (CreditCard, PayPal) implement same interface</div></td>
+                            <td><div class="lead-tip">Don't force patterns - use them when they solve real problems. Know when NOT to use a pattern</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phase 3 Content -->
+        <div id="phase3" class="tab-content">
+            <h2 class="phase-title">PHASE 3 — ADVANCED PHP (Project Level)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Error Handling</td>
+                            <td class="definition"><strong>Easy:</strong> Car's airbag and warning lights - catches problems before they cause crashes, alerts you when something's wrong</td>
+                            <td><div class="example"><strong>Real-world:</strong> try { $user->save(); } catch (Exception $e) { Log::error($e); return "Try again later"; } - graceful failure instead of white screen</div></td>
+                            <td><div class="lead-tip">Never show raw errors to users. Log everything, return user-friendly messages. Use custom exceptions for business logic</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">File Handling</td>
+                            <td class="definition"><strong>Easy:</strong> Office filing cabinet - organize, store, retrieve, and manage documents safely</td>
+                            <td><div class="example"><strong>Real-world:</strong> User uploads profile picture: validate size/type → move to secure folder → save path to database → generate thumbnails</div></td>
+                            <td><div class="lead-tip">Always validate file uploads: type, size, malware scan. Store outside web root, use random filenames to prevent enumeration</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">JSON & XML</td>
+                            <td class="definition"><strong>Easy:</strong> Universal translator - converts data into formats any system can understand (JSON = lightweight, XML = structured)</td>
+                            <td><div class="example"><strong>Real-world:</strong> API returns user data as JSON: {"name":"John","email":"john@example.com"} - mobile apps, browsers, servers all understand it</div></td>
+                            <td><div class="lead-tip">JSON for APIs (faster, smaller), XML for complex documents/configs. Always validate input, handle encoding properly</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">REST API</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant menu system - GET (read menu), POST (place order), PUT (modify order), DELETE (cancel order)</td>
+                            <td><div class="example"><strong>Real-world:</strong> Twitter API: GET /users/show (get user info), POST /statuses/update (post tweet), DELETE /statuses/destroy (delete tweet)</div></td>
+                            <td><div class="lead-tip">Use proper HTTP status codes (200 OK, 201 Created, 404 Not Found). Design resource-based URLs, not action-based</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Auth Tokens (JWT)</td>
+                            <td class="definition"><strong>Easy:</strong> VIP backstage pass - digitally signed ticket proving "you are who you say you are" without checking database every time</td>
+                            <td><div class="example"><strong>Real-world:</strong> Login once, get JWT token. Every API call includes "Authorization: Bearer eyJ..." - server verifies without DB lookup</div></td>
+                            <td><div class="lead-tip">Set short expiration (15-60 min), use refresh tokens for long sessions. Never store sensitive data in JWT payload</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">cURL / API Integration</td>
+                            <td class="definition"><strong>Easy:</strong> Phone operator connecting calls - your app calls external services, handles responses, manages failures</td>
+                            <td><div class="example"><strong>Real-world:</strong> Payment processing: your app calls Stripe API → handles success/failure → updates order status → sends confirmation email</div></td>
+                            <td><div class="lead-tip">Always set timeouts, handle network failures gracefully, implement retry logic with exponential backoff, log all API calls</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Composer</td>
+                            <td class="definition"><strong>Easy:</strong> App store for developers - downloads, installs, updates libraries automatically. Manages dependencies like a pro</td>
+                            <td><div class="example"><strong>Real-world:</strong> composer require guzzlehttp/guzzle - downloads HTTP client library + all its dependencies automatically</div></td>
+                            <td><div class="lead-tip">composer.json declares what you need, composer.lock ensures everyone gets exact same versions. PSR-4 autoloading is magic</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Reflection API</td>
+                            <td class="definition"><strong>Easy:</strong> X-ray machine for code - lets you inspect classes, methods, properties at runtime without knowing them beforehand</td>
+                            <td><div class="example"><strong>Real-world:</strong> Laravel's service container uses reflection to automatically inject dependencies by inspecting constructor parameters</div></td>
+                            <td><div class="lead-tip">Powerful but slow - cache reflection results. Used in frameworks, ORMs, dependency injection. Don't abuse in application code</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Performance Optimization</td>
+                            <td class="definition"><strong>Easy:</strong> Race car tuning - eliminate bottlenecks, reduce weight, improve aerodynamics for maximum speed</td>
+                            <td><div class="example"><strong>Real-world:</strong> Page loads in 8 seconds → Profile shows DB queries taking 6s → Add indexes, eager loading → Now loads in 0.8s</div></td>
+                            <td><div class="lead-tip">Measure before optimizing! Use APM tools (New Relic, Blackfire). 80/20 rule: 20% of code causes 80% of slowness</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Security</td>
+                            <td class="definition"><strong>Easy:</strong> Bank vault + security cameras + armed guards - multiple layers protect against different attack types</td>
+                            <td><div class="example"><strong>Real-world:</strong> User login: validate input → hash password with bcrypt → check against DB → set secure session → CSRF token on forms</div></td>
+                            <td><div class="lead-tip">Defense in depth: input validation + prepared statements + escaping output + CSP headers + rate limiting + monitoring</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phase 4 Content -->
+        <div id="phase4" class="tab-content">
+            <h2 class="phase-title">PHASE 4 — PHP IN FRAMEWORK CONTEXT</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">MVC</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant kitchen organization - Chef (Controller) takes order, Cook (Model) prepares food, Waiter (View) serves to customer</td>
+                            <td><div class="example"><strong>Real-world:</strong> User clicks "Save Profile" → Controller validates data → Model saves to DB → View shows success message</div></td>
+                            <td><div class="lead-tip">MVC prevents spaghetti code. Controllers stay thin, Models handle business logic, Views just display data</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Service Container</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant's walk-in fridge - stores all ingredients (services), chefs grab what they need automatically</td>
+                            <td><div class="example"><strong>Real-world:</strong> Constructor needs Logger? Container automatically creates/provides it. No manual "new Logger()"</div></td>
+                            <td><div class="lead-tip">Dependency Injection container. Enables testability, flexibility. Laravel's most powerful feature</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">ORM (Eloquent)</td>
+                            <td class="definition"><strong>Easy:</strong> Database as LEGO blocks - instead of SQL strings, you work with objects and relationships</td>
+                            <td><div class="example"><strong>Real-world:</strong> $user->posts()->where('published', true)->get() instead of complex JOIN queries</div></td>
+                            <td><div class="lead-tip">Active Record pattern. Great for 80% of queries, but know when to drop to raw SQL for performance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Middleware</td>
+                            <td class="definition"><strong>Easy:</strong> Bouncer at nightclub door - checks ID, dress code, VIP status before letting you in</td>
+                            <td><div class="example"><strong>Real-world:</strong> Auth middleware checks if logged in, Throttle middleware prevents API abuse, CORS middleware handles cross-origin requests</div></td>
+                            <td><div class="lead-tip">Request filters run before/after controllers. Perfect for authentication, logging, rate limiting</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Jobs & Queues</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant order tickets - take order instantly, cook prepares in background, customer gets food when ready</td>
+                            <td><div class="example"><strong>Real-world:</strong> User uploads video → Queue job to process/compress → User gets instant response, processing happens later</div></td>
+                            <td><div class="lead-tip">Makes apps feel fast. Essential for email sending, file processing, API calls. Use Redis/Beanstalkd for queues</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Events & Listeners</td>
+                            <td class="definition"><strong>Easy:</strong> Party announcements - "Cake cutting time!" triggers multiple reactions (guests gather, photographer shoots, music plays)</td>
+                            <td><div class="example"><strong>Real-world:</strong> User registers → Event fires → Multiple listeners: send welcome email, create profile, log analytics, update CRM</div></td>
+                            <td><div class="lead-tip">Loose coupling through events. Perfect for extensible systems. One action, multiple side effects</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Service Providers</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant setup crew - arrives early, sets up tables, stocks fridge, prepares kitchen before customers arrive</td>
+                            <td><div class="example"><strong>Real-world:</strong> AppServiceProvider registers: DB connections, cache drivers, custom validation rules, event listeners</div></td>
+                            <td><div class="lead-tip">Bootstrapping code. Perfect for third-party package setup, custom bindings, global configurations</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Route Caching</td>
+                            <td class="definition"><strong>Easy:</strong> GPS pre-calculating route - loads all routes into memory once instead of looking them up every request</td>
+                            <td><div class="example"><strong>Real-world:</strong> Laravel app with 200 routes: uncached takes 50ms per request, cached takes 5ms - 10x performance boost</div></td>
+                            <td><div class="lead-tip">php artisan route:cache on production. Re-cache after route changes. Essential for high-traffic apps</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">API Resources</td>
+                            <td class="definition"><strong>Easy:</strong> Sushi chef presentation - transforms raw ingredients into beautiful, consistent plates every time</td>
+                            <td><div class="example"><strong>Real-world:</strong> User model has password/internal fields → UserResource only exposes name, email, avatar for API responses</div></td>
+                            <td><div class="lead-tip">Standardizes API output. Handles data transformation, conditional fields, relationships. Version your APIs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Testing</td>
+                            <td class="definition"><strong>Easy:</strong> Car safety testing - crash test dummies ensure car protects passengers before real people drive it</td>
+                            <td><div class="example"><strong>Real-world:</strong> Unit test payment logic, Feature test user registration flow, Browser test checkout process</div></td>
+                            <td><div class="lead-tip">TDD: Write test first, then code. PHPUnit + Mockery for mocking. 70%+ coverage shows professional quality</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phase 5 Content -->
+        <div id="phase5" class="tab-content">
+            <h2 class="phase-title">PHASE 5 — SYSTEM DESIGN & SCALABILITY</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Scaling</td>
+                            <td class="definition"><strong>Easy:</strong> Making your restaurant bigger - add more tables (horizontal) or make tables bigger (vertical) to serve more customers</td>
+                            <td><div class="example"><strong>Real-world:</strong> Facebook grew from 1 server to millions by horizontal scaling - adding more commodity servers instead of one massive supercomputer</div></td>
+                            <td><div class="lead-tip">Horizontal scaling is king for millions of users - it's cheaper and more resilient</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load Balancing</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant host seating customers evenly across tables - no table overwhelmed, all get good service</td>
+                            <td><div class="example"><strong>Real-world:</strong> Netflix uses load balancers to distribute 200M+ users across thousands of servers - if one server fails, others take over seamlessly</div></td>
+                            <td><div class="lead-tip">Load balancers prevent single points of failure and ensure high availability</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Caching</td>
+                            <td class="definition"><strong>Easy:</strong> Waiter's memory of frequent orders - remembers popular dishes so doesn't keep asking kitchen</td>
+                            <td><div class="example"><strong>Real-world:</strong> Amazon product pages load instantly because product details are cached in Redis - only inventory updates hit database</div></td>
+                            <td><div class="lead-tip">Cache everything expensive: DB queries, API calls, computations. Invalidate wisely!</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queues</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant takes orders, customer gets receipt, food comes later - async processing prevents waiting</td>
+                            <td><div class="example"><strong>Real-world:</strong> When you upload photo to Instagram, it goes to queue for processing - you get instant feedback while image resizes in background</div></td>
+                            <td><div class="lead-tip">Queues make apps feel fast by offloading heavy work - essential for good UX</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Horizontal vs Vertical</td>
+                            <td class="definition"><strong>Easy:</strong> Vertical = Buy bigger truck for more cargo, Horizontal = Buy more smaller trucks and coordinate them</td>
+                            <td><div class="example"><strong>Real-world:</strong> Netflix uses 1000s of small AWS instances (horizontal) vs one massive server (vertical) - easier to replace failed instances</div></td>
+                            <td><div class="lead-tip">Horizontal = infinite scaling potential, Vertical = hardware limits. Always prefer horizontal for serious scale</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Session Management</td>
+                            <td class="definition"><strong>Easy:</strong> Shared shopping cart across store locations - your cart follows you from electronics to checkout</td>
+                            <td><div class="example"><strong>Real-world:</strong> Amazon remembers your cart across devices because sessions are stored in shared Redis cluster, not individual servers</div></td>
+                            <td><div class="lead-tip">Sticky sessions are evil - use shared session stores (Redis) for multi-server setups</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">DB Replication</td>
+                            <td class="definition"><strong>Easy:</strong> Library with multiple copies of same book - read from any copy, write to master, copies sync automatically</td>
+                            <td><div class="example"><strong>Real-world:</strong> Twitter reads from replica databases for timeline, writes to master - handles millions of reads without overloading write database</div></td>
+                            <td><div class="lead-tip">Read replicas for scale, master for writes. Replication lag can cause stale data issues</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">DB Sharding</td>
+                            <td class="definition"><strong>Easy:</strong> Phone book split by last name (A-D, E-H, etc.) - each section handled by different person</td>
+                            <td><div class="example"><strong>Real-world:</strong> Instagram shards user data by user ID ranges - each shard on separate server, scales horizontally as user base grows</div></td>
+                            <td><div class="lead-tip">Shard by access patterns, not randomly. Cross-shard queries are expensive - design to minimize them</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Microservices</td>
+                            <td class="definition"><strong>Easy:</strong> Restaurant kitchen divided into stations - grill chef, salad chef, dessert chef work independently but coordinate</td>
+                            <td><div class="example"><strong>Real-world:</strong> Netflix has separate services for user management, billing, recommendations - each can scale independently and fail without taking down others</div></td>
+                            <td><div class="lead-tip">Microservices = Organizational scaling. Teams own services end-to-end, deploy independently</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Event-driven Architecture</td>
+                            <td class="definition"><strong>Easy:</strong> Domino effect in Rube Goldberg machine - one event triggers chain reactions without direct coupling</td>
+                            <td><div class="example"><strong>Real-world:</strong> When user signs up on LinkedIn, event triggers: welcome email, profile creation, notification to connections - all decoupled</div></td>
+                            <td><div class="lead-tip">Events create loose coupling - services react to events, not direct API calls. Perfect for microservices</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Observability</td>
+                            <td class="definition"><strong>Easy:</strong> Airplane black box + health monitors - tracks what happened and current vital signs for debugging</td>
+                            <td><div class="example"><strong>Real-world:</strong> When AWS goes down, their observability stack shows exactly which services failed, why, and impact - enables fast recovery</div></td>
+                            <td><div class="lead-tip">Logs, metrics, traces - the three pillars. Without observability, you're flying blind in production</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Phase 6 Content -->
+        <div id="phase6" class="tab-content">
+            <h2 class="phase-title">PHASE 6 — LEAD / ARCHITECT INTERVIEW PREP</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">PHP 8+ Features</td>
+                            <td class="definition"><strong>Easy:</strong> Upgrading from flip phone to smartphone - better battery life, more features, faster performance</td>
+                            <td><div class="example"><strong>Real-world:</strong> Union types prevent bugs (function returns string|int), match() replaces switch with return values, nullsafe (?->) prevents null errors</div></td>
+                            <td><div class="lead-tip">PHP 8 = 2x faster than PHP 7. Mention JIT compiler and modern features - shows you're current</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">SOLID Principles</td>
+                            <td class="definition"><strong>Easy:</strong> Five golden rules for building maintainable software - like traffic laws preventing accidents</td>
+                            <td><div class="example"><strong>Real-world:</strong> Single Responsibility: Payment class only handles payments, not logging. Open/Closed: Extend payment types without modifying existing code</div></td>
+                            <td><div class="lead-tip">SOLID = Professional code craftsmanship. Interviewers test if you think long-term maintainability</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Clean Code</td>
+                            <td class="definition"><strong>Easy:</strong> Writing code like a bestselling novel - clear, engaging, easy to follow, not confusing technical jargon</td>
+                            <td><div class="example"><strong>Real-world:</strong> Instead of $u = getUser(), use $user = $this->userRepository->findById($userId); - self-documenting code</div></td>
+                            <td><div class="lead-tip">Code is read 10x more than written. Variable names matter more than clever algorithms</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Code Review</td>
+                            <td class="definition"><strong>Easy:</strong> Literary critique for code - constructive feedback to improve quality, not personal attacks</td>
+                            <td><div class="example"><strong>Real-world:</strong> "This SQL injection vulnerability could be fixed with prepared statements. Also, consider adding input validation."</div></td>
+                            <td><div class="lead-tip">Focus on code, not coder. Explain why changes improve security/maintainability/scalability</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">System Design Q&A</td>
+                            <td class="definition"><strong>Easy:</strong> Architect designing skyscraper - must consider foundation, load-bearing, elevators, fire safety, future expansion</td>
+                            <td><div class="example"><strong>Real-world:</strong> "Design Instagram": Photo uploads → CDN, metadata → DB, feed generation → cache, notifications → queues</div></td>
+                            <td><div class="lead-tip">Always ask for requirements first. Explain trade-offs: consistency vs availability, cost vs performance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Problem Solving</td>
+                            <td class="definition"><strong>Easy:</strong> Doctor diagnosing patient - systematic approach: symptoms → tests → diagnosis → treatment → monitoring</td>
+                            <td><div class="example"><strong>Real-world:</strong> Slow API: Check logs → Profile code → Identify bottleneck (N+1 query) → Add eager loading → Monitor performance</div></td>
+                            <td><div class="lead-tip">Show structured thinking: Problem → Investigation → Root cause → Solution → Prevention. Use data, not guesses</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Leadership</td>
+                            <td class="definition"><strong>Easy:</strong> Orchestra conductor - coordinates musicians, sets tempo, ensures harmony, inspires performance</td>
+                            <td><div class="example"><strong>Real-world:</strong> Lead developer: Mentors juniors on best practices, resolves team conflicts, makes technical decisions, represents team to management</div></td>
+                            <td><div class="lead-tip">Leadership = Influence without authority. Focus on enabling team success, not just individual achievement</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Common Traps</td>
+                            <td class="definition"><strong>Easy:</strong> Speed dating disasters - talking too much about exes, forgetting to listen, or being negative</td>
+                            <td><div class="example"><strong>Real-world:</strong> "I used goto in PHP" (shows poor judgment), "Microservices are always better" (ignores complexity), "I don't need tests" (arrogant)</div></td>
+                            <td><div class="lead-tip">Be humble but confident. Show learning from mistakes. Admit what you don't know but can learn quickly</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 10px; border-left: 5px solid #2196f3;">
+                <h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.4em;">🎯 Final Lead-Level Tip</h3>
+                <p style="font-size: 1.1em; line-height: 1.6; color: #424242; margin: 0;">
+                    <strong>Interviewers at lead level don't test only "what you know" — they test how you think.</strong><br>
+                    Always explain why you choose a design, pattern, or solution, not just what it is.
+                </p>
+            </div>
+        </div>
+
+        <!-- Laravel Content -->
+        <div id="laravel" class="tab-content">
+            <h2 class="phase-title">LARAVEL LEAD-LEVEL CHEAT SHEET</h2>
+
+            <h3 style="color: #2c3e50; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 1 — LARAVEL BASICS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Simple Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">What is Laravel</td>
+                            <td class="definition">A modern PHP MVC framework</td>
+                            <td><div class="example">Uses MVC + Artisan + Eloquent</div></td>
+                            <td><div class="lead-tip">Cleaner and faster than CodeIgniter</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Why Laravel over CodeIgniter</td>
+                            <td class="definition">Laravel has ORM, queues, blade, middleware, DI</td>
+                            <td><div class="example">CI is procedural, Laravel is OOP-centric</div></td>
+                            <td><div class="lead-tip">Laravel = enterprise-ready</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">MVC</td>
+                            <td class="definition">Model = data, View = UI, Controller = logic</td>
+                            <td><div class="example">Route → Controller → View</div></td>
+                            <td><div class="lead-tip">Keep layers independent</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Service Providers</td>
+                            <td class="definition">Bootstraps app services</td>
+                            <td><div class="example">AppServiceProvider</div></td>
+                            <td><div class="lead-tip">Register bindings or events</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Routing</td>
+                            <td class="definition">Defines URL endpoints</td>
+                            <td><div class="example">Route::get('/users', [UserController::class, 'index']);</div></td>
+                            <td><div class="lead-tip">Group routes by module</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Blade Template</td>
+                            <td class="definition">Templating engine</td>
+                            <td><div class="example">{{ $user->name }}</div></td>
+                            <td><div class="lead-tip">Use for clean, reusable views</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Middleware</td>
+                            <td class="definition">Filters requests before/after</td>
+                            <td><div class="example">auth, csrf</div></td>
+                            <td><div class="lead-tip">Great for auth or logging</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Request Lifecycle</td>
+                            <td class="definition">Flow from route → controller → response</td>
+                            <td><div class="example">Kernel manages middleware</div></td>
+                            <td><div class="lead-tip">Understand this deeply for lead-level</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">DATABASE & MODELS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Migrations</td>
+                            <td class="definition">Version control for DB</td>
+                            <td><div class="example">php artisan migrate</div></td>
+                            <td><div class="lead-tip">Keep DB in sync with code</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Seeders & Factories</td>
+                            <td class="definition">Generate dummy/test data</td>
+                            <td><div class="example">User::factory()->create();</div></td>
+                            <td><div class="lead-tip">Great for testing</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Eloquent ORM</td>
+                            <td class="definition">Interact with DB using models</td>
+                            <td><div class="example">$users = User::all();</div></td>
+                            <td><div class="lead-tip">Cleaner than raw SQL</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Relationships</td>
+                            <td class="definition">Define DB relations</td>
+                            <td><div class="example">hasOne, hasMany, belongsTo, belongsToMany</div></td>
+                            <td><div class="lead-tip">Must master these</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Eager Loading</td>
+                            <td class="definition">Avoid N+1 query problem</td>
+                            <td><div class="example">User::with('posts')->get();</div></td>
+                            <td><div class="lead-tip">Big performance win</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Query Builder</td>
+                            <td class="definition">Fluent DB queries</td>
+                            <td><div class="example">DB::table('users')->where('id',1)->get();</div></td>
+                            <td><div class="lead-tip">Use for complex joins</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Soft Deletes</td>
+                            <td class="definition">Don't delete, mark deleted</td>
+                            <td><div class="example">use SoftDeletes;</div></td>
+                            <td><div class="lead-tip">Useful for audit tracking</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Accessors/Mutators</td>
+                            <td class="definition">Modify attribute values</td>
+                            <td><div class="example">getFullNameAttribute()</div></td>
+                            <td><div class="lead-tip">Keep logic inside model</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">ADVANCED FEATURES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Middleware</td>
+                            <td class="definition">Runs before/after request</td>
+                            <td><div class="example">php artisan make:middleware CheckRole</div></td>
+                            <td><div class="lead-tip">Used for role-based access</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Service Container</td>
+                            <td class="definition">Manages dependencies</td>
+                            <td><div class="example">$app->make('Logger')</div></td>
+                            <td><div class="lead-tip">Core concept behind DI</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Dependency Injection</td>
+                            <td class="definition">Pass dependencies via constructor</td>
+                            <td><div class="example">__construct(UserService $service)</div></td>
+                            <td><div class="lead-tip">Improves testability</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Facades</td>
+                            <td class="definition">Static interface to classes in container</td>
+                            <td><div class="example">Cache::put('key','value',60);</div></td>
+                            <td><div class="lead-tip">Shortcut for service classes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Job</td>
+                            <td class="definition">Defines background task</td>
+                            <td><div class="example">php artisan make:job SendEmailJob</div></td>
+                            <td><div class="lead-tip">Job = "what to do"</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queue</td>
+                            <td class="definition">Stores pending jobs</td>
+                            <td><div class="example">Redis, DB, SQS</div></td>
+                            <td><div class="lead-tip">Queue = "where jobs wait"</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Worker</td>
+                            <td class="definition">Executes queued jobs</td>
+                            <td><div class="example">php artisan queue:work</div></td>
+                            <td><div class="lead-tip">Use Supervisor to auto-run</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Events/Listeners</td>
+                            <td class="definition">Event triggers an action</td>
+                            <td><div class="example">UserRegistered → SendWelcomeEmail</div></td>
+                            <td><div class="lead-tip">Clean decoupled architecture</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Broadcasting</td>
+                            <td class="definition">Send real-time updates</td>
+                            <td><div class="example">Broadcast::channel('chat')</div></td>
+                            <td><div class="lead-tip">Used for sockets or notifications</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PERFORMANCE & SECURITY</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Caching</td>
+                            <td class="definition">Store frequent data</td>
+                            <td><div class="example">Redis, file, DB</div></td>
+                            <td><div class="lead-tip">Use Cache::remember()</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Route Caching</td>
+                            <td class="definition">Speed up route loading</td>
+                            <td><div class="example">php artisan route:cache</div></td>
+                            <td><div class="lead-tip">10x faster on prod</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Config Caching</td>
+                            <td class="definition">Merge configs</td>
+                            <td><div class="example">php artisan config:cache</div></td>
+                            <td><div class="lead-tip">Reduce IO operations</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Query Optimization</td>
+                            <td class="definition">Reduce DB load</td>
+                            <td><div class="example">Eager load, indexes</div></td>
+                            <td><div class="lead-tip">Always analyze with ->toSql()</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Rate Limiting</td>
+                            <td class="definition">Control API usage</td>
+                            <td><div class="example">ThrottleMiddleware</div></td>
+                            <td><div class="lead-tip">Protect from abuse</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">CSRF & XSS</td>
+                            <td class="definition">Prevent attacks</td>
+                            <td><div class="example">@csrf, e()</div></td>
+                            <td><div class="lead-tip">Always escape user input</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queue + Cache</td>
+                            <td class="definition">Improve response time</td>
+                            <td><div class="example">Offload heavy tasks</div></td>
+                            <td><div class="lead-tip">Use horizon/redis monitoring</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">API Resources</td>
+                            <td class="definition">Standardize JSON response</td>
+                            <td><div class="example">return new UserResource($user);</div></td>
+                            <td><div class="lead-tip">Clean and consistent APIs</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">ADVANCED PATTERNS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Service Container Binding</td>
+                            <td class="definition">Register class in container</td>
+                            <td><div class="example">$this->app->bind('PaymentService', ...)</div></td>
+                            <td><div class="lead-tip">For clean architecture</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Repository Pattern</td>
+                            <td class="definition">Abstract DB logic</td>
+                            <td><div class="example">UserRepository</div></td>
+                            <td><div class="lead-tip">Helps testing & maintenance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Command Bus</td>
+                            <td class="definition">Run business logic</td>
+                            <td><div class="example">php artisan make:command</div></td>
+                            <td><div class="lead-tip">Used in complex apps</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Jobs & Queue Retry</td>
+                            <td class="definition">Handle failed jobs</td>
+                            <td><div class="example">failed_jobs table</div></td>
+                            <td><div class="lead-tip">Set retry limit</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Observers</td>
+                            <td class="definition">Watch model events</td>
+                            <td><div class="example">UserObserver@created</div></td>
+                            <td><div class="lead-tip">Useful for logging or sync</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Testing</td>
+                            <td class="definition">Unit/Feature</td>
+                            <td><div class="example">php artisan test</div></td>
+                            <td><div class="lead-tip">Use PHPUnit + Mockery</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">API Throttling</td>
+                            <td class="definition">Prevent overload</td>
+                            <td><div class="example">Route::middleware('throttle:60,1')</div></td>
+                            <td><div class="lead-tip">Essential for public APIs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Scaling Laravel</td>
+                            <td class="definition">Handle millions users</td>
+                            <td><div class="example">Caching, Queue, Load Balancer, Read Replicas</div></td>
+                            <td><div class="lead-tip">Use horizontal scaling</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%); border-radius: 15px; border-left: 5px solid #4caf50;">
+                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">🧠 LARAVEL LEAD SUMMARY</h3>
+                <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
+                    <li><strong>✅ Master Eloquent + Service Container</strong></li>
+                    <li><strong>✅ Know how queues, caching, and events improve scalability</strong></li>
+                    <li><strong>✅ Understand Laravel lifecycle & middleware deeply</strong></li>
+                    <li><strong>✅ Use design patterns for structure (Repository, Observer, Strategy)</strong></li>
+                    <li><strong>✅ Always discuss performance, scaling, and clean architecture in interviews</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MySQLi Content -->
+        <div id="mysqli" class="tab-content">
+            <h2 class="phase-title">🧩 MYSQLi LEAD-LEVEL CHEAT SHEET</h2>
+
+            <h3 style="color: #2c3e50; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 1 — MYSQLi BASICS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">What is MySQLi</td>
+                            <td class="definition"><strong>Easy:</strong> Upgraded database driver - like getting a sports car instead of a basic sedan (faster, more features, safer)</td>
+                            <td><div class="example"><strong>Real-world:</strong> Old mysql_* functions are deprecated. MySQLi supports both procedural and OOP styles, prepared statements, multiple queries</div></td>
+                            <td><div class="lead-tip">MySQLi = "MySQL Improved". Essential for modern PHP. PDO is alternative but MySQLi is more MySQL-specific</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Connect to DB</td>
+                            <td class="definition"><strong>Easy:</strong> Knocking on database door - introduce yourself with credentials, get permission to enter</td>
+                            <td><div class="example"><strong>Real-world:</strong> $conn = new mysqli('localhost', 'app_user', 'secret123', 'ecommerce'); if($conn->connect_error) die('DB down!');</div></td>
+                            <td><div class="lead-tip">Always check connection errors. Use environment variables for credentials, never hardcode. Connection pooling for high traffic</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Query Execution</td>
+                            <td class="definition"><strong>Easy:</strong> Asking database librarian for books - give exact request, get back results or "book not found"</td>
+                            <td><div class="example"><strong>Real-world:</strong> $result = $conn->query("SELECT name, email FROM users WHERE active=1"); // Get active users list</div></td>
+                            <td><div class="lead-tip">Check $result !== false before using. For SELECT queries, check $result->num_rows. Handle both success and failure</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Fetch Data</td>
+                            <td class="definition"><strong>Easy:</strong> Unpacking delivery boxes - take items out one by one, either as labeled packages or ready-to-use objects</td>
+                            <td><div class="example"><strong>Real-world:</strong> while($user = $result->fetch_assoc()) { echo $user['name']; } // Process each user from database</div></td>
+                            <td><div class="lead-tip">fetch_assoc() returns arrays, fetch_object() returns objects. Use fetch_all() for small result sets. Close result after use</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Prepared Statement</td>
+                            <td class="definition"><strong>Easy:</strong> Pre-written form with blanks - fill in the blanks safely, no risk of mixing up the form structure</td>
+                            <td><div class="example"><strong>Real-world:</strong> User searches "John's iPhone" → Prepared statement prevents SQL injection, treats it as literal string, not SQL code</div></td>
+                            <td><div class="lead-tip">SECURITY FIRST: Bind parameters separately from SQL. Prevents injection attacks. Always use for user input</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 2 — ADVANCED SQL OPERATIONS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Transactions</td>
+                            <td class="definition"><strong>Easy:</strong> Bank transfer - both debit AND credit must succeed, or neither happens (all-or-nothing guarantee)</td>
+                            <td><div class="example"><strong>Real-world:</strong> Money transfer: BEGIN → Deduct from account A → Add to account B → COMMIT. If B's bank fails, ROLLBACK both</div></td>
+                            <td><div class="lead-tip">ACID properties: Atomic, Consistent, Isolated, Durable. Essential for financial data, inventory, critical business logic</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Joins</td>
+                            <td class="definition"><strong>Easy:</strong> Party guest list mashup - combine RSVPs with guest details to create complete invitation list</td>
+                            <td><div class="example"><strong>Real-world:</strong> E-commerce: Join orders with customers to show "John Doe ordered iPhone 15 on Dec 1st" instead of just order ID and customer ID</div></td>
+                            <td><div class="lead-tip">INNER JOIN = only matching rows, LEFT JOIN = all from left + matching from right. Use EXPLAIN to optimize join performance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Indexes</td>
+                            <td class="definition"><strong>Easy:</strong> Book index - instead of reading entire book, jump directly to page with "database optimization"</td>
+                            <td><div class="example"><strong>Real-world:</strong> User login: Without email index = scan 1M users, With index = instant lookup. 1000x faster!</div></td>
+                            <td><div class="lead-tip">Index WHERE, JOIN, ORDER BY columns. Composite indexes for multiple conditions. Too many indexes slow down writes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Stored Procedures</td>
+                            <td class="definition">Reusable SQL logic</td>
+                            <td><div class="example">CALL GetUserDetails(1);</div></td>
+                            <td><div class="lead-tip">Moves logic to DB</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Triggers</td>
+                            <td class="definition">Auto execute on data change</td>
+                            <td><div class="example">AFTER INSERT</div></td>
+                            <td><div class="lead-tip">Use for auditing</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Views</td>
+                            <td class="definition">Virtual tables</td>
+                            <td><div class="example">CREATE VIEW active_users AS SELECT ...</div></td>
+                            <td><div class="lead-tip">Simplify complex queries</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 3 — OPTIMIZATION & SCALING</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Normalization</td>
+                            <td class="definition">Remove redundancy</td>
+                            <td><div class="example">Split data into smaller related tables</div></td>
+                            <td><div class="lead-tip">3NF is usually enough</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Denormalization</td>
+                            <td class="definition">Combine for speed</td>
+                            <td><div class="example">Store computed values</div></td>
+                            <td><div class="lead-tip">Used for analytics tables</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Query Optimization</td>
+                            <td class="definition">Make SQL faster</td>
+                            <td><div class="example">Use EXPLAIN</div></td>
+                            <td><div class="lead-tip">Avoid SELECT *</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Indexes</td>
+                            <td class="definition">Speed up lookups</td>
+                            <td><div class="example">Add to WHERE or JOIN fields</div></td>
+                            <td><div class="lead-tip">Use composite indexes wisely</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Replication</td>
+                            <td class="definition">Copy DB for read scalability</td>
+                            <td><div class="example">Master → Replica setup</div></td>
+                            <td><div class="lead-tip">Scale reads for millions users</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Partitioning</td>
+                            <td class="definition">Split large table into parts</td>
+                            <td><div class="example">RANGE, HASH</div></td>
+                            <td><div class="lead-tip">Used for huge datasets</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Sharding</td>
+                            <td class="definition">Distribute across servers</td>
+                            <td><div class="example">Split by user_id range</div></td>
+                            <td><div class="lead-tip">Horizontal scaling</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Connection Pooling</td>
+                            <td class="definition">Reuse connections</td>
+                            <td><div class="example">Use persistent connection</div></td>
+                            <td><div class="lead-tip">Improves performance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Deadlocks</td>
+                            <td class="definition">Two queries block each other</td>
+                            <td><div class="example">Detect & retry logic</div></td>
+                            <td><div class="lead-tip">Always lock in same order</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 4 — SECURITY & MAINTENANCE</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Topic</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 20%">Lead Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">SQL Injection Prevention</td>
+                            <td class="definition">Use prepared statements</td>
+                            <td><div class="example">$stmt->bind_param()</div></td>
+                            <td><div class="lead-tip">Never use raw input</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Backup & Recovery</td>
+                            <td class="definition">Protect data</td>
+                            <td><div class="example">mysqldump</div></td>
+                            <td><div class="lead-tip">Automate daily backups</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">User Permissions</td>
+                            <td class="definition">Restrict DB access</td>
+                            <td><div class="example">GRANT SELECT ON db.* TO 'app_user'@'%'</div></td>
+                            <td><div class="lead-tip">Least privilege rule</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Monitoring</td>
+                            <td class="definition">Track DB health</td>
+                            <td><div class="example">SHOW PROCESSLIST;</div></td>
+                            <td><div class="lead-tip">Watch for slow queries</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Index Maintenance</td>
+                            <td class="definition">Remove unused indexes</td>
+                            <td><div class="example">SHOW INDEX FROM table;</div></td>
+                            <td><div class="lead-tip">Rebuild when needed</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%); border-radius: 15px; border-left: 5px solid #4caf50;">
+                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">🧠 MYSQLi LEAD SUMMARY</h3>
+                <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
+                    <li><strong>✅ Use Prepared Statements + Transactions always</strong></li>
+                    <li><strong>✅ Know Joins, Indexing, and Optimization deeply</strong></li>
+                    <li><strong>✅ Handle Replication, Partitioning, and Deadlocks for scaling</strong></li>
+                    <li><strong>✅ Design DB with normalization first, denormalize later for speed</strong></li>
+                    <li><strong>✅ Focus on performance, safety, and maintainability</strong></li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%); border-radius: 15px; border-left: 5px solid #ff9800;">
+                <h3 style="color: #e65100; margin-bottom: 15px; font-size: 1.6em;">🚀 Final Summary — You’re Now Lead-Ready in:</h3>
+                <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
+                    <li><strong>✅ PHP Core + OOP + System Design</strong></li>
+                    <li><strong>✅ Laravel Architecture + Scaling</strong></li>
+                    <li><strong>✅ MySQLi Optimization + Performance</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Interview Mastery Guide Content -->
+        <div id="interview" class="tab-content">
+            <h2 class="phase-title">🎯 INTERVIEW MASTERY GUIDE - Crack Lead-Level Interviews</h2>
+
+            <h3 style="color: #2c3e50; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">❓ COMMON INTERVIEW QUESTIONS & ANSWERS</h3>
+
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Q1: Explain MVC pattern and why it's important?</strong></h4>
+                <p style="margin-bottom: 10px;"><strong>Answer:</strong> MVC separates concerns: Model (data/business logic), View (presentation), Controller (handles requests). Important because:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>• <strong>Maintainability:</strong> Changes in one layer don't affect others</li>
+                    <li>• <strong>Testability:</strong> Each layer can be tested independently</li>
+                    <li>• <strong>Scalability:</strong> Multiple developers can work on different layers</li>
+                    <li>• <strong>Real-world example:</strong> In e-commerce, Controller handles checkout request, Model manages inventory, View shows confirmation</li>
+                </ul>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Q2: How do you handle database optimization?</strong></h4>
+                <p style="margin-bottom: 10px;"><strong>Answer:</strong> Follow this systematic approach:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>• <strong>Identify slow queries:</strong> Use EXPLAIN, slow query log, New Relic</li>
+                    <li>• <strong>Check indexes:</strong> Ensure WHERE/JOIN columns are indexed</li>
+                    <li>• <strong>Query optimization:</strong> Avoid SELECT *, use LIMIT, optimize subqueries</li>
+                    <li>• <strong>Caching:</strong> Redis for frequent data, query result caching</li>
+                    <li>• <strong>Real-world example:</strong> E-commerce product search went from 5s to 0.2s by adding composite index on (category_id, price)</li>
+                </ul>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Q3: How do you approach security in PHP applications?</strong></h4>
+                <p style="margin-bottom: 10px;"><strong>Answer:</strong> Defense in depth approach:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>• <strong>Input validation:</strong> filter_var(), htmlspecialchars() on all user input</li>
+                    <li>• <strong>SQL injection:</strong> Prepared statements only, no raw queries</li>
+                    <li>• <strong>XSS prevention:</strong> Escape output, Content Security Policy</li>
+                    <li>• <strong>CSRF protection:</strong> Tokens for state-changing operations</li>
+                    <li>• <strong>Authentication:</strong> bcrypt for passwords, secure sessions, JWT for APIs</li>
+                    <li>• <strong>Real-world example:</strong> Banking app uses multiple layers: input sanitization + prepared statements + CSRF tokens</li>
+                </ul>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🔍 CODE REVIEW BEST PRACTICES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Aspect</th>
+                            <th style="width: 35%">What to Look For</th>
+                            <th style="width: 40%">Lead-Level Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Security</td>
+                            <td class="definition">SQL injection, XSS, CSRF, authentication bypasses</td>
+                            <td><div class="example">Does this code validate/sanitize all user inputs? Are prepared statements used? Any direct SQL?</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Performance</td>
+                            <td class="definition">N+1 queries, memory leaks, inefficient algorithms</td>
+                            <td><div class="example">Will this scale? Any N+1 problems? Could this cause memory issues with large datasets?</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Architecture</td>
+                            <td class="definition">SOLID principles, separation of concerns, design patterns</td>
+                            <td><div class="example">Does this follow single responsibility? Is the code testable? Proper dependency injection?</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Error Handling</td>
+                            <td class="definition">Exception handling, logging, graceful failures</td>
+                            <td><div class="example">What happens if DB fails? Are errors logged? Does it fail gracefully?</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Code Quality</td>
+                            <td class="definition">Readability, naming, documentation, DRY principle</td>
+                            <td><div class="example">Is this code self-documenting? Variable names clear? Duplication removed?</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🚀 PERFORMANCE TROUBLESHOOTING CHECKLIST</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Issue Type</th>
+                            <th style="width: 35%">Symptoms</th>
+                            <th style="width: 40%">Investigation Steps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Slow Page Load</td>
+                            <td class="definition">Pages taking >3 seconds to load</td>
+                            <td><div class="example">1. Check browser dev tools network tab<br>2. Profile PHP execution (Xdebug/tideways)<br>3. Check DB queries (EXPLAIN, slow log)<br>4. Verify caching (Redis, OPcache)<br>5. Check external API calls</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">High Memory Usage</td>
+                            <td class="definition">PHP processes using >100MB RAM</td>
+                            <td><div class="example">1. Use memory_get_peak_usage()<br>2. Check for memory leaks in loops<br>3. Unset large variables after use<br>4. Use generators for large datasets<br>5. Check circular references</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Database Bottlenecks</td>
+                            <td class="definition">Slow queries, high CPU on DB server</td>
+                            <td><div class="example">1. Enable slow query log<br>2. Use EXPLAIN on slow queries<br>3. Check missing indexes<br>4. Monitor connection pooling<br>5. Consider read replicas</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">API Timeouts</td>
+                            <td class="definition">Requests timing out or failing</td>
+                            <td><div class="example">1. Check external service response times<br>2. Implement timeouts and retries<br>3. Use async processing for slow operations<br>4. Add circuit breaker pattern<br>5. Cache expensive API responses</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🛡️ SECURITY BEST PRACTICES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Vulnerability</th>
+                            <th style="width: 35%">Prevention</th>
+                            <th style="width: 40%">Implementation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">SQL Injection</td>
+                            <td class="definition">Malicious SQL execution through user input</td>
+                            <td><div class="example">// WRONG: $sql = "SELECT * FROM users WHERE id = $id"<br>// RIGHT: $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?")<br>$stmt->bind_param("i", $id)</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">XSS Attacks</td>
+                            <td class="definition">Malicious scripts injected into web pages</td>
+                            <td><div class="example">// Always escape output<br>echo htmlspecialchars($userInput, ENT_QUOTES, 'UTF-8')<br>// Use Content Security Policy headers</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">CSRF Attacks</td>
+                            <td class="definition">Forced actions on behalf of authenticated users</td>
+                            <td><div class="example">// Add CSRF tokens to forms<br>session_start();<br>$token = bin2hex(random_bytes(32));<br>$_SESSION['csrf_token'] = $token;</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Password Security</td>
+                            <td class="definition">Weak password storage and authentication</td>
+                            <td><div class="example">// Use password_hash() and password_verify()<br>$hash = password_hash($password, PASSWORD_ARGON2ID)<br>if (password_verify($password, $hash)) { /* login */ }</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Session Security</td>
+                            <td class="definition">Session hijacking and fixation</td>
+                            <td><div class="example">// Regenerate session on login<br>session_regenerate_id(true)<br>// Set secure/httponly flags<br>session_set_cookie_params(0, '/', '', true, true)</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🎭 BEHAVIORAL INTERVIEW PREPARATION</h3>
+            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #2e7d32; margin-bottom: 15px;"><strong>Leadership Questions:</strong></h4>
+                <ul style="margin-left: 20px;">
+                    <li><strong>"Tell me about a time you led a team through a difficult technical challenge"</strong></li>
+                    <li><strong>"How do you handle conflicting priorities from multiple stakeholders?"</strong></li>
+                    <li><strong>"Describe how you mentor junior developers"</strong></li>
+                    <li><strong>"How do you handle team members who resist new technologies?"</strong></li>
+                </ul>
+            </div>
+
+            <div style="background: #fff3e0; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #f57c00; margin-bottom: 15px;"><strong>Problem-Solving Questions:</strong></h4>
+                <ul style="margin-left: 20px;">
+                    <li><strong>"Walk me through how you debug a production issue"</strong></li>
+                    <li><strong>"How do you approach optimizing a slow application?"</strong></li>
+                    <li><strong>"Tell me about a time you had to make a trade-off between speed and quality"</strong></li>
+                    <li><strong>"How do you stay updated with new technologies?"</strong></li>
+                </ul>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">📈 CAREER PROGRESSION TIPS</h3>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                <h4 style="margin-bottom: 15px; font-size: 1.3em;">🚀 From Senior to Lead Developer:</h4>
+                <ul style="margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Focus on architecture:</strong> Design scalable systems, not just write code</li>
+                    <li><strong>Mentor others:</strong> Help juniors grow, conduct code reviews</li>
+                    <li><strong>Own features end-to-end:</strong> From requirements to deployment</li>
+                    <li><strong>Think business impact:</strong> How does your code affect revenue/users?</li>
+                    <li><strong>Learn adjacent skills:</strong> DevOps, system design, team management</li>
+                </ul>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                <h4 style="margin-bottom: 15px; font-size: 1.3em;">🎯 Interview Success Secrets:</h4>
+                <ul style="margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Show, don't tell:</strong> Use specific examples, not vague statements</li>
+                    <li><strong>Know your 'why':</strong> Explain decisions, not just what you did</li>
+                    <li><strong>Be honest about gaps:</strong> "I haven't worked with X, but here's how I'd approach it"</li>
+                    <li><strong>Ask smart questions:</strong> Shows interest in company and role</li>
+                    <li><strong>Follow up:</strong> Send thank-you notes showing continued interest</li>
+                </ul>
+            </div>
+
+            <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">💡 SYSTEM DESIGN CASE STUDIES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">System</th>
+                            <th style="width: 35%">Requirements</th>
+                            <th style="width: 40%">Architecture Decisions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">E-commerce Platform</td>
+                            <td class="definition">1M daily users, 100K concurrent, 99.9% uptime</td>
+                            <td><div class="example"><strong>Frontend:</strong> CDN + React SPA<br><strong>Backend:</strong> Microservices (Product, Order, Payment)<br><strong>Database:</strong> MySQL master-slave + Redis cache<br><strong>Queue:</strong> RabbitMQ for order processing</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Social Media Feed</td>
+                            <td class="definition">10M users, real-time updates, personalized content</td>
+                            <td><div class="example"><strong>Feed Generation:</strong> Pre-compute feeds, store in Redis<br><strong>Real-time:</strong> WebSockets + Redis pub/sub<br><strong>Database:</strong> Cassandra for timeline data<br><strong>Personalization:</strong> ML service for content ranking</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Payment Gateway</td>
+                            <td class="definition">Zero downtime, PCI compliance, sub-second response</td>
+                            <td><div class="example"><strong>Security:</strong> Multi-layer encryption, tokenization<br><strong>High Availability:</strong> Multi-region deployment<br><strong>Monitoring:</strong> Real-time fraud detection<br><strong>Compliance:</strong> Audit logs, data isolation</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px;">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em; text-align: center;">🎯 FINAL LEAD-LEVEL INTERVIEW TIPS</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4 style="color: #ffd700; margin-bottom: 10px;">Technical Excellence</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>• Master system design principles</li>
+                            <li>• Know when to use which pattern</li>
+                            <li>• Understand trade-offs deeply</li>
+                            <li>• Stay current with industry trends</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #ffd700; margin-bottom: 10px;">Leadership Skills</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>• Mentor and grow your team</li>
+                            <li>• Make technical decisions</li>
+                            <li>• Communicate complex ideas</li>
+                            <li>• Own project outcomes</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #ffd700; margin-bottom: 10px;">Business Acumen</h4>
+                        <ul style="line-height: 1.6;">
+                            <li>• Understand business impact</li>
+                            <li>• Balance speed vs quality</li>
+                            <li>• Prioritize based on value</li>
+                            <li>• Think long-term scalability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🧩 LEAD PHP INTERVIEW MASTERY GUIDE - Complete with Real-world Examples, Interview Questions & Career Tips! 🎯💪</p>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            // Show the selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to the clicked button
+            event.target.classList.add('active');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const activeTab = document.querySelector('.tab-button.active');
+            let currentIndex = Array.from(tabButtons).indexOf(activeTab);
+
+            if (e.key === 'ArrowRight' && currentIndex < tabButtons.length - 1) {
+                tabButtons[currentIndex + 1].click();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                tabButtons[currentIndex - 1].click();
+            }
+        });
+    </script>
+</body>
+</html>
