@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Cloud Master Plan & Cheat Sheet - PHP Developer Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+            transition: background 0.2s ease;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .example {
+            background: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        /* GCP Cloud Master Plan Styles */
+        .section-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            font-weight: 600;
+        }
+
+        .gcp-intro {
+            margin-bottom: 30px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 1px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .highlight-box h3 {
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .gcp-definition h4 {
+            color: #2c3e50;
+            margin: 20px 0 10px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .emoji-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .emoji-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .emoji-list li:last-child {
+            border-bottom: none;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #495057;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+            border: 1px solid #ffb74d;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+            text-align: center;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .architecture-table .step {
+            text-align: center;
+            font-weight: bold;
+            color: #1565c0;
+            background: #e3f2fd;
+        }
+
+        .interview-questions .question {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .interview-questions .answer {
+            background: #f8f9fa;
+            border-left: 3px solid #007bff;
+            padding: 10px 15px;
+            color: #495057;
+        }
+
+        .study-plan .day {
+            text-align: center;
+            font-weight: bold;
+            color: #1565c0;
+            background: #e8f4fd;
+        }
+
+        .architecture-example {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .architecture-example h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .quote-box {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .quote-box strong {
+            color: #1565c0;
+        }
+
+        /* Cheat Sheet Section Styles */
+        .cheat-sheet-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #3498db;
+        }
+
+        .cheat-sheet-section .section-title {
+            color: #e74c3c;
+            border-bottom-color: #e74c3c;
+        }
+
+        .cheat-sheet-section .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-color: #e17055;
+        }
+
+        .cheat-sheet-section .highlight-box h3 {
+            color: #d63031;
+        }
+
+        .cheat-sheet-section .topic {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .cheat-sheet-section .lead-tip {
+            background: #ffeaa7;
+            border-left-color: #d63031;
+            color: #d63031;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☁️ GCP CLOUD MASTER PLAN & CHEAT SHEET</h1>
+            <p>Complete Guide + Quick Reference for PHP Developers - Interview Success in 7 Days</p>
+        </div>
+
+        <div class="content">
+            <div class="gcp-intro">
+                <div class="highlight-box">
+                    <h3>🚀 Why GCP Matters for PHP Developers</h3>
+                    <p><strong>Real Talk:</strong> Companies are moving to cloud. GCP knowledge = higher salary + better jobs. This plan gets you interview-ready in 7 days with real examples you can explain.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">📋 Phase 1 — Understand GCP at a Glance</h3>
+            <div class="gcp-definition">
+                <h4>Definition:</h4>
+                <p>Google Cloud Platform (GCP) is a suite of cloud computing services that runs on the same infrastructure that Google uses internally for products like Gmail, YouTube, and Search.</p>
+
+                <h4>Key Idea:</h4>
+                <p>GCP gives you —</p>
+                <ul class="emoji-list">
+                    <li>🧠 <strong>Compute</strong> (run apps)</li>
+                    <li>📦 <strong>Storage</strong> (save data)</li>
+                    <li>🔄 <strong>Databases</strong> (structured/unstructured)</li>
+                    <li>⚙️ <strong>Networking</strong> (connect systems)</li>
+                    <li>🔍 <strong>Monitoring & IAM</strong> (secure/manage everything)</li>
+                </ul>
+
+                <h4>Easy Example:</h4>
+                <p>You have a Laravel + MySQL app → you can deploy it using:</p>
+                <div class="code-example">
+                    <strong>Compute Engine</strong> (VM)<br>
+                    <strong>Cloud SQL</strong> (MySQL)<br>
+                    <strong>Cloud Storage</strong> (for images)<br>
+                    <strong>Load Balancer</strong> (for traffic)<br>
+                    <strong>Cloud Monitoring</strong> (for uptime)
+                </div>
+            </div>
+
+            <h3 class="section-title">⚡ Phase 2 — Core Services (You Must Know 100%)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Simple Example (Think PHP Project)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Compute Engine (GCE)</td>
+                            <td class="definition">Virtual Machines (VMs) on Google Cloud</td>
+                            <td><div class="example"><strong>Like AWS EC2</strong> → host your Laravel app</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">App Engine (GAE)</td>
+                            <td class="definition">Fully managed app platform (no server setup)</td>
+                            <td><div class="example"><strong>Deploy your PHP app directly</strong> — GCP manages scaling</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Run</td>
+                            <td class="definition">Run Docker containers in a serverless way</td>
+                            <td><div class="example"><strong>Package your Laravel app in Docker</strong> → GCP scales automatically</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Kubernetes Engine (GKE)</td>
+                            <td class="definition">Managed Kubernetes for containers</td>
+                            <td><div class="example"><strong>Run multiple containers</strong> (frontend, backend, DB) easily</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Functions</td>
+                            <td class="definition">Serverless functions that run small code blocks</td>
+                            <td><div class="example"><strong>Send email when user registers</strong> (trigger-based)</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">💾 Phase 3 — Storage & Database Services</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Cloud Storage (GCS)</td>
+                            <td class="definition">Object storage for files</td>
+                            <td><div class="example"><strong>Store user profile images, PDFs</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud SQL</td>
+                            <td class="definition">Managed SQL DB (MySQL, PostgreSQL, SQL Server)</td>
+                            <td><div class="example"><strong>Host MySQL for your Laravel app</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Firestore (NoSQL)</td>
+                            <td class="definition">Document-based DB for real-time apps</td>
+                            <td><div class="example"><strong>Store chat messages or user activity</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">BigQuery</td>
+                            <td class="definition">Data warehouse for analytics</td>
+                            <td><div class="example"><strong>Analyze millions of orders or logs</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">MemoryStore (Redis)</td>
+                            <td class="definition">Managed in-memory cache</td>
+                            <td><div class="example"><strong>Store session or caching data</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>👉 For PHP / Laravel, <strong>Cloud SQL + Cloud Storage</strong> are your core picks.</p>
+                <p>👉 For analytics / scaling, learn <strong>BigQuery</strong> basics.</p>
+            </div>
+
+            <h3 class="section-title">🌐 Phase 4 — Networking Services</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">VPC (Virtual Private Cloud)</td>
+                            <td class="definition">Private isolated network</td>
+                            <td><div class="example"><strong>Create subnet for your Laravel server</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load Balancer</td>
+                            <td class="definition">Distribute traffic between servers</td>
+                            <td><div class="example"><strong>Handle high traffic for your app</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud CDN</td>
+                            <td class="definition">Cache static content globally</td>
+                            <td><div class="example"><strong>Serve images faster like Nitro CDN</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud DNS</td>
+                            <td class="definition">Manage custom domains</td>
+                            <td><div class="example"><strong>Map domain to your GCP resources</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Interconnect / VPN</td>
+                            <td class="definition">Connect GCP with on-prem systems</td>
+                            <td><div class="example"><strong>For enterprise-level hybrid connections</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>Understand how <strong>VPC + Load Balancer + Cloud SQL</strong> connect together — it's a favorite interview question.</p>
+            </div>
+
+            <h3 class="section-title">🔒 Phase 5 — Security & IAM (Access Management)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">IAM (Identity and Access Management)</td>
+                            <td class="definition">Assign roles & permissions</td>
+                            <td><div class="example"><strong>Give DB Admin access to only 1 team member</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud KMS</td>
+                            <td class="definition">Key management for encryption</td>
+                            <td><div class="example"><strong>Encrypt sensitive patient data (HIPAA-style)</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Secret Manager</td>
+                            <td class="definition">Store API keys, passwords securely</td>
+                            <td><div class="example"><strong>Keep SMTP or DB credentials safe</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Armor</td>
+                            <td class="definition">Protect apps from DDoS & threats</td>
+                            <td><div class="example"><strong>Protect your Laravel API endpoints</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Audit Logs</td>
+                            <td class="definition">Record who did what in GCP</td>
+                            <td><div class="example"><strong>Track changes made by developers</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>Use IAM roles properly → interviewers often ask "how will you secure GCP resources?"</p>
+            </div>
+
+            <h3 class="section-title">🔧 Phase 6 — DevOps & CI/CD Tools</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Cloud Build</td>
+                            <td class="definition">Build and deploy your code</td>
+                            <td><div class="example"><strong>Auto-deploy Laravel after Git push</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Artifact Registry</td>
+                            <td class="definition">Store Docker images</td>
+                            <td><div class="example"><strong>Keep your container versions</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Deploy</td>
+                            <td class="definition">Automate release pipelines</td>
+                            <td><div class="example"><strong>Move from staging → prod automatically</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Operations Suite (Stackdriver)</td>
+                            <td class="definition">Logging, Monitoring, Tracing</td>
+                            <td><div class="example"><strong>Track server health and response times</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Scheduler</td>
+                            <td class="definition">Cron jobs in GCP</td>
+                            <td><div class="example"><strong>Run daily cleanup or report generation</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>Set up <strong>Cloud Build + Cloud Run + Cloud Storage</strong> → one simple pipeline = very impressive in interview.</p>
+            </div>
+
+            <h3 class="section-title">🤖 Phase 7 — AI/ML & Data Tools (Just High-Level Awareness)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Service</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Vertex AI</td>
+                            <td class="definition">Unified ML platform</td>
+                            <td><div class="example"><strong>Train model to predict food delivery time</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Vision API</td>
+                            <td class="definition">Detect objects/text in images</td>
+                            <td><div class="example"><strong>Extract text from invoices</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Speech-to-Text / Text-to-Speech</td>
+                            <td class="definition">Voice processing</td>
+                            <td><div class="example"><strong>Convert patient calls to text</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Translation API</td>
+                            <td class="definition">Language translation</td>
+                            <td><div class="example"><strong>Auto translate user messages</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">BigQuery ML</td>
+                            <td class="definition">Run ML directly inside BigQuery</td>
+                            <td><div class="example"><strong>Predict user churn using SQL</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>Just understand what each API can do — no need for deep ML unless your target company demands it.</p>
+            </div>
+
+            <h3 class="section-title">🏗️ Phase 8 — Real-Time Example (How to Build PHP/Laravel App in GCP)</h3>
+            <div class="architecture-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Step</th>
+                            <th style="width: 30%">Component</th>
+                            <th style="width: 50%">GCP Service Used</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="step">1</td>
+                            <td>Host Laravel App</td>
+                            <td><strong>Compute Engine / Cloud Run</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">2</td>
+                            <td>Database</td>
+                            <td><strong>Cloud SQL (MySQL)</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">3</td>
+                            <td>Static Files</td>
+                            <td><strong>Cloud Storage</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">4</td>
+                            <td>Cache</td>
+                            <td><strong>MemoryStore (Redis)</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">5</td>
+                            <td>Logging & Monitoring</td>
+                            <td><strong>Operations Suite</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">6</td>
+                            <td>Domain & SSL</td>
+                            <td><strong>Cloud DNS + Load Balancer</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">7</td>
+                            <td>CI/CD</td>
+                            <td><strong>Cloud Build + Cloud Deploy</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ This shows interviewer that you can architect and deploy a real system, not just memorize names.</strong>
+            </div>
+
+            <h3 class="section-title">🎯 Phase 9 — Interview Questions (Lead Level)</h3>
+            <div class="interview-questions">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Question</th>
+                            <th style="width: 60%">Smart Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="question">What is difference between Compute Engine and App Engine?</td>
+                            <td class="answer"><strong>GCE = VM (you manage), GAE = fully managed platform</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">What is the difference between Cloud Run and App Engine?</td>
+                            <td class="answer"><strong>Cloud Run uses containers; App Engine is for code deployment directly</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">How will you secure your Laravel app in GCP?</td>
+                            <td class="answer"><strong>Use IAM for access, Secret Manager for credentials, HTTPS with Cloud Load Balancer</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">What GCP service you'll use for file uploads?</td>
+                            <td class="answer"><strong>Cloud Storage</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">How can you scale MySQL in GCP?</td>
+                            <td class="answer"><strong>Use Cloud SQL with read replicas and caching</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">How can you automate deployment?</td>
+                            <td class="answer"><strong>Cloud Build + Cloud Deploy</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">How do you monitor logs and metrics?</td>
+                            <td class="answer"><strong>Cloud Operations Suite (Stackdriver)</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Difference between Cloud Functions and Cloud Run?</td>
+                            <td class="answer"><strong>Cloud Function = small event-based code; Cloud Run = full containerized app</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">📅 Phase 10 — 7-Day GCP Crash Plan (For Interview)</h3>
+            <div class="study-plan">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Day</th>
+                            <th style="width: 35%">Focus</th>
+                            <th style="width: 50%">Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="day">Day 1</td>
+                            <td>Learn GCP core structure (console, projects, billing)</td>
+                            <td><strong>1 hr</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 2</td>
+                            <td>Compute Services (GCE, GAE, Cloud Run)</td>
+                            <td><strong>2 hrs</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 3</td>
+                            <td>Database & Storage (Cloud SQL, Firestore, Storage)</td>
+                            <td><strong>2 hrs</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 4</td>
+                            <td>Networking (VPC, Load Balancer, CDN, DNS)</td>
+                            <td><strong>1.5 hrs</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 5</td>
+                            <td>Security (IAM, Secret Manager, KMS)</td>
+                            <td><strong>1.5 hrs</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 6</td>
+                            <td>CI/CD + Monitoring</td>
+                            <td><strong>2 hrs</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 7</td>
+                            <td>Review with mock Q&A + sample architecture diagram</td>
+                            <td><strong>2 hrs</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 After 7 days → you can confidently explain, design, and compare services.</strong>
+            </div>
+
+            <h3 class="section-title">🎨 Phase 11 — Bonus: How to Explain GCP Architecture (Interview Trick)</h3>
+            <div class="architecture-example">
+                <h4>Example (Food Delivery App)</h4>
+                <div class="quote-box">
+                    "In GCP, I'll deploy my Laravel backend on <strong>Cloud Run</strong> (auto-scaling), store food images in <strong>Cloud Storage</strong>, use <strong>Cloud SQL</strong> for orders, <strong>Cloud Functions</strong> for background SMS triggers, <strong>Cloud Build</strong> for CI/CD, and <strong>Cloud Operations</strong> for monitoring."
+                </div>
+                <p><strong>That one sentence = 10/10 impression in any interview.</strong></p>
+            </div>
+        </div>
+
+        <!-- GCP Quick Reference Cheat Sheet -->
+        <div class="cheat-sheet-section">
+            <h2 class="phase-title">📋 GCP QUICK REFERENCE CHEAT SHEET (Lead-Level)</h2>
+
+            <div class="highlight-box">
+                <h3>🎯 Perfect for Last-Minute Interview Prep</h3>
+                <p><strong>Real Interview Hack:</strong> This condensed version fits on 2 pages. Print it, memorize the tables, practice the Q&A. Enough for 80% of lead-level GCP interviews.</p>
+            </div>
+
+            <h3 class="section-title">⚙️ CORE COMPUTE SERVICES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition (Simple)</th>
+                            <th style="width: 35%">Example (PHP/Laravel Context)</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Compute Engine (GCE)</td>
+                            <td class="definition">Virtual Machines (like AWS EC2)</td>
+                            <td><div class="example"><strong>Host Laravel manually</strong> (Apache/Nginx)</div></td>
+                            <td><div class="lead-tip">"Best when you want full control of OS and PHP version."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">App Engine (GAE)</td>
+                            <td class="definition">Fully managed web app platform</td>
+                            <td><div class="example"><strong>Deploy Laravel without managing servers</strong></div></td>
+                            <td><div class="lead-tip">"No DevOps needed; auto scaling."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Run</td>
+                            <td class="definition">Run containers (Docker) serverlessly</td>
+                            <td><div class="example"><strong>Package Laravel in Docker and deploy</strong></div></td>
+                            <td><div class="lead-tip">"Serverless + container flexibility."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Kubernetes Engine (GKE)</td>
+                            <td class="definition">Managed Kubernetes cluster</td>
+                            <td><div class="example"><strong>Large-scale PHP microservices</strong></div></td>
+                            <td><div class="lead-tip">"Used for container orchestration at scale."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Functions</td>
+                            <td class="definition">Event-based functions</td>
+                            <td><div class="example"><strong>Send email when user registers</strong></div></td>
+                            <td><div class="lead-tip">"Best for lightweight, background jobs."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">💾 STORAGE & DATABASES</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition</th>
+                            <th style="width: 35%">Example</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Cloud Storage (GCS)</td>
+                            <td class="definition">Object/file storage</td>
+                            <td><div class="example"><strong>Store images, PDFs, invoices</strong></div></td>
+                            <td><div class="lead-tip">"Use instead of AWS S3."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud SQL</td>
+                            <td class="definition">Managed SQL DB (MySQL, PostgreSQL)</td>
+                            <td><div class="example"><strong>Laravel app's main database</strong></div></td>
+                            <td><div class="lead-tip">"Automatic backups, scaling, maintenance."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Firestore (NoSQL)</td>
+                            <td class="definition">Real-time document DB</td>
+                            <td><div class="example"><strong>Chat or live tracking app</strong></div></td>
+                            <td><div class="lead-tip">"Use for JSON-like, flexible data."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">BigQuery</td>
+                            <td class="definition">Data warehouse</td>
+                            <td><div class="example"><strong>Analyze millions of orders</strong></div></td>
+                            <td><div class="lead-tip">"For analytics, not transactions."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">MemoryStore (Redis)</td>
+                            <td class="definition">In-memory cache</td>
+                            <td><div class="example"><strong>Store sessions or cached queries</strong></div></td>
+                            <td><div class="lead-tip">"Improves app speed."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🌐 NETWORKING</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition</th>
+                            <th style="width: 35%">Example</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">VPC</td>
+                            <td class="definition">Private network for resources</td>
+                            <td><div class="example"><strong>Create subnet for app & DB</strong></div></td>
+                            <td><div class="lead-tip">"Controls traffic and security."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load Balancer</td>
+                            <td class="definition">Distributes traffic to servers</td>
+                            <td><div class="example"><strong>1M users accessing Laravel app</strong></div></td>
+                            <td><div class="lead-tip">"High availability setup."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud CDN</td>
+                            <td class="definition">Global cache for static data</td>
+                            <td><div class="example"><strong>Serve images, JS faster</strong></div></td>
+                            <td><div class="lead-tip">"Reduces latency for static assets."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud DNS</td>
+                            <td class="definition">Manage custom domains</td>
+                            <td><div class="example"><strong>Link www.boxupmeal.com → GCP</strong></div></td>
+                            <td><div class="lead-tip">"Simple DNS zone management."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">VPN/Interconnect</td>
+                            <td class="definition">Connect GCP with on-prem</td>
+                            <td><div class="example"><strong>Company internal network link</strong></div></td>
+                            <td><div class="lead-tip">"Used in hybrid cloud setups."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🔐 SECURITY & IAM</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition</th>
+                            <th style="width: 35%">Example</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">IAM</td>
+                            <td class="definition">Manage permissions & roles</td>
+                            <td><div class="example"><strong>Limit DB access to admin</strong></div></td>
+                            <td><div class="lead-tip">"Always follow principle of least privilege."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Secret Manager</td>
+                            <td class="definition">Store sensitive info</td>
+                            <td><div class="example"><strong>Keep API keys, SMTP password</strong></div></td>
+                            <td><div class="lead-tip">"Never hardcode secrets in app."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud KMS</td>
+                            <td class="definition">Encryption key manager</td>
+                            <td><div class="example"><strong>Encrypt health records</strong></div></td>
+                            <td><div class="lead-tip">"HIPAA-compliant key handling."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Armor</td>
+                            <td class="definition">Protect apps from attacks</td>
+                            <td><div class="example"><strong>Block suspicious IPs</strong></div></td>
+                            <td><div class="lead-tip">"DDoS & WAF protection."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Audit Logs</td>
+                            <td class="definition">Record resource changes</td>
+                            <td><div class="example"><strong>Track who deleted DB</strong></div></td>
+                            <td><div class="lead-tip">"Used for compliance & debugging."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">⚡ DEVOPS / CI-CD / MONITORING</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition</th>
+                            <th style="width: 35%">Example</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Cloud Build</td>
+                            <td class="definition">Build & deploy code automatically</td>
+                            <td><div class="example"><strong>Auto-deploy Laravel from GitHub</strong></div></td>
+                            <td><div class="lead-tip">"Like GitHub Actions or Jenkins."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Artifact Registry</td>
+                            <td class="definition">Store Docker images</td>
+                            <td><div class="example"><strong>Save Laravel Docker builds</strong></div></td>
+                            <td><div class="lead-tip">"Use for versioning container images."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Deploy</td>
+                            <td class="definition">Automated release pipeline</td>
+                            <td><div class="example"><strong>Move from staging → prod</strong></div></td>
+                            <td><div class="lead-tip">"CI/CD orchestration service."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Scheduler</td>
+                            <td class="definition">Run cron jobs</td>
+                            <td><div class="example"><strong>Daily report emails</strong></div></td>
+                            <td><div class="lead-tip">"Cron in cloud."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Operations Suite</td>
+                            <td class="definition">Logs, metrics, monitoring</td>
+                            <td><div class="example"><strong>Track errors & uptime</strong></div></td>
+                            <td><div class="lead-tip">"Full observability & alerting."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🧩 DATA / ANALYTICS / AI (High-Level)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 25%">Definition</th>
+                            <th style="width: 35%">Example</th>
+                            <th style="width: 20%">Interview Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">BigQuery ML</td>
+                            <td class="definition">Machine learning using SQL</td>
+                            <td><div class="example"><strong>Predict sales trends</strong></div></td>
+                            <td><div class="lead-tip">"SQL-based ML for analysts."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Vertex AI</td>
+                            <td class="definition">Build & train ML models</td>
+                            <td><div class="example"><strong>Product recommendation engine</strong></div></td>
+                            <td><div class="lead-tip">"End-to-end AI suite."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cloud Vision API</td>
+                            <td class="definition">Image recognition</td>
+                            <td><div class="example"><strong>Detect text in documents</strong></div></td>
+                            <td><div class="lead-tip">"Plug-and-play ML API."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Translation API</td>
+                            <td class="definition">Language translation</td>
+                            <td><div class="example"><strong>Multi-language user content</strong></div></td>
+                            <td><div class="lead-tip">"Instant translation of text."</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Speech-to-Text</td>
+                            <td class="definition">Convert voice ↔ text</td>
+                            <td><div class="example"><strong>Voice-based support chat</strong></div></td>
+                            <td><div class="lead-tip">"Add speech intelligence easily."</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🧠 SCALING & ARCHITECTURE CONCEPTS</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Concept</th>
+                            <th style="width: 30%">Definition</th>
+                            <th style="width: 40%">Example / Analogy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Vertical Scaling</td>
+                            <td class="definition">Add more CPU/RAM to same machine</td>
+                            <td><div class="example"><strong>Upgrade single server</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Horizontal Scaling</td>
+                            <td class="definition">Add more servers to share load</td>
+                            <td><div class="example"><strong>Multiple Laravel servers + load balancer</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Auto Scaling</td>
+                            <td class="definition">GCP auto adds/removes instances</td>
+                            <td><div class="example"><strong>Traffic-based scaling</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Caching</td>
+                            <td class="definition">Store frequent data</td>
+                            <td><div class="example"><strong>Redis / MemoryStore for users</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Replication</td>
+                            <td class="definition">DB copies for read traffic</td>
+                            <td><div class="example"><strong>Cloud SQL read replicas</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Sharding</td>
+                            <td class="definition">Split data across DBs</td>
+                            <td><div class="example"><strong>Orders in DB1, Users in DB2</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Microservices</td>
+                            <td class="definition">Small independent services</td>
+                            <td><div class="example"><strong>User, Order, Payment APIs</strong></div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Event-driven</td>
+                            <td class="definition">Async communication via events</td>
+                            <td><div class="example"><strong>UserRegistered → SendWelcomeEmail job</strong></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🚀 COMPLETE EXAMPLE — Laravel Deployment on GCP</h3>
+            <div class="architecture-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Layer</th>
+                            <th style="width: 30%">GCP Service</th>
+                            <th style="width: 50%">Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="step">Compute</td>
+                            <td><strong>Cloud Run</strong></td>
+                            <td><strong>Auto-scaled Laravel container</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Database</td>
+                            <td><strong>Cloud SQL</strong></td>
+                            <td><strong>Managed MySQL</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Storage</td>
+                            <td><strong>Cloud Storage</strong></td>
+                            <td><strong>Store images & files</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Cache</td>
+                            <td><strong>MemoryStore</strong></td>
+                            <td><strong>Redis session caching</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Security</td>
+                            <td><strong>IAM + Secret Manager</strong></td>
+                            <td><strong>Manage permissions & secrets</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Network</td>
+                            <td><strong>VPC + Load Balancer + CDN</strong></td>
+                            <td><strong>Secure global access</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">CI/CD</td>
+                            <td><strong>Cloud Build + Cloud Deploy</strong></td>
+                            <td><strong>Auto deploy after Git push</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="step">Monitoring</td>
+                            <td><strong>Operations Suite</strong></td>
+                            <td><strong>Logs + metrics + uptime alerts</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ This is your "Interview Architecture Answer" — repeat this confidently if they ask:</strong>
+                <br><br>
+                <em>"How will you deploy Laravel app on GCP?"</em>
+            </div>
+
+            <h3 class="section-title">💬 TOP 10 INTERVIEW Q&A (Lead-Level)</h3>
+            <div class="interview-questions">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50%">Question</th>
+                            <th style="width: 50%">Smart Lead-Level Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="question">Q1. Difference between Compute Engine and App Engine?</td>
+                            <td class="answer"><strong>GCE → VM (you manage); GAE → fully managed app.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q2. Why use Cloud Run?</td>
+                            <td class="answer"><strong>Serverless + container flexibility + automatic scaling.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q3. How to scale Laravel app in GCP?</td>
+                            <td class="answer"><strong>Cloud Run + Cloud SQL + Redis + Load Balancer.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q4. How to secure secrets?</td>
+                            <td class="answer"><strong>Use Secret Manager (never .env files in repo).</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q5. How to automate deployment?</td>
+                            <td class="answer"><strong>Cloud Build triggers → Cloud Deploy → Cloud Run.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q6. How to monitor server issues?</td>
+                            <td class="answer"><strong>Cloud Monitoring dashboards + alerts.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q7. What's difference between Cloud Functions & Cloud Run?</td>
+                            <td class="answer"><strong>Function = single event; Run = full container/app.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q8. How will you improve DB performance?</td>
+                            <td class="answer"><strong>Read replicas, caching, optimized queries.</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q9. How will you connect Laravel with GCP services?</td>
+                            <td class="answer"><strong>Use APIs/SDKs with service accounts (IAM roles).</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Q10. Which service for big data analysis?</td>
+                            <td class="answer"><strong>BigQuery (serverless data warehouse).</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🗓️ 7-DAY GCP CRASH COURSE PLAN (For Busy Developers)</h3>
+            <div class="study-plan">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%">Day</th>
+                            <th style="width: 30%">Focus Area</th>
+                            <th style="width: 35%">Key Services</th>
+                            <th style="width: 20%">Time (hrs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="day">Day 1</td>
+                            <td>GCP Overview + Console</td>
+                            <td>Projects, Billing, IAM</td>
+                            <td><strong>1</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 2</td>
+                            <td>Compute Layer</td>
+                            <td>GCE, GAE, Cloud Run</td>
+                            <td><strong>2</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 3</td>
+                            <td>Database & Storage</td>
+                            <td>Cloud SQL, Firestore, GCS</td>
+                            <td><strong>2</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 4</td>
+                            <td>Networking</td>
+                            <td>VPC, Load Balancer, CDN</td>
+                            <td><strong>1.5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 5</td>
+                            <td>Security</td>
+                            <td>IAM, Secret Manager, Cloud Armor</td>
+                            <td><strong>1.5</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 6</td>
+                            <td>CI/CD + Monitoring</td>
+                            <td>Cloud Build, Deploy, Stackdriver</td>
+                            <td><strong>2</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="day">Day 7</td>
+                            <td>Review + Architecture Practice</td>
+                            <td>End-to-end Laravel deployment</td>
+                            <td><strong>2</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Final Pro Tip for Interview:</strong>
+                <p>"I prefer Cloud Run for PHP apps since it combines container flexibility with serverless scaling, Cloud SQL for managed DB, Redis for caching, and Cloud Build for CI/CD. This setup ensures high scalability, security, and low maintenance."</p>
+                <br>
+                <p><strong>👉 That one sentence shows you understand architecture, DevOps, and GCP integration.</strong></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>☁️ GCP Cloud Master Plan & Cheat Sheet - Complete Guide for PHP Developers! 🎯💪</p>
+        </div>
+    </div>
+</body>
+</html>
