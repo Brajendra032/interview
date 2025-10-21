@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Generative AI Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#implementation" class="nav-link">Implementation</a>
+                <a href="#production" class="nav-link">Production</a>
+                <a href="#ethics" class="nav-link">Ethics</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🤖 Generative AI Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master Large Language Models, RAG Architecture, and Production AI Systems
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">40+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">AI Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Code Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">AI Architect Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="python"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <i class="fas fa-brain section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🏗️ AI Architecture & System Design</h2>
+                        <p class="section-description">Design scalable AI systems, RAG architectures, and production-ready AI pipelines</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">RAG Architecture & Retrieval Systems</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">RAG</span>
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Vector Search</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design a Retrieval-Augmented Generation (RAG) system for enterprise knowledge management.</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-search highlight-icon"></i>
+                                    <strong>RAG Components:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Data Ingestion:</strong> Document processing and chunking strategies</li>
+                                    <li><strong>Vector Database:</strong> Embedding storage and similarity search</li>
+                                    <li><strong>Retrieval:</strong> Hybrid search combining semantic and keyword matching</li>
+                                    <li><strong>Generation:</strong> Context-aware response generation with citations</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View RAG Architecture Implementation
+                        </button>
+
+                        <div class="code-block" data-lang="python" data-title="RAG Architecture Implementation">
+"""
+Retrieval-Augmented Generation (RAG) System Architecture
+Enterprise-scale knowledge management and Q&A system
+"""
+
+import asyncio
+import numpy as np
+from typing import List, Dict, Any, Optional, Tuple
+from dataclasses import dataclass, field
+from abc import ABC, abstractmethod
+import logging
+
+# Core Data Structures
+@dataclass
+class Document:
+    """Represents a document chunk with metadata"""
+    id: str
+    content: str
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    embedding: Optional[np.ndarray] = None
+    score: float = 0.0
+
+@dataclass
+class SearchResult:
+    """Search result with relevance score"""
+    document: Document
+    score: float
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class RAGResponse:
+    """RAG system response with sources"""
+    answer: str
+    sources: List[Document]
+    confidence: float
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+# Vector Database Interface
+class VectorStore(ABC):
+    @abstractmethod
+    async def store(self, documents: List[Document]) -> bool:
+        """Store documents with their embeddings"""
+        pass
+
+    @abstractmethod
+    async def search(self, query_embedding: np.ndarray, top_k: int = 10,
+                    filters: Optional[Dict] = None) -> List[SearchResult]:
+        """Search for similar documents"""
+        pass
+
+    @abstractmethod
+    async def delete(self, document_ids: List[str]) -> bool:
+        """Delete documents by IDs"""
+        pass
+
+# Embedding Service Interface
+class EmbeddingService(ABC):
+    @abstractmethod
+    async def encode(self, texts: List[str]) -> List[np.ndarray]:
+        """Generate embeddings for texts"""
+        pass
+
+    @abstractmethod
+    async def encode_query(self, query: str) -> np.ndarray:
+        """Generate embedding for search query"""
+        pass
+
+# Language Model Interface
+class LanguageModel(ABC):
+    @abstractmethod
+    async def generate(self, prompt: str, context: List[Document],
+                      **kwargs) -> str:
+        """Generate response given context"""
+        pass
+
+    @abstractmethod
+    async def estimate_confidence(self, response: str, context: List[Document]) -> float:
+        """Estimate confidence in the generated response"""
+        pass
+
+# Document Processing Pipeline
+class DocumentProcessor:
+    def __init__(self, chunk_size: int = 1000, overlap: int = 200):
+        self.chunk_size = chunk_size
+        self.overlap = overlap
+
+    def process_document(self, content: str, metadata: Dict = None) -> List[Document]:
+        """Split document into chunks with overlap"""
+        chunks = self._split_text(content)
+        documents = []
+
+        for i, chunk in enumerate(chunks):
+            doc_id = f"{metadata.get('source', 'unknown')}_chunk_{i}"
+            documents.append(Document(
+                id=doc_id,
+                content=chunk,
+                metadata={**metadata, 'chunk_index': i, 'total_chunks': len(chunks)}
+            ))
+
+        return documents
+
+    def _split_text(self, text: str) -> List[str]:
+        """Split text into overlapping chunks"""
+        words = text.split()
+        chunks = []
+
+        for i in range(0, len(words), self.chunk_size - self.overlap):
+            chunk = ' '.join(words[i:i + self.chunk_size])
+            if len(chunk.strip()) > 50:  # Minimum chunk size
+                chunks.append(chunk)
+
+        return chunks
+
+# Hybrid Search Implementation
+class HybridRetriever:
+    def __init__(self, vector_store: VectorStore, embedding_service: EmbeddingService):
+        self.vector_store = vector_store
+        self.embedding_service = embedding_service
+
+    async def retrieve(self, query: str, top_k: int = 10,
+                      filters: Optional[Dict] = None) -> List[SearchResult]:
+        """Perform hybrid search combining semantic and keyword matching"""
+        # Generate query embedding
+        query_embedding = await self.embedding_service.encode_query(query)
+
+        # Vector search
+        vector_results = await self.vector_store.search(query_embedding, top_k * 2, filters)
+
+        # Keyword search (simple implementation)
+        keyword_results = await self._keyword_search(query, top_k * 2, filters)
+
+        # Combine and rerank results
+        combined_results = self._combine_results(vector_results, keyword_results)
+
+        # Apply reciprocal rank fusion
+        reranked_results = self._reciprocal_rank_fusion(combined_results)
+
+        return reranked_results[:top_k]
+
+    async def _keyword_search(self, query: str, top_k: int,
+                            filters: Optional[Dict] = None) -> List[SearchResult]:
+        """Simple keyword-based search (would use full-text search in production)"""
+        # This is a simplified implementation
+        # In production, you'd use Elasticsearch, Solr, or similar
+        return []
+
+    def _combine_results(self, vector_results: List[SearchResult],
+                        keyword_results: List[SearchResult]) -> List[SearchResult]:
+        """Combine vector and keyword results"""
+        result_map = {}
+
+        # Add vector results
+        for result in vector_results:
+            result_map[result.document.id] = result
+
+        # Add keyword results
+        for result in keyword_results:
+            if result.document.id not in result_map:
+                result_map[result.document.id] = result
+            else:
+                # Combine scores if document appears in both
+                existing = result_map[result.document.id]
+                existing.score = max(existing.score, result.score)
+
+        return list(result_map.values())
+
+    def _reciprocal_rank_fusion(self, results: List[SearchResult],
+                               k: int = 60) -> List[SearchResult]:
+        """Apply reciprocal rank fusion to combine rankings"""
+        score_map = {}
+
+        # Calculate RRF scores
+        for rank, result in enumerate(results, 1):
+            rrf_score = 1.0 / (k + rank)
+            if result.document.id in score_map:
+                score_map[result.document.id]['score'] += rrf_score
+            else:
+                score_map[result.document.id] = {
+                    'result': result,
+                    'score': rrf_score
+                }
+
+        # Sort by combined score
+        sorted_results = sorted(
+            score_map.values(),
+            key=lambda x: x['score'],
+            reverse=True
+        )
+
+        # Update result scores
+        for item in sorted_results:
+            item['result'].score = item['score']
+
+        return [item['result'] for item in sorted_results]
+
+# RAG System Orchestrator
+class RAGSystem:
+    def __init__(self,
+                 retriever: HybridRetriever,
+                 language_model: LanguageModel,
+                 document_processor: DocumentProcessor):
+        self.retriever = retriever
+        self.language_model = language_model
+        self.document_processor = document_processor
+        self.logger = logging.getLogger(__name__)
+
+    async def ingest_documents(self, documents: List[Tuple[str, Dict]]) -> bool:
+        """Ingest and process documents into the system"""
+        try:
+            processed_docs = []
+
+            for content, metadata in documents:
+                docs = self.document_processor.process_document(content, metadata)
+                processed_docs.extend(docs)
+
+            # Generate embeddings
+            contents = [doc.content for doc in processed_docs]
+            embeddings = await self.retriever.embedding_service.encode(contents)
+
+            # Assign embeddings to documents
+            for doc, embedding in zip(processed_docs, embeddings):
+                doc.embedding = embedding
+
+            # Store in vector database
+            success = await self.retriever.vector_store.store(processed_docs)
+
+            if success:
+                self.logger.info(f"Successfully ingested {len(processed_docs)} document chunks")
+            else:
+                self.logger.error("Failed to ingest documents")
+                return False
+
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Error ingesting documents: {e}")
+            return False
+
+    async def query(self, question: str, top_k: int = 5,
+                   filters: Optional[Dict] = None) -> RAGResponse:
+        """Answer a question using RAG"""
+        try:
+            # Retrieve relevant documents
+            search_results = await self.retriever.retrieve(question, top_k, filters)
+            context_docs = [result.document for result in search_results]
+
+            if not context_docs:
+                return RAGResponse(
+                    answer="I couldn't find relevant information to answer your question.",
+                    sources=[],
+                    confidence=0.0,
+                    metadata={'reason': 'no_context_found'}
+                )
+
+            # Generate answer
+            answer = await self.language_model.generate(question, context_docs)
+
+            # Estimate confidence
+            confidence = await self.language_model.estimate_confidence(answer, context_docs)
+
+            return RAGResponse(
+                answer=answer,
+                sources=context_docs,
+                confidence=confidence,
+                metadata={
+                    'num_sources': len(context_docs),
+                    'query': question,
+                    'filters': filters
+                }
+            )
+
+        except Exception as e:
+            self.logger.error(f"Error processing query: {e}")
+            return RAGResponse(
+                answer="An error occurred while processing your question.",
+                sources=[],
+                confidence=0.0,
+                metadata={'error': str(e)}
+            )
+
+    async def evaluate_response_quality(self, response: RAGResponse) -> Dict[str, float]:
+        """Evaluate the quality of a RAG response"""
+        metrics = {
+            'relevance': 0.0,
+            'accuracy': 0.0,
+            'completeness': 0.0,
+            'conciseness': 0.0
+        }
+
+        # Simple heuristics (would use more sophisticated evaluation in production)
+        if response.sources:
+            # Relevance based on source diversity and recency
+            source_scores = [doc.score for doc in response.sources]
+            metrics['relevance'] = np.mean(source_scores)
+
+            # Accuracy based on confidence
+            metrics['accuracy'] = response.confidence
+
+            # Completeness based on answer length and source coverage
+            answer_length = len(response.answer.split())
+            metrics['completeness'] = min(1.0, answer_length / 100)  # Normalize
+
+            # Conciseness (inverse of length, with minimum)
+            metrics['conciseness'] = min(1.0, 200 / max(answer_length, 50))
+
+        return metrics
+
+# Monitoring and Analytics
+class RAGMetricsCollector:
+    def __init__(self):
+        self.metrics = {
+            'queries_processed': 0,
+            'avg_response_time': 0.0,
+            'avg_confidence': 0.0,
+            'error_rate': 0.0,
+            'cache_hit_rate': 0.0
+        }
+
+    def record_query(self, response_time: float, confidence: float, had_error: bool):
+        self.metrics['queries_processed'] += 1
+
+        # Update averages
+        current_count = self.metrics['queries_processed']
+        self.metrics['avg_response_time'] = (
+            (self.metrics['avg_response_time'] * (current_count - 1)) + response_time
+        ) / current_count
+
+        if not had_error:
+            self.metrics['avg_confidence'] = (
+                (self.metrics['avg_confidence'] * (current_count - 1)) + confidence
+            ) / current_count
+
+        # Update error rate
+        errors = int(had_error)
+        self.metrics['error_rate'] = (
+            (self.metrics['error_rate'] * (current_count - 1)) + errors
+        ) / current_count
+
+    def get_metrics(self) -> Dict[str, float]:
+        return self.metrics.copy()
+
+# Example Usage
+async def main():
+    # Initialize components (simplified - would use real implementations)
+    # vector_store = PineconeVectorStore(api_key="...")
+    # embedding_service = OpenAIEmbeddingService(api_key="...")
+    # language_model = GPT4LanguageModel(api_key="...")
+
+    # document_processor = DocumentProcessor(chunk_size=1000, overlap=200)
+    # retriever = HybridRetriever(vector_store, embedding_service)
+    # rag_system = RAGSystem(retriever, language_model, document_processor)
+
+    # Example documents
+    documents = [
+        ("RAG systems combine retrieval and generation for better QA. They use vector databases to find relevant context before generating answers.", {"source": "ai_overview", "category": "technical"}),
+        ("Vector embeddings capture semantic meaning of text. They're used for similarity search in recommendation systems.", {"source": "embeddings_guide", "category": "technical"}),
+        ("Large language models can hallucinate incorrect information. RAG helps reduce this by grounding responses in retrieved facts.", {"source": "llm_limitations", "category": "technical"})
+    ]
+
+    # Ingest documents
+    # await rag_system.ingest_documents(documents)
+
+    # Query the system
+    # response = await rag_system.query("How do RAG systems work?")
+    # print(f"Answer: {response.answer}")
+    # print(f"Confidence: {response.confidence}")
+    # print(f"Sources: {len(response.sources)}")
+
+    print("RAG system architecture example completed")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+

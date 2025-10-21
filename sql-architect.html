@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗄️ SQL Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#performance" class="nav-link">Performance</a>
+                <a href="#patterns" class="nav-link">Patterns</a>
+                <a href="#fullstack" class="nav-link">Full Stack</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🗄️ SQL Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master SQL at the Architect Level - Advanced Database Design, Optimization & Scaling
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Code Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Design Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Architect Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="sql"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <i class="fas fa-database section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🏗️ Database Architecture & Design</h2>
+                        <p class="section-description">Master advanced database design patterns, indexing strategies, and scalable architectures</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">Multi-Tenant Database Schema Design</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Design</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design a database schema for a multi-tenant SaaS application with proper indexing and partitioning strategies.</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-brain highlight-icon"></i>
+                                    <strong>Key Considerations:</strong>
+                                </div>
+                                <ul>
+                                    <li>Data isolation and security</li>
+                                    <li>Scalability and performance</li>
+                                    <li>Resource optimization</li>
+                                    <li>Maintenance complexity</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="sql" data-title="Multi-Tenant Database Schema">
+-- Multi-Tenant SaaS Database Schema
+-- Using separate database per tenant approach
+
+-- Tenant Management
+CREATE TABLE tenants (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    subdomain VARCHAR(100) UNIQUE NOT NULL,
+    database_name VARCHAR(100) UNIQUE NOT NULL,
+    status ENUM('active', 'suspended', 'deleted') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_subdomain (subdomain),
+    INDEX idx_status (status)
+);
+
+-- User Management (Central)
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    tenant_id BIGINT NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user', 'moderator') DEFAULT 'user',
+    status ENUM('active', 'inactive', 'banned') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_tenant_email (tenant_id, email),
+    INDEX idx_tenant_status (tenant_id, status),
+    FOREIGN KEY (tenant_id) REFERENCES tenants(id) ON DELETE CASCADE
+);
+
+-- Per-tenant tables (example structure)
+-- This would be created for each tenant's database
+
+CREATE TABLE posts (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    tenant_id BIGINT NOT NULL, -- For shared table approach
+    user_id BIGINT NOT NULL,
+    title VARCHAR(500) NOT NULL,
+    content TEXT,
+    status ENUM('draft', 'published', 'archived') DEFAULT 'draft',
+    published_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    -- Partitioning by tenant_id for large datasets
+    INDEX idx_tenant_status (tenant_id, status),
+    INDEX idx_user_created (user_id, created_at),
+    INDEX idx_published (published_at),
+
+    -- Fulltext search index
+    FULLTEXT idx_title_content (title, content),
+
+    FOREIGN KEY (tenant_id) REFERENCES tenants(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+) PARTITION BY HASH(tenant_id) PARTITIONS 64;
+
+-- Partition management
+ALTER TABLE posts ADD PARTITION (PARTITION p_new VALUES LESS THAN MAXVALUE);
+
+-- Optimized queries with tenant isolation
+DELIMITER //
+CREATE PROCEDURE get_tenant_posts(IN tenantId BIGINT, IN limitCount INT)
+BEGIN
+    SELECT p.*, u.email as author_email
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    WHERE p.tenant_id = tenantId
+    AND p.status = 'published'
+    ORDER BY p.published_at DESC
+    LIMIT limitCount;
+END //
+DELIMITER ;
+
+-- Tenant-specific indexes for better performance
+CREATE INDEX idx_tenant_posts_recent ON posts (tenant_id, published_at DESC, status);
+CREATE INDEX idx_tenant_user_posts ON posts (tenant_id, user_id, created_at DESC);
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">2</div>
+                            <h3 class="question-title">Advanced Indexing Strategies</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Performance</span>
+                            <span class="question-badge">Optimization</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you design and implement advanced indexing strategies for high-performance database queries?</p>
+
+                            <div class="highlight-box success">
+                                <div class="highlight-header">
+                                    <i class="fas fa-lightbulb highlight-icon"></i>
+                                    <strong>Indexing Best Practices:</strong>
+                                </div>
+                                <ul>
+                                    <li>Index foreign keys automatically</li>
+                                    <li>Use composite indexes for multi-column WHERE clauses</li>
+                                    <li>Consider covering indexes for common query patterns</li>
+                                    <li>Monitor index usage and remove unused indexes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="sql" data-title="Advanced Indexing Strategies">
+-- Advanced Indexing Strategies for High Performance
+
+-- 1. Composite Index for Common Query Patterns
+-- Query: SELECT * FROM orders WHERE customer_id = ? AND order_date >= ? AND status = 'active'
+CREATE INDEX idx_orders_customer_date_status
+ON orders (customer_id, order_date DESC, status)
+WHERE status = 'active';
+
+-- 2. Covering Index (includes all columns needed by query)
+-- Query: SELECT customer_id, order_date, total FROM orders WHERE status = 'shipped'
+CREATE INDEX idx_orders_covering
+ON orders (status, customer_id, order_date, total)
+WHERE status = 'shipped';
+
+-- 3. Partial Index for specific conditions
+-- Only index active users to reduce index size
+CREATE INDEX idx_active_users_email
+ON users (email)
+WHERE status = 'active' AND deleted_at IS NULL;
+
+-- 4. Functional Index for computed values
+-- Index on email domain for segmentation queries
+CREATE INDEX idx_users_email_domain
+ON users (SUBSTRING_INDEX(email, '@', -1));
+
+-- 5. Spatial Index for location-based queries
+-- For geo-location features
+CREATE TABLE locations (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255),
+    coordinates POINT NOT NULL,
+    SPATIAL INDEX idx_coordinates (coordinates)
+);
+
+-- Query nearby locations
+SELECT name, ST_Distance(coordinates, ST_PointFromText('POINT(40.7128 -74.0060)')) as distance
+FROM locations
+WHERE ST_Contains(ST_Buffer(ST_PointFromText('POINT(40.7128 -74.0060)'), 1000), coordinates)
+ORDER BY distance;
+
+-- 6. Index Maintenance and Monitoring
+-- Check index usage
+SELECT
+    object_schema,
+    object_name,
+    index_name,
+    count_read,
+    count_write,
+    count_fetch
+FROM performance_schema.table_io_waits_summary_by_index_usage
+WHERE object_schema NOT IN ('mysql', 'sys', 'performance_schema')
+ORDER BY (count_read + count_write) DESC;
+
+-- Find unused indexes
+SELECT
+    object_schema,
+    object_name,
+    index_name,
+    count_read,
+    count_write
+FROM performance_schema.table_io_waits_summary_by_index_usage
+WHERE count_read = 0 AND count_write = 0
+AND object_schema NOT IN ('mysql', 'sys', 'performance_schema');
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">3</div>
+                            <h3 class="question-title">Database Partitioning & Sharding</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Scalability</span>
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Implement database partitioning and sharding strategies for handling massive datasets and high concurrency.</p>
+
+                            <div class="highlight-box warning">
+                                <div class="highlight-header">
+                                    <i class="fas fa-exclamation-triangle highlight-icon"></i>
+                                    <strong>Partitioning vs Sharding:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Partitioning:</strong> Divide table into smaller pieces within the same database</li>
+                                    <li><strong>Sharding:</strong> Distribute data across multiple database instances</li>
+                                    <li><strong>Hybrid:</strong> Combine both for optimal performance</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="sql" data-title="Database Partitioning & Sharding">
+-- Database Partitioning & Sharding Strategies
+
+-- 1. Range Partitioning (by date)
+CREATE TABLE user_activity (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    activity_type VARCHAR(50) NOT NULL,
+    activity_data JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_created (user_id, created_at)
+) PARTITION BY RANGE (YEAR(created_at)) (
+    PARTITION p2020 VALUES LESS THAN (2021),
+    PARTITION p2021 VALUES LESS THAN (2022),
+    PARTITION p2022 VALUES LESS THAN (2023),
+    PARTITION p2023 VALUES LESS THAN (2024),
+    PARTITION p_future VALUES LESS THAN MAXVALUE
+);
+
+-- Add new partition for next year
+ALTER TABLE user_activity ADD PARTITION (
+    PARTITION p2024 VALUES LESS THAN (2025)
+);
+
+-- 2. Hash Partitioning (for even distribution)
+CREATE TABLE sessions (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    session_token VARCHAR(255) UNIQUE NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    data JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_token (session_token),
+    INDEX idx_expires (expires_at)
+) PARTITION BY HASH(id) PARTITIONS 64;
+
+-- 3. List Partitioning (by category)
+CREATE TABLE notifications (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    type ENUM('email', 'sms', 'push', 'in_app') NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT,
+    read_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_read (user_id, read_at)
+) PARTITION BY LIST (type) (
+    PARTITION p_email VALUES IN ('email'),
+    PARTITION p_sms VALUES IN ('sms'),
+    PARTITION p_push VALUES IN ('push'),
+    PARTITION p_inapp VALUES IN ('in_app')
+);
+
+-- 4. Subpartitioning (Range + Hash)
+CREATE TABLE orders (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    customer_id BIGINT NOT NULL,
+    order_date DATE NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'processing', 'shipped', 'delivered') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_customer_date (customer_id, order_date)
+) PARTITION BY RANGE (YEAR(order_date))
+SUBPARTITION BY HASH(customer_id) SUBPARTITIONS 4 (
+    PARTITION p2023 VALUES LESS THAN (2024) (
+        SUBPARTITION p2023_h0,
+        SUBPARTITION p2023_h1,
+        SUBPARTITION p2023_h2,
+        SUBPARTITION p2023_h3
+    ),
+    PARTITION p2024 VALUES LESS THAN (2025) (
+        SUBPARTITION p2024_h0,
+        SUBPARTITION p2024_h1,
+        SUBPARTITION p2024_h2,
+        SUBPARTITION p2024_h3
+    )
+);
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">4</div>
+                            <h3 class="question-title">Query Optimization & Performance Tuning</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Performance</span>
+                            <span class="question-badge">Optimization</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you analyze and optimize slow database queries for enterprise applications?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-search highlight-icon"></i>
+                                    <strong>Optimization Workflow:</strong>
+                                </div>
+                                <ul>
+                                    <li>Enable slow query log and analyze patterns</li>
+                                    <li>Use EXPLAIN to understand query execution plans</li>
+                                    <li>Identify bottlenecks (missing indexes, table scans)</li>
+                                    <li>Implement appropriate optimizations</li>
+                                    <li>Monitor performance improvements</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="sql" data-title="Query Optimization Techniques">
+-- Query Optimization & Performance Tuning
+
+-- 1. Analyze Query Performance
+EXPLAIN FORMAT=JSON
+SELECT u.name, COUNT(o.id) as order_count, SUM(o.total) as total_spent
+FROM users u
+LEFT JOIN orders o ON u.id = o.customer_id
+WHERE u.created_at >= '2023-01-01'
+AND u.status = 'active'
+GROUP BY u.id
+HAVING total_spent > 1000
+ORDER BY total_spent DESC
+LIMIT 50;
+
+-- 2. Common Optimization Patterns
+
+-- a) Replace correlated subquery with JOIN
+-- SLOW: Correlated subquery
+SELECT u.name,
+       (SELECT COUNT(*) FROM orders o WHERE o.customer_id = u.id) as order_count
+FROM users u;
+
+-- FAST: JOIN with aggregation
+SELECT u.name, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.customer_id
+GROUP BY u.id;
+
+-- b) Optimize pagination for large datasets
+-- SLOW: OFFSET for deep pages
+SELECT * FROM products ORDER BY created_at DESC LIMIT 50 OFFSET 999950;
+
+-- FAST: Seek method (requires unique index)
+SELECT * FROM products
+WHERE (created_at, id) < ('2024-01-01', 1000000)
+ORDER BY created_at DESC, id DESC
+LIMIT 50;
+
+-- c) Optimize complex WHERE conditions
+-- Create composite index for complex conditions
+CREATE INDEX idx_users_complex
+ON users (status, created_at, last_login_at)
+WHERE status IN ('active', 'premium');
+
+-- d) Optimize full-text search
+-- Use MATCH AGAINST instead of LIKE for text search
+SELECT * FROM articles
+WHERE MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUAGE MODE)
+ORDER BY MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUAGE MODE) DESC;
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">5</div>
+                            <h3 class="question-title">Database Security & Access Control</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Security</span>
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design comprehensive database security measures including access control, encryption, and audit trails.</p>
+
+                            <div class="highlight-box danger">
+                                <div class="highlight-header">
+                                    <i class="fas fa-shield-alt highlight-icon"></i>
+                                    <strong>Security Layers:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Network Security:</strong> SSL/TLS encryption for data in transit</li>
+                                    <li><strong>Access Control:</strong> Principle of least privilege</li>
+                                    <li><strong>Data Protection:</strong> Encryption at rest and in use</li>
+                                    <li><strong>Audit & Monitoring:</strong> Comprehensive logging and alerting</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="sql" data-title="Database Security Implementation">
+-- Database Security & Access Control Implementation
+
+-- 1. User and Role Management
+-- Create roles with minimal privileges
+CREATE ROLE 'app_readonly' IDENTIFIED BY 'secure_password';
+CREATE ROLE 'app_readwrite' IDENTIFIED BY 'secure_password';
+CREATE ROLE 'app_admin' IDENTIFIED BY 'secure_password';
+
+-- Grant specific privileges to roles
+GRANT SELECT ON ecommerce.* TO 'app_readonly';
+GRANT SELECT, INSERT, UPDATE ON ecommerce.* TO 'app_readwrite';
+GRANT ALL PRIVILEGES ON ecommerce.* TO 'app_admin' WITH GRANT OPTION;
+
+-- Create users and assign roles
+CREATE USER 'ecommerce_app'@'%' IDENTIFIED BY 'strong_password';
+GRANT 'app_readwrite' TO 'ecommerce_app'@'%';
+
+-- 2. Row Level Security (RLS)
+-- Implement tenant isolation
+DELIMITER //
+CREATE FUNCTION current_tenant_id() RETURNS BIGINT
+BEGIN
+    RETURN @current_tenant_id; -- Set by application
+END //
+DELIMITER ;
+
+-- Add tenant_id to all tables and create policies
+ALTER TABLE users ADD COLUMN tenant_id BIGINT NOT NULL DEFAULT 1;
+ALTER TABLE orders ADD COLUMN tenant_id BIGINT NOT NULL DEFAULT 1;
+
+-- Create views with automatic tenant filtering
+CREATE VIEW user_orders AS
+SELECT o.* FROM orders o
+JOIN users u ON o.customer_id = u.id
+WHERE u.tenant_id = current_tenant_id();
+
+-- 3. Data Encryption
+-- Encrypt sensitive data at rest
+ALTER TABLE users ADD COLUMN encrypted_ssn VARBINARY(255);
+ALTER TABLE payment_methods ADD COLUMN encrypted_card_number VARBINARY(255);
+
+-- Create encryption/decryption functions
+DELIMITER //
+CREATE FUNCTION encrypt_data(data TEXT, key_string TEXT) RETURNS VARBINARY(255)
+BEGIN
+    DECLARE encrypted VARBINARY(255);
+    SET encrypted = AES_ENCRYPT(data, key_string);
+    RETURN encrypted;
+END //
+
+CREATE FUNCTION decrypt_data(encrypted VARBINARY(255), key_string TEXT) RETURNS TEXT
+BEGIN
+    DECLARE decrypted TEXT;
+    SET decrypted = AES_DECRYPT(encrypted, key_string);
+    RETURN decrypted;
+END //
+DELIMITER ;
+
+-- 4. Audit Logging
+-- Create comprehensive audit trail
+CREATE TABLE audit_log (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    table_name VARCHAR(100) NOT NULL,
+    record_id BIGINT NOT NULL,
+    action ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
+    old_values JSON,
+    new_values JSON,
+    user_id BIGINT,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_table_record (table_name, record_id),
+    INDEX idx_timestamp (created_at)
+);
+
+-- Audit trigger for users table
+DELIMITER //
+CREATE TRIGGER audit_users_update
+    AFTER UPDATE ON users
+    FOR EACH ROW
+BEGIN
+    INSERT INTO audit_log (table_name, record_id, action, old_values, new_values, user_id)
+    VALUES ('users', NEW.id, 'UPDATE',
+        JSON_OBJECT('email', OLD.email, 'status', OLD.status),
+        JSON_OBJECT('email', NEW.email, 'status', NEW.status),
+        @current_user_id);
+END //
+
+CREATE TRIGGER audit_users_delete
+    AFTER DELETE ON users
+    FOR EACH ROW
+BEGIN
+    INSERT INTO audit_log (table_name, record_id, action, old_values, user_id)
+    VALUES ('users', OLD.id, 'DELETE',
+        JSON_OBJECT('email', OLD.email, 'status', OLD.status),
+        @current_user_id);
+END //
+DELIMITER ;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

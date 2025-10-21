@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Microservices Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#patterns" class="nav-link">Patterns</a>
+                <a href="#communication" class="nav-link">Communication</a>
+                <a href="#deployment" class="nav-link">Deployment</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🔧 Microservices Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master Microservices Architecture, Event-Driven Systems, and Distributed Computing
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">40+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Architecture Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Code Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Architect Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="javascript"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <i class="fas fa-cubes section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🏗️ Microservices Architecture Fundamentals</h2>
+                        <p class="section-description">Core principles, design patterns, and architectural decisions for scalable microservices</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">Microservices Decomposition Strategies</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Design</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you approach decomposing a monolithic application into microservices? What are the key considerations and patterns?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-brain highlight-icon"></i>
+                                    <strong>Decomposition Strategies:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Business Capability:</strong> Align services with business domains</li>
+                                    <li><strong>Subdomain:</strong> Use Domain-Driven Design (DDD) bounded contexts</li>
+                                    <li><strong>Strangler Pattern:</strong> Gradually migrate functionality</li>
+                                    <li><strong>Transactional Boundaries:</strong> Respect ACID requirements</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="javascript" data-title="Microservices Decomposition Strategy">
+// Microservices Decomposition Example
+// E-commerce Platform Breakdown
+
+class OrderService {
+    // Handles order lifecycle: creation, payment, fulfillment
+    async createOrder(orderData) {
+        // 1. Validate order data
+        // 2. Check inventory via Inventory Service
+        // 3. Process payment via Payment Service
+        // 4. Create order record
+        // 5. Publish OrderCreated event
+    }
+
+    async getOrder(orderId) {
+        // Retrieve order with related data
+    }
+
+    async updateOrderStatus(orderId, status) {
+        // Update order status and publish events
+    }
+}
+
+class InventoryService {
+    // Manages product inventory and stock levels
+    async checkAvailability(productId, quantity) {
+        // Check if product is available
+    }
+
+    async reserveStock(orderId, items) {
+        // Reserve stock for order
+    }
+
+    async releaseStock(orderId) {
+        // Release reserved stock
+    }
+}
+
+class PaymentService {
+    // Handles payment processing and transactions
+    async processPayment(orderId, paymentDetails) {
+        // Process payment through payment gateway
+        // Update payment status
+        // Publish PaymentProcessed event
+    }
+
+    async refundPayment(paymentId, amount) {
+        // Process refund
+    }
+}
+
+class NotificationService {
+    // Handles all communication: email, SMS, push notifications
+    async sendOrderConfirmation(orderId) {
+        // Send order confirmation email/SMS
+    }
+
+    async sendShippingNotification(orderId) {
+        // Send shipping update notifications
+    }
+}
+
+// API Gateway routes requests to appropriate services
+class ApiGateway {
+    constructor() {
+        this.routes = {
+            '/orders': 'OrderService',
+            '/inventory': 'InventoryService',
+            '/payments': 'PaymentService',
+            '/notifications': 'NotificationService'
+        };
+    }
+
+    async routeRequest(path, method, data) {
+        const service = this.routes[path];
+        if (!service) {
+            throw new Error('Service not found');
+        }
+
+        // Authentication & Authorization
+        await this.authenticateRequest();
+
+        // Rate limiting
+        await this.checkRateLimit();
+
+        // Route to service
+        return await this.proxyToService(service, method, data);
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">2</div>
+                            <h3 class="question-title">Event-Driven Architecture & CQRS</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Patterns</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design an event-driven microservices architecture using CQRS pattern. How do you handle event sourcing and eventual consistency?</p>
+
+                            <div class="highlight-box success">
+                                <div class="highlight-header">
+                                    <i class="fas fa-stream highlight-icon"></i>
+                                    <strong>CQRS Benefits:</strong>
+                                </div>
+                                <ul>
+                                    <li>Separate read and write models for optimal performance</li>
+                                    <li>Independent scaling of read and write workloads</li>
+                                    <li>Rich domain models without performance penalties</li>
+                                    <li>Event sourcing for audit trails and temporal queries</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="javascript" data-title="CQRS Event-Driven Architecture">
+// CQRS with Event Sourcing Implementation
+
+class Command {
+    constructor(aggregateId, data) {
+        this.aggregateId = aggregateId;
+        this.data = data;
+        this.timestamp = new Date();
+        this.id = uuidv4();
+    }
+}
+
+class Event {
+    constructor(aggregateId, eventType, data) {
+        this.aggregateId = aggregateId;
+        this.eventType = eventType;
+        this.data = data;
+        this.timestamp = new Date();
+        this.version = null; // Set by event store
+    }
+}
+
+// Write Model (Commands)
+class OrderCommandHandler {
+    constructor(eventStore, eventPublisher) {
+        this.eventStore = eventStore;
+        this.eventPublisher = eventPublisher;
+    }
+
+    async handle(command) {
+        const aggregate = await this.loadAggregate(command.aggregateId);
+        const events = aggregate.processCommand(command);
+
+        await this.eventStore.saveEvents(command.aggregateId, events);
+        await this.eventPublisher.publish(events);
+    }
+
+    async loadAggregate(aggregateId) {
+        const events = await this.eventStore.getEvents(aggregateId);
+        return new OrderAggregate(events);
+    }
+}
+
+class OrderAggregate {
+    constructor(events = []) {
+        this.id = null;
+        this.status = 'pending';
+        this.items = [];
+        this.version = 0;
+
+        // Replay events to build current state
+        events.forEach(event => this.apply(event));
+    }
+
+    processCommand(command) {
+        switch (command.constructor.name) {
+            case 'CreateOrderCommand':
+                return [new OrderCreatedEvent(this.id, command.data)];
+            case 'AddItemCommand':
+                return [new ItemAddedEvent(this.id, command.data)];
+            case 'PlaceOrderCommand':
+                return [new OrderPlacedEvent(this.id)];
+            default:
+                throw new Error('Unknown command');
+        }
+    }
+
+    apply(event) {
+        this.version = event.version;
+        switch (event.eventType) {
+            case 'OrderCreated':
+                this.id = event.aggregateId;
+                this.status = 'created';
+                break;
+            case 'ItemAdded':
+                this.items.push(event.data);
+                break;
+            case 'OrderPlaced':
+                this.status = 'placed';
+                break;
+        }
+    }
+}
+
+// Read Model (Queries)
+class OrderReadModel {
+    constructor(database) {
+        this.db = database;
+    }
+
+    async getOrderDetails(orderId) {
+        return await this.db.query(`
+            SELECT o.*, GROUP_CONCAT(oi.product_name) as products
+            FROM orders o
+            LEFT JOIN order_items oi ON o.id = oi.order_id
+            WHERE o.id = ?
+            GROUP BY o.id
+        `, [orderId]);
+    }
+
+    async getOrdersByCustomer(customerId, page = 1, limit = 10) {
+        const offset = (page - 1) * limit;
+        return await this.db.query(`
+            SELECT * FROM orders
+            WHERE customer_id = ?
+            ORDER BY created_at DESC
+            LIMIT ? OFFSET ?
+        `, [customerId, limit, offset]);
+    }
+}
+
+// Event Store
+class EventStore {
+    constructor(database) {
+        this.db = database;
+    }
+
+    async saveEvents(aggregateId, events) {
+        const transaction = await this.db.beginTransaction();
+
+        try {
+            for (const event of events) {
+                event.version = await this.getNextVersion(aggregateId);
+                await this.db.query(`
+                    INSERT INTO events (aggregate_id, event_type, data, version, timestamp)
+                    VALUES (?, ?, ?, ?, ?)
+                `, [aggregateId, event.eventType, JSON.stringify(event.data),
+                     event.version, event.timestamp]);
+            }
+
+            await transaction.commit();
+        } catch (error) {
+            await transaction.rollback();
+            throw error;
+        }
+    }
+
+    async getEvents(aggregateId) {
+        return await this.db.query(`
+            SELECT * FROM events
+            WHERE aggregate_id = ?
+            ORDER BY version ASC
+        `, [aggregateId]);
+    }
+
+    async getNextVersion(aggregateId) {
+        const result = await this.db.query(`
+            SELECT MAX(version) as max_version
+            FROM events WHERE aggregate_id = ?
+        `, [aggregateId]);
+
+        return (result[0].max_version || 0) + 1;
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">3</div>
+                            <h3 class="question-title">Saga Pattern for Distributed Transactions</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Patterns</span>
+                            <span class="question-badge">Transactions</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Implement the Saga pattern to manage distributed transactions across microservices. Compare choreography vs orchestration approaches.</p>
+
+                            <div class="highlight-box warning">
+                                <div class="highlight-header">
+                                    <i class="fas fa-exchange-alt highlight-icon"></i>
+                                    <strong>Saga Types:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Choreography:</strong> Services communicate directly via events</li>
+                                    <li><strong>Orchestration:</strong> Central coordinator manages the saga</li>
+                                    <li><strong>Mixed Approach:</strong> Combine both based on complexity</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="javascript" data-title="Saga Pattern Implementation">
+// Saga Pattern Implementation
+// Order Processing Saga Example
+
+// Event definitions
+class SagaEvent {
+    constructor(sagaId, eventType, data) {
+        this.sagaId = sagaId;
+        this.eventType = eventType;
+        this.data = data;
+        this.timestamp = new Date();
+    }
+}
+
+// Orchestration-based Saga
+class OrderProcessingSaga {
+    constructor(eventPublisher, services) {
+        this.id = uuidv4();
+        this.state = 'STARTED';
+        this.steps = ['reserve_inventory', 'process_payment', 'create_shipment'];
+        this.completedSteps = [];
+        this.failedSteps = [];
+        this.compensatingActions = [];
+
+        this.eventPublisher = eventPublisher;
+        this.inventoryService = services.inventory;
+        this.paymentService = services.payment;
+        this.shippingService = services.shipping;
+    }
+
+    async execute(orderData) {
+        try {
+            // Step 1: Reserve Inventory
+            await this.reserveInventory(orderData);
+            this.completedSteps.push('reserve_inventory');
+
+            // Step 2: Process Payment
+            await this.processPayment(orderData);
+            this.completedSteps.push('process_payment');
+
+            // Step 3: Create Shipment
+            await this.createShipment(orderData);
+            this.completedSteps.push('create_shipment');
+
+            this.state = 'COMPLETED';
+            await this.eventPublisher.publish(
+                new SagaEvent(this.id, 'OrderProcessingCompleted', { orderId: orderData.id })
+            );
+
+        } catch (error) {
+            await this.compensate();
+            this.state = 'FAILED';
+            throw error;
+        }
+    }
+
+    async reserveInventory(orderData) {
+        try {
+            await this.inventoryService.reserveItems(orderData.items);
+            await this.eventPublisher.publish(
+                new SagaEvent(this.id, 'InventoryReserved', { orderId: orderData.id })
+            );
+        } catch (error) {
+            throw new Error('Failed to reserve inventory');
+        }
+    }
+
+    async processPayment(orderData) {
+        try {
+            await this.paymentService.charge(orderData.payment, orderData.total);
+            await this.eventPublisher.publish(
+                new SagaEvent(this.id, 'PaymentProcessed', { orderId: orderData.id })
+            );
+        } catch (error) {
+            this.compensatingActions.push(() => this.inventoryService.releaseReservation(orderData.items));
+            throw new Error('Failed to process payment');
+        }
+    }
+
+    async createShipment(orderData) {
+        try {
+            await this.shippingService.createShipment(orderData);
+            await this.eventPublisher.publish(
+                new SagaEvent(this.id, 'ShipmentCreated', { orderId: orderData.id })
+            );
+        } catch (error) {
+            this.compensatingActions.push(() => this.paymentService.refund(orderData.payment));
+            throw new Error('Failed to create shipment');
+        }
+    }
+
+    async compensate() {
+        // Execute compensating actions in reverse order
+        for (const action of this.compensatingActions.reverse()) {
+            try {
+                await action();
+            } catch (compensateError) {
+                console.error('Compensation failed:', compensateError);
+                // Log for manual intervention
+            }
+        }
+
+        // Additional compensation for completed steps
+        if (this.completedSteps.includes('create_shipment')) {
+            await this.shippingService.cancelShipment();
+        }
+    }
+}
+
+// Choreography-based approach
+class OrderEventHandler {
+    constructor(eventPublisher, services) {
+        this.eventPublisher = eventPublisher;
+        this.services = services;
+    }
+
+    async handleOrderCreated(event) {
+        try {
+            // Reserve inventory
+            await this.services.inventory.reserveItems(event.data.items);
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'InventoryReserved', event.data)
+            );
+        } catch (error) {
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'OrderProcessingFailed',
+                    { reason: 'inventory_reservation_failed', error: error.message })
+            );
+        }
+    }
+
+    async handleInventoryReserved(event) {
+        try {
+            // Process payment
+            await this.services.payment.charge(event.data.payment, event.data.total);
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'PaymentProcessed', event.data)
+            );
+        } catch (error) {
+            // Compensate inventory reservation
+            await this.services.inventory.releaseReservation(event.data.items);
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'OrderProcessingFailed',
+                    { reason: 'payment_failed', error: error.message })
+            );
+        }
+    }
+
+    async handlePaymentProcessed(event) {
+        try {
+            // Create shipment
+            await this.services.shipping.createShipment(event.data);
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'ShipmentCreated', event.data)
+            );
+        } catch (error) {
+            // Compensate payment
+            await this.services.payment.refund(event.data.payment);
+            await this.eventPublisher.publish(
+                new SagaEvent(event.sagaId, 'OrderProcessingFailed',
+                    { reason: 'shipment_creation_failed', error: error.message })
+            );
+        }
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">4</div>
+                            <h3 class="question-title">Circuit Breaker & Resilience Patterns</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Resilience</span>
+                            <span class="question-badge">Patterns</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Implement circuit breaker pattern and other resilience patterns for microservices communication. How do you handle cascading failures?</p>
+
+                            <div class="highlight-box danger">
+                                <div class="highlight-header">
+                                    <i class="fas fa-shield-alt highlight-icon"></i>
+                                    <strong>Circuit Breaker States:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Closed:</strong> Normal operation, requests flow through</li>
+                                    <li><strong>Open:</strong> Service is failing, requests fail fast</li>
+                                    <li><strong>Half-Open:</strong> Testing if service has recovered</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="javascript" data-title="Circuit Breaker Implementation">
+// Circuit Breaker & Resilience Patterns
+
+class CircuitBreaker {
+    constructor(serviceName, options = {}) {
+        this.serviceName = serviceName;
+        this.failureThreshold = options.failureThreshold || 5;
+        this.recoveryTimeout = options.recoveryTimeout || 60000; // 1 minute
+        this.monitoringPeriod = options.monitoringPeriod || 10000; // 10 seconds
+
+        this.state = 'CLOSED'; // CLOSED, OPEN, HALF_OPEN
+        this.failureCount = 0;
+        this.lastFailureTime = null;
+        this.successCount = 0;
+        this.nextAttemptTime = null;
+
+        this.metrics = {
+            totalRequests: 0,
+            successfulRequests: 0,
+            failedRequests: 0,
+            rejectedRequests: 0
+        };
+    }
+
+    async execute(requestFn) {
+        this.metrics.totalRequests++;
+
+        if (this.state === 'OPEN') {
+            if (Date.now() < this.nextAttemptTime) {
+                this.metrics.rejectedRequests++;
+                throw new Error(`Circuit breaker is OPEN for ${this.serviceName}`);
+            } else {
+                this.state = 'HALF_OPEN';
+            }
+        }
+
+        try {
+            const result = await requestFn();
+            this.onSuccess();
+            this.metrics.successfulRequests++;
+            return result;
+
+        } catch (error) {
+            this.onFailure();
+            this.metrics.failedRequests++;
+            throw error;
+        }
+    }
+
+    onSuccess() {
+        this.failureCount = 0;
+        if (this.state === 'HALF_OPEN') {
+            this.state = 'CLOSED';
+            this.successCount++;
+        }
+    }
+
+    onFailure() {
+        this.failureCount++;
+        this.lastFailureTime = Date.now();
+
+        if (this.state === 'HALF_OPEN') {
+            this.state = 'OPEN';
+            this.nextAttemptTime = Date.now() + this.recoveryTimeout;
+        } else if (this.failureCount >= this.failureThreshold) {
+            this.state = 'OPEN';
+            this.nextAttemptTime = Date.now() + this.recoveryTimeout;
+        }
+    }
+
+    getMetrics() {
+        return {
+            ...this.metrics,
+            state: this.state,
+            failureCount: this.failureCount,
+            successRate: this.metrics.totalRequests > 0 ?
+                (this.metrics.successfulRequests / this.metrics.totalRequests) * 100 : 0
+        };
+    }
+}
+
+// HTTP Client with Circuit Breaker
+class ResilientHttpClient {
+    constructor(baseUrl, options = {}) {
+        this.baseUrl = baseUrl;
+        this.circuitBreaker = new CircuitBreaker(`${baseUrl}`, options);
+        this.timeout = options.timeout || 5000;
+        this.retryAttempts = options.retryAttempts || 3;
+        this.backoffMultiplier = options.backoffMultiplier || 2;
+    }
+
+    async get(endpoint, options = {}) {
+        return this.circuitBreaker.execute(() =>
+            this.requestWithRetry('GET', endpoint, null, options)
+        );
+    }
+
+    async post(endpoint, data, options = {}) {
+        return this.circuitBreaker.execute(() =>
+            this.requestWithRetry('POST', endpoint, data, options)
+        );
+    }
+
+    async requestWithRetry(method, endpoint, data, options) {
+        let lastError;
+
+        for (let attempt = 0; attempt < this.retryAttempts; attempt++) {
+            try {
+                return await this.makeRequest(method, endpoint, data, options);
+            } catch (error) {
+                lastError = error;
+
+                if (!this.isRetryableError(error) || attempt === this.retryAttempts - 1) {
+                    throw error;
+                }
+
+                // Exponential backoff
+                const delay = Math.pow(this.backoffMultiplier, attempt) * 1000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+
+        throw lastError;
+    }
+
+    async makeRequest(method, endpoint, data, options) {
+        const url = `${this.baseUrl}${endpoint}`;
+        const config = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            },
+            timeout: this.timeout,
+            ...options
+        };
+
+        if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+            config.body = JSON.stringify(data);
+        }
+
+        const response = await fetch(url, config);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        return response.json();
+    }
+
+    isRetryableError(error) {
+        // Retry on network errors, 5xx errors, timeout
+        return error.message.includes('fetch') ||
+               error.message.includes('500') ||
+               error.message.includes('502') ||
+               error.message.includes('503') ||
+               error.message.includes('504') ||
+               error.message.includes('timeout');
+    }
+}
+
+// Bulkhead Pattern - Limit concurrent requests
+class Bulkhead {
+    constructor(maxConcurrent = 10) {
+        this.maxConcurrent = maxConcurrent;
+        this.currentRequests = 0;
+        this.waitingQueue = [];
+    }
+
+    async execute(operation) {
+        if (this.currentRequests >= this.maxConcurrent) {
+            // Queue the request
+            return new Promise((resolve, reject) => {
+                this.waitingQueue.push({ operation, resolve, reject });
+            });
+        }
+
+        this.currentRequests++;
+        try {
+            const result = await operation();
+            return result;
+        } finally {
+            this.currentRequests--;
+
+            // Process next waiting request
+            if (this.waitingQueue.length > 0) {
+                const next = this.waitingQueue.shift();
+                this.execute(next.operation)
+                    .then(next.resolve)
+                    .catch(next.reject);
+            }
+        }
+    }
+}
+
+// Usage example
+const inventoryClient = new ResilientHttpClient('http://inventory-service:3000', {
+    failureThreshold: 3,
+    recoveryTimeout: 30000,
+    timeout: 3000,
+    retryAttempts: 2
+});
+
+const bulkhead = new Bulkhead(5); // Max 5 concurrent requests
+
+async function getInventory(productId) {
+    return bulkhead.execute(() =>
+        inventoryClient.get(`/products/${productId}/inventory`)
+    );
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">5</div>
+                            <h3 class="question-title">API Gateway & Service Mesh</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Infrastructure</span>
+                            <span class="question-badge">Communication</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design and implement an API Gateway and Service Mesh for microservices communication. How do they differ and when to use each?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-network-wired highlight-icon"></i>
+                                    <strong>API Gateway vs Service Mesh:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>API Gateway:</strong> External traffic management, authentication, rate limiting</li>
+                                    <li><strong>Service Mesh:</strong> Internal service-to-service communication, observability</li>
+                                    <li><strong>Hybrid:</strong> Both for comprehensive traffic management</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="javascript" data-title="API Gateway Implementation">
+// API Gateway Implementation
+
+class ApiGateway {
+    constructor(options = {}) {
+        this.port = options.port || 8080;
+        this.routes = new Map();
+        this.middlewares = [];
+        this.services = new Map();
+
+        // Built-in middlewares
+        this.use(this.corsMiddleware);
+        this.use(this.authMiddleware);
+        this.use(this.rateLimitMiddleware);
+        this.use(this.loggingMiddleware);
+        this.use(this.circuitBreakerMiddleware);
+    }
+
+    // Route registration
+    route(path, targetService, options = {}) {
+        this.routes.set(path, {
+            service: targetService,
+            methods: options.methods || ['GET', 'POST', 'PUT', 'DELETE'],
+            authRequired: options.authRequired || false,
+            rateLimit: options.rateLimit || null,
+            timeout: options.timeout || 30000
+        });
+    }
+
+    // Service registration
+    registerService(name, url, options = {}) {
+        this.services.set(name, {
+            url,
+            healthCheck: options.healthCheck || `${url}/health`,
+            circuitBreaker: new CircuitBreaker(name),
+            timeout: options.timeout || 30000
+        });
+    }
+
+    // Middleware system
+    use(middleware) {
+        this.middlewares.push(middleware);
+    }
+
+    // Start gateway
+    async start() {
+        const server = http.createServer(async (req, res) => {
+            try {
+                await this.handleRequest(req, res);
+            } catch (error) {
+                this.handleError(error, res);
+            }
+        });
+
+        server.listen(this.port, () => {
+            console.log(`API Gateway listening on port ${this.port}`);
+        });
+    }
+
+    async handleRequest(req, res) {
+        // Apply middlewares
+        for (const middleware of this.middlewares) {
+            const result = await middleware(req, res);
+            if (result === false) return; // Middleware rejected request
+        }
+
+        // Route resolution
+        const route = this.findRoute(req.url, req.method);
+        if (!route) {
+            res.writeHead(404);
+            res.end(JSON.stringify({ error: 'Route not found' }));
+            return;
+        }
+
+        // Service discovery and load balancing
+        const service = this.services.get(route.service);
+        if (!service) {
+            res.writeHead(503);
+            res.end(JSON.stringify({ error: 'Service unavailable' }));
+            return;
+        }
+
+        // Circuit breaker check
+        const response = await service.circuitBreaker.execute(() =>
+            this.proxyToService(service, req, route)
+        );
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(response));
+    }
+
+    findRoute(url, method) {
+        for (const [path, route] of this.routes) {
+            if (url.startsWith(path) && route.methods.includes(method)) {
+                return { ...route, path };
+            }
+        }
+        return null;
+    }
+
+    async proxyToService(service, req, route) {
+        const targetUrl = `${service.url}${req.url.replace(route.path, '')}`;
+
+        const response = await fetch(targetUrl, {
+            method: req.method,
+            headers: this.filterHeaders(req.headers),
+            body: req.method !== 'GET' ? req.body : undefined,
+            timeout: route.timeout
+        });
+
+        if (!response.ok) {
+            throw new Error(`Service error: ${response.status}`);
+        }
+
+        return response.json();
+    }
+
+    // Middlewares
+    corsMiddleware(req, res) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+        if (req.method === 'OPTIONS') {
+            res.writeHead(200);
+            res.end();
+            return false; // Stop processing
+        }
+    }
+
+    async authMiddleware(req, res) {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            res.writeHead(401);
+            res.end(JSON.stringify({ error: 'Unauthorized' }));
+            return false;
+        }
+
+        // Validate JWT token
+        try {
+            const token = authHeader.substring(7);
+            req.user = await this.validateToken(token);
+        } catch (error) {
+            res.writeHead(401);
+            res.end(JSON.stringify({ error: 'Invalid token' }));
+            return false;
+        }
+    }
+
+    async rateLimitMiddleware(req, res) {
+        const clientId = req.user?.id || req.ip;
+        const limit = await this.checkRateLimit(clientId);
+
+        if (limit.exceeded) {
+            res.writeHead(429);
+            res.end(JSON.stringify({ error: 'Rate limit exceeded' }));
+            return false;
+        }
+    }
+
+    loggingMiddleware(req, res) {
+        const startTime = Date.now();
+        res.on('finish', () => {
+            const duration = Date.now() - startTime;
+            console.log(`${req.method} ${req.url} ${res.statusCode} ${duration}ms`);
+        });
+    }
+
+    circuitBreakerMiddleware(req, res) {
+        // Circuit breaker logic handled in proxyToService
+    }
+
+    filterHeaders(headers) {
+        // Remove hop-by-hop headers
+        const filtered = { ...headers };
+        delete filtered['connection'];
+        delete filtered['keep-alive'];
+        delete filtered['proxy-authenticate'];
+        delete filtered['proxy-authorization'];
+        delete filtered['te'];
+        delete filtered['trailers'];
+        delete filtered['transfer-encoding'];
+        delete filtered['upgrade'];
+        return filtered;
+    }
+
+    handleError(error, res) {
+        console.error('Gateway error:', error);
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: 'Internal server error' }));
+    }
+}
+
+// Service Mesh sidecar pattern (simplified)
+class ServiceMeshSidecar {
+    constructor(serviceName, options = {}) {
+        this.serviceName = serviceName;
+        this.controlPlaneUrl = options.controlPlaneUrl || 'http://control-plane:8080';
+        this.observability = options.observability || new ObservabilityCollector();
+
+        this.interceptors = [
+            this.tracingInterceptor,
+            this.metricsInterceptor,
+            this.securityInterceptor
+        ];
+    }
+
+    interceptOutbound(request) {
+        for (const interceptor of this.interceptors) {
+            interceptor(request, 'outbound');
+        }
+        return request;
+    }
+
+    interceptInbound(response) {
+        for (const interceptor of this.interceptors) {
+            interceptor(response, 'inbound');
+        }
+        return response;
+    }
+
+    tracingInterceptor(request, direction) {
+        const span = this.observability.startSpan(`${direction}_${request.method}_${request.url}`);
+        request.headers['x-trace-id'] = span.traceId;
+        request.headers['x-span-id'] = span.spanId;
+    }
+
+    metricsInterceptor(request, direction) {
+        this.observability.recordMetric('request_count', 1, {
+            service: this.serviceName,
+            direction,
+            method: request.method,
+            status: request.status || 'pending'
+        });
+    }
+
+    securityInterceptor(request, direction) {
+        // Mutual TLS, service authentication, etc.
+        if (direction === 'inbound') {
+            this.validateServiceIdentity(request);
+        }
+    }
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

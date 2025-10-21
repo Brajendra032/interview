@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👥 Leadership & Architecture Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#leadership" class="nav-link">Leadership</a>
+                <a href="#mentoring" class="nav-link">Mentoring</a>
+                <a href="#strategy" class="nav-link">Strategy</a>
+                <a href="#communication" class="nav-link">Communication</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">👥 Leadership & Architecture Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master Technical Leadership, Team Management, and Strategic Decision Making
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">45+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Leadership Scenarios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Case Studies</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Executive Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <i class="fas fa-users-cog section-icon"></i>
+                    <div>
+                        <h2 class="section-title">👔 Technical Leadership & Team Management</h2>
+                        <p class="section-description">Lead engineering teams, drive technical excellence, and manage complex projects</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">Leading Technical Teams</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Leadership</span>
+                            <span class="question-badge">Management</span>
+                            <span class="question-badge">Strategy</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you approach leading and managing technical teams in a fast-paced environment?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-users section-icon"></i>
+                                    <strong>Leadership Principles:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Vision & Direction:</strong> Set clear technical vision and roadmap</li>
+                                    <li><strong>Empowerment:</strong> Delegate effectively while maintaining accountability</li>
+                                    <li><strong>Growth & Development:</strong> Invest in team skill development</li>
+                                    <li><strong>Culture Building:</strong> Foster collaboration and innovation</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Leadership Framework
+                        </button>
+
+                        <div class="code-block" data-lang="text" data-title="Technical Leadership Framework">
+Technical Leadership Framework
+=============================
+
+1. VISION & STRATEGY
+   - Define technical vision aligned with business goals
+   - Create multi-year technology roadmap
+   - Balance innovation with operational excellence
+   - Communicate technical strategy to stakeholders
+
+2. TEAM MANAGEMENT
+   - Build high-performing engineering teams
+   - Implement effective hiring and onboarding processes
+   - Establish performance management systems
+   - Foster inclusive and diverse team culture
+
+3. TECHNICAL EXCELLENCE
+   - Set coding standards and best practices
+   - Implement code review processes
+   - Drive continuous learning and improvement
+   - Maintain technical debt management
+
+4. PROJECT EXECUTION
+   - Define agile development processes
+   - Implement effective project management
+   - Manage stakeholder expectations
+   - Ensure quality and timely delivery
+
+5. MENTORING & DEVELOPMENT
+   - Provide career guidance and development plans
+   - Conduct regular performance reviews
+   - Support professional growth opportunities
+   - Build succession planning
+
+6. STAKEHOLDER MANAGEMENT
+   - Communicate effectively with business leaders
+   - Manage relationships with other departments
+   - Present technical concepts to non-technical audiences
+   - Influence organizational decisions
+
+7. CRISIS MANAGEMENT
+   - Handle production incidents effectively
+   - Implement incident response procedures
+   - Learn from failures and drive improvements
+   - Maintain team morale during crises
+
+8. RESOURCE PLANNING
+   - Forecast technical resource needs
+   - Manage budgets and procurement
+   - Plan for scaling and growth
+   - Optimize resource utilization
+
+Key Leadership Behaviors:
+- Lead by example and demonstrate technical competence
+- Build trust through transparency and integrity
+- Empower team members to make decisions
+- Take responsibility for failures and share success
+- Continuously learn and adapt to change
+- Champion diversity, equity, and inclusion
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">2</div>
+                            <h3 class="question-title">Code Review & Quality Assurance</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Quality</span>
+                            <span class="question-badge">Process</span>
+                            <span class="question-badge">Mentoring</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you establish and maintain high code quality standards across your team?</p>
+
+                            <div class="highlight-box success">
+                                <div class="highlight-header">
+                                    <i class="fas fa-code-branch highlight-icon"></i>
+                                    <strong>Code Review Best Practices:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Automated Checks:</strong> Linting, formatting, security scanning</li>
+                                    <li><strong>Peer Reviews:</strong> Knowledge sharing and quality gates</li>
+                                    <li><strong>Standards Documentation:</strong> Clear guidelines and examples</li>
+                                    <li><strong>Continuous Improvement:</strong> Regular review of processes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Review Guidelines
+                        </button>
+
+                        <div class="code-block" data-lang="text" data-title="Code Review Guidelines & Process">
+Code Review Guidelines & Process
+===============================
+
+1. CODE REVIEW PRINCIPLES
+   - Code reviews are about improving code quality and sharing knowledge
+   - Be respectful and constructive in feedback
+   - Focus on the code, not the person
+   - Everyone's code gets reviewed, including leads and managers
+
+2. REVIEW PROCESS
+   Pre-Review Checklist:
+   □ Code compiles and passes all tests
+   □ Automated checks pass (linting, security, etc.)
+   □ Documentation updated
+   □ Breaking changes identified and communicated
+
+   Review Steps:
+   1. Author creates pull request with clear description
+   2. Automated checks run and pass
+   3. At least 2 reviewers assigned
+   4. Reviewers complete review within 24 hours
+   5. Author addresses feedback and updates PR
+   6. Approved PR gets merged
+
+3. REVIEW CRITERIA
+
+   Functionality:
+   □ Code works as intended
+   □ Edge cases handled appropriately
+   □ Error handling is robust
+   □ Performance considerations addressed
+
+   Code Quality:
+   □ Follows established coding standards
+   □ Clear, readable, and maintainable
+   □ Properly abstracted and modular
+   □ No unnecessary complexity
+
+   Testing:
+   □ Unit tests cover new functionality
+   □ Integration tests added for new features
+   □ Existing tests still pass
+   □ Test coverage maintained or improved
+
+   Documentation:
+   □ Code is self-documenting where possible
+   □ Comments explain complex logic
+   □ API documentation updated
+   □ README/changelogs updated if needed
+
+   Security:
+   □ Input validation and sanitization
+   □ Authentication/authorization checks
+   □ No sensitive data exposure
+   □ Security best practices followed
+
+4. REVIEWER RESPONSIBILITIES
+   - Provide timely feedback (within SLA)
+   - Explain reasoning for requested changes
+   - Suggest improvements and alternatives
+   - Approve when standards are met
+   - Escalate blocking issues to team lead
+
+5. AUTHOR RESPONSIBILITIES
+   - Write clear pull request descriptions
+   - Address all review feedback
+   - Explain decisions when reviewers disagree
+   - Keep pull requests small and focused
+   - Test changes thoroughly before review
+
+6. COMMON REVIEW COMMENTS
+
+   Good Examples:
+   ✅ "Consider extracting this logic into a separate method for better readability"
+   ✅ "This error handling could be more specific - let's catch the exact exception"
+   ✅ "Great use of the strategy pattern here!"
+
+   Poor Examples:
+   ❌ "This sucks, rewrite it"
+   ❌ "Why did you do it this way? This is wrong."
+   ❌ "Fix this" (without explanation)
+
+7. AUTOMATED QUALITY GATES
+
+   Pre-commit Hooks:
+   - Code formatting (Prettier, Black, etc.)
+   - Linting (ESLint, PHPCS, etc.)
+   - Type checking (TypeScript, PHPStan, etc.)
+
+   CI/CD Pipeline:
+   - Unit test execution
+   - Integration test execution
+   - Security vulnerability scanning
+   - Code coverage reporting
+   - Performance regression testing
+
+8. METRICS & MONITORING
+
+   Track and improve:
+   - Average review time
+   - Review coverage (percentage of code reviewed)
+   - Defect escape rate (bugs found post-release)
+   - Code review participation
+   - Time to merge pull requests
+
+9. TOOLS & INTEGRATION
+
+   Version Control: Git with protected branches
+   Code Review: GitHub/GitLab pull requests
+   Automation: Pre-commit hooks, CI/CD pipelines
+   Documentation: Confluence, Notion, or wiki
+   Communication: Slack, Microsoft Teams
+
+10. CONTINUOUS IMPROVEMENT
+
+    Regular Activities:
+    - Monthly review process retrospectives
+    - Update guidelines based on lessons learned
+    - Share best practices and anti-patterns
+    - Provide training for new team members
+    - Recognize and reward good review practices
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">3</div>
+                            <h3 class="question-title">Deployment Planning & Release Management</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">DevOps</span>
+                            <span class="question-badge">Planning</span>
+                            <span class="question-badge">Risk Management</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you plan and execute complex software deployments with minimal risk?</p>
+
+                            <div class="highlight-box warning">
+                                <div class="highlight-header">
+                                    <i class="fas fa-rocket highlight-icon"></i>
+                                    <strong>Deployment Strategies:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Blue-Green:</strong> Zero-downtime deployments with instant rollback</li>
+                                    <li><strong>Canary:</strong> Gradual rollout with traffic shifting</li>
+                                    <li><strong>Rolling:</strong> Incremental updates across instances</li>
+                                    <li><strong>Feature Flags:</strong> Runtime feature toggles</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Deployment Planning Framework
+                        </button>
+
+                        <div class="code-block" data-lang="text" data-title="Deployment Planning & Release Management">
+Deployment Planning & Release Management Framework
+================================================
+
+1. RELEASE PLANNING PROCESS
+
+   Pre-Planning Phase:
+   □ Define release objectives and success criteria
+   □ Identify stakeholders and communication plan
+   □ Assess technical feasibility and dependencies
+   □ Estimate effort and timeline
+   □ Identify risks and mitigation strategies
+
+   Planning Phase:
+   □ Create detailed deployment checklist
+   □ Define rollback procedures
+   □ Prepare monitoring and alerting
+   □ Schedule deployment windows
+   □ Coordinate with other teams (DBA, infra, security)
+
+2. DEPLOYMENT STRATEGIES
+
+   Blue-Green Deployment:
+   + Zero downtime deployment
+   + Instant rollback capability
+   + Full environment validation
+   - Requires double infrastructure capacity
+   - More complex routing configuration
+
+   Canary Deployment:
+   + Gradual risk reduction
+   + Real user validation
+   + Easy rollback (traffic shifting)
+   - Slower rollout process
+   - Requires sophisticated traffic management
+
+   Rolling Deployment:
+   + Minimal resource overhead
+   + Simple to implement
+   + Works with any infrastructure
+   - No instant rollback
+   - Potential inconsistency during rollout
+
+3. DEPLOYMENT CHECKLIST
+
+   Pre-Deployment:
+   □ Feature flags configured and tested
+   □ Database migrations prepared and tested
+   □ Configuration management updated
+   □ Infrastructure provisioning completed
+   □ Security review completed
+   □ Performance testing completed
+   □ Documentation updated
+
+   During Deployment:
+   □ Establish deployment command center
+   □ Implement deployment freeze if needed
+   □ Monitor key metrics and alerts
+   □ Execute smoke tests after each phase
+   □ Validate data integrity
+   □ Update DNS/load balancers if needed
+
+   Post-Deployment:
+   □ Conduct post-mortem review
+   □ Update monitoring dashboards
+   □ Communicate success to stakeholders
+   □ Monitor for issues over next 24-48 hours
+   □ Clean up temporary resources
+
+4. RISK MANAGEMENT
+
+   Risk Assessment:
+   - Business Impact: High/Medium/Low
+   - Technical Complexity: High/Medium/Low
+   - User Impact: High/Medium/Low
+   - Rollback Difficulty: High/Medium/Low
+
+   Mitigation Strategies:
+   □ Feature flags for instant disable
+   □ Circuit breakers for graceful degradation
+   □ Comprehensive monitoring and alerting
+   □ Automated rollback procedures
+   □ Gradual rollout with manual approval gates
+
+5. COMMUNICATION PLAN
+
+   Internal Communication:
+   □ Team standup updates
+   □ Slack/Teams deployment channel
+   □ Email updates to stakeholders
+   □ Incident response plan activation if needed
+
+   External Communication:
+   □ Customer notification for major releases
+   □ Status page updates
+   □ Marketing coordination for feature launches
+
+6. MONITORING & OBSERVABILITY
+
+   Key Metrics to Monitor:
+   - Application response times
+   - Error rates and exceptions
+   - Database connection pools
+   - Infrastructure utilization (CPU, memory, disk)
+   - Business metrics (conversions, transactions)
+
+   Alerting Strategy:
+   □ Critical alerts: Page on-call engineer
+   □ Warning alerts: Notify team via Slack
+   □ Info alerts: Log for post-mortem analysis
+
+7. ROLLBACK PROCEDURES
+
+   Automated Rollback:
+   □ Blue-green: Switch traffic back instantly
+   □ Canary: Gradually reduce traffic to new version
+   □ Feature flags: Disable problematic features
+   □ Database: Rollback migrations if possible
+
+   Manual Rollback:
+   □ Documented step-by-step procedures
+   □ Tested rollback scenarios
+   □ Backup restoration procedures
+   □ Communication templates for rollback
+
+8. CONTINUOUS IMPROVEMENT
+
+   Post-Mortem Process:
+   □ What went well?
+   □ What could be improved?
+   □ Action items with owners and deadlines
+   □ Lessons learned documentation
+
+   Metrics to Track:
+   - Deployment frequency
+   - Deployment success rate
+   - Mean time to recovery (MTTR)
+   - Change failure rate
+   - Lead time for changes
+
+9. TOOLING & AUTOMATION
+
+   Infrastructure as Code:
+   - Terraform/OpenTofu for infrastructure
+   - Ansible/Chef/Puppet for configuration
+   - Helm/Kustomize for Kubernetes manifests
+
+   CI/CD Pipelines:
+   - GitHub Actions/GitLab CI/Jenkins
+   - Automated testing (unit, integration, e2e)
+   - Security scanning and compliance checks
+   - Artifact management and versioning
+
+   Monitoring & Alerting:
+   - Prometheus/Grafana for metrics
+   - ELK stack for logging
+   - PagerDuty/Opsgenie for alerting
+   - Sentry/New Relic for error tracking
+
+10. TEAM RESPONSIBILITIES
+
+    Release Manager:
+    - Coordinate overall release process
+    - Make go/no-go decisions
+    - Communicate with stakeholders
+    - Lead post-mortem analysis
+
+    Development Team:
+    - Ensure code quality and testing
+    - Provide deployment documentation
+    - Support production issues
+    - Participate in post-mortem
+
+    Operations Team:
+    - Prepare infrastructure
+    - Execute deployment procedures
+    - Monitor systems during deployment
+    - Handle infrastructure issues
+
+    QA Team:
+    - Validate release readiness
+    - Execute manual test scenarios
+    - Verify production deployment
+    - Report any issues found
+
+    Business Stakeholders:
+    - Provide business requirements
+    - Approve release timing
+    - Validate business functionality
+    - Communicate with end users
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">4</div>
+                            <h3 class="question-title">Technical Strategy & Architecture Planning</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Strategy</span>
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Planning</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you develop and communicate technical strategy for large-scale systems?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-chess-king highlight-icon"></i>
+                                    <strong>Strategic Planning:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Vision Setting:</strong> Define long-term technical direction</li>
+                                    <li><strong>Roadmap Creation:</strong> Prioritize initiatives and timelines</li>
+                                    <li><strong>Stakeholder Alignment:</strong> Get buy-in from business leaders</li>
+                                    <li><strong>Technology Evaluation:</strong> Assess new tools and frameworks</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Architecture Planning Framework
+                        </button>
+
+                        <div class="code-block" data-lang="text" data-title="Technical Strategy & Architecture Planning">
+Technical Strategy & Architecture Planning Framework
+===================================================
+
+1. STRATEGY DEVELOPMENT PROCESS
+
+   Current State Analysis:
+   □ Assess existing technology stack
+   □ Evaluate team capabilities and skills
+   □ Analyze business requirements and constraints
+   □ Identify technical debt and pain points
+   □ Review industry trends and competitive landscape
+
+   Vision & Goals:
+   □ Define 3-5 year technical vision
+   □ Establish measurable objectives
+   □ Align with business strategy
+   □ Consider scalability and flexibility needs
+
+   Strategic Planning:
+   □ Identify key technology initiatives
+   □ Prioritize based on business value and risk
+   □ Create implementation roadmap
+   □ Define success metrics and KPIs
+
+2. ARCHITECTURE PRINCIPLES
+
+   Design Principles:
+   - Scalability: Design for growth and performance
+   - Resilience: Build fault-tolerant systems
+   - Security: Implement defense in depth
+   - Maintainability: Write clean, testable code
+   - Observability: Monitor and debug effectively
+
+   Technology Choices:
+   - Programming languages and frameworks
+   - Database and storage solutions
+   - Infrastructure and cloud platforms
+   - DevOps and deployment tools
+   - Monitoring and logging solutions
+
+3. ROADMAP PLANNING
+
+   Time Horizons:
+   - Now (0-3 months): Immediate priorities and fixes
+   - Soon (3-6 months): Short-term improvements
+   - Next (6-12 months): Medium-term initiatives
+   - Future (1-3 years): Long-term vision and transformation
+
+   Initiative Categories:
+   - Platform modernization
+   - Architecture improvements
+   - Process optimization
+   - Team growth and development
+   - Security enhancements
+
+4. STAKEHOLDER MANAGEMENT
+
+   Communication Strategy:
+   □ Regular architecture review meetings
+   □ Technical roadmap presentations
+   □ Executive summaries for business leaders
+   □ Detailed technical documentation
+   □ Open feedback channels
+
+   Stakeholder Groups:
+   - Engineering teams (detailed technical info)
+   - Product managers (feature impact and timelines)
+   - Business leaders (business value and ROI)
+   - Operations teams (deployment and maintenance)
+   - External partners (integration requirements)
+
+5. RISK ASSESSMENT & MITIGATION
+
+   Technical Risks:
+   □ Technology choice becoming obsolete
+   □ Vendor lock-in concerns
+   □ Scalability limitations
+   □ Security vulnerabilities
+   □ Team skill gaps
+
+   Mitigation Strategies:
+   □ Proof of concepts for new technologies
+   □ Modular architecture for flexibility
+   □ Regular technology evaluations
+   □ Comprehensive testing strategies
+   □ Training and skill development plans
+
+6. IMPLEMENTATION PLANNING
+
+   Execution Framework:
+   □ Break down initiatives into manageable projects
+   □ Define clear success criteria
+   □ Assign ownership and accountability
+   □ Establish timelines and milestones
+   □ Create contingency plans
+
+   Resource Planning:
+   □ Team capacity and allocation
+   □ Budget requirements
+   □ External vendor relationships
+   □ Training and development needs
+
+7. MEASUREMENT & MONITORING
+
+   Success Metrics:
+   □ Delivery velocity and quality
+   □ System performance and reliability
+   □ Team productivity and satisfaction
+   □ Business value delivered
+   □ Technical debt reduction
+
+   Progress Tracking:
+   □ Regular roadmap reviews
+   □ KPI dashboards and reporting
+   □ Stakeholder feedback collection
+   □ Course correction as needed
+
+8. GOVERNANCE & OVERSIGHT
+
+   Decision Making:
+   □ Architecture review board
+   □ Technology standards committee
+   □ Change approval processes
+   □ Exception handling procedures
+
+   Documentation:
+   □ Architecture decision records (ADRs)
+   □ System documentation
+   □ API specifications
+   □ Deployment and operations guides
+
+9. CONTINUOUS EVOLUTION
+
+   Feedback Loops:
+   □ Regular strategy reviews and updates
+   □ Industry trend monitoring
+   □ Technology evaluation processes
+   □ Lessons learned capture
+
+   Adaptation Strategies:
+   □ Flexible roadmap that can adjust to changes
+   □ Modular architecture for incremental changes
+   □ Continuous learning and improvement culture
+   □ Innovation time allocation
+
+10. COMMON CHALLENGES & SOLUTIONS
+
+    Challenge: Resistance to Change
+    Solution: Clear communication, stakeholder involvement, phased rollout
+
+    Challenge: Technology Choice Paralysis
+    Solution: Proof of concepts, reference architectures, established evaluation criteria
+
+    Challenge: Scope Creep
+    Solution: Clear project boundaries, regular scope reviews, change control processes
+
+    Challenge: Resource Constraints
+    Solution: Prioritization frameworks, incremental delivery, cross-training
+
+    Challenge: Technical Debt
+    Solution: Dedicated refactoring time, automated quality gates, regular assessments
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">5</div>
+                            <h3 class="question-title">Crisis Management & Incident Response</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Crisis</span>
+                            <span class="question-badge">Leadership</span>
+                            <span class="question-badge">Communication</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you lead your team through production incidents and system outages?</p>
+
+                            <div class="highlight-box danger">
+                                <div class="highlight-header">
+                                    <i class="fas fa-exclamation-triangle highlight-icon"></i>
+                                    <strong>Incident Response Phases:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Detect & Assess:</strong> Identify and evaluate the incident</li>
+                                    <li><strong>Contain & Mitigate:</strong> Stop the bleeding and minimize impact</li>
+                                    <li><strong>Resolve & Recover:</strong> Fix the issue and restore service</li>
+                                    <li><strong>Learn & Improve:</strong> Post-mortem analysis and prevention</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Incident Response Playbook
+                        </button>
+
+                        <div class="code-block" data-lang="text" data-title="Crisis Management & Incident Response">
+Incident Response & Crisis Management Playbook
+==============================================
+
+1. INCIDENT RESPONSE PROCESS
+
+   Phase 1: Detection & Assessment (0-15 minutes)
+   □ Incident detected via monitoring/alerting
+   □ Initial assessment of impact and scope
+   □ Incident commander appointed
+   □ Severity level determined (SEV-1, SEV-2, SEV-3)
+   □ Initial communication sent to stakeholders
+
+   Phase 2: Investigation & Containment (15-60 minutes)
+   □ Assemble incident response team
+   □ Gather relevant logs and metrics
+   □ Identify root cause hypothesis
+   □ Implement temporary containment measures
+   □ Update stakeholders on progress
+
+   Phase 3: Resolution & Recovery (1-4 hours)
+   □ Develop and implement fix
+   □ Test fix in staging environment
+   □ Deploy fix to production
+   □ Verify service restoration
+   □ Monitor for stability
+
+   Phase 4: Post-Mortem & Learning (1-5 days)
+   □ Conduct blameless post-mortem
+   □ Document timeline and root cause
+   □ Identify improvement opportunities
+   □ Implement preventive measures
+   □ Share lessons learned
+
+2. INCIDENT SEVERITY LEVELS
+
+   SEV-1 (Critical):
+   - Complete system outage
+   - Significant data loss
+   - Security breach
+   - Revenue impacting (>25% of users affected)
+
+   SEV-2 (High):
+   - Partial system degradation
+   - Performance issues affecting many users
+   - Important functionality broken
+   - Business operations impacted
+
+   SEV-3 (Medium):
+   - Minor functionality issues
+   - Intermittent problems
+   - Limited user impact
+   - Workarounds available
+
+3. COMMUNICATION PROTOCOLS
+
+   Internal Communication:
+   □ Dedicated incident Slack/Teams channel
+   □ Regular updates every 15-30 minutes
+   □ Clear status updates with timelines
+   □ Designated communication lead
+
+   External Communication:
+   □ Status page updates (if applicable)
+   □ Customer notification templates
+   □ Social media monitoring
+   □ Press release preparation for major incidents
+
+4. TEAM ROLES & RESPONSIBILITIES
+
+   Incident Commander:
+   - Overall decision making authority
+   - Coordinates response efforts
+   - Manages communication and stakeholders
+   - Makes go/no-go decisions
+
+   Technical Lead:
+   - Leads technical investigation
+   - Coordinates with engineering teams
+   - Implements fixes and workarounds
+   - Documents technical details
+
+   Communications Lead:
+   - Manages internal communications
+   - Prepares external communications
+   - Updates status pages and stakeholders
+   - Manages customer inquiries
+
+   Scribe:
+   - Documents incident timeline
+   - Records decisions and actions
+   - Captures key information
+   - Prepares post-mortem report
+
+5. TECHNICAL RESPONSE ACTIONS
+
+   Investigation Tools:
+   □ Application logs (ELK stack, Splunk)
+   □ Infrastructure monitoring (Datadog, New Relic)
+   □ Database query analysis
+   □ Network traffic analysis
+   □ Configuration drift detection
+
+   Containment Strategies:
+   □ Load balancer configuration changes
+   □ Feature flag activation/deactivation
+   □ Database connection pool adjustments
+   □ Cache invalidation and warm-up
+   □ Circuit breaker activation
+
+   Recovery Procedures:
+   □ Database failovers and restores
+   □ Service restarts and redeployments
+   □ Configuration rollbacks
+   □ DNS and routing changes
+   □ Data integrity verification
+
+6. CRISIS LEADERSHIP PRINCIPLES
+
+   Leadership During Crisis:
+   □ Remain calm and focused
+   □ Make decisions with available information
+   □ Communicate frequently and transparently
+   □ Support team members under stress
+   □ Take responsibility for outcomes
+
+   Team Morale Management:
+   □ Acknowledge the stress and difficulty
+   □ Provide breaks and shift rotations
+   □ Celebrate small wins and progress
+   □ Debrief and provide psychological support
+   □ Recognize individual contributions
+
+7. POST-MORTEM PROCESS
+
+   Post-Mortem Structure:
+   □ Incident timeline (what happened when)
+   □ Root cause analysis (5-whys technique)
+   □ Impact assessment (users, revenue, reputation)
+   □ Response effectiveness evaluation
+   □ Lessons learned and improvement opportunities
+
+   Action Items:
+   □ Immediate fixes and workarounds
+   □ Short-term improvements (1-4 weeks)
+   □ Medium-term projects (1-3 months)
+   □ Long-term strategic changes (3-12 months)
+
+8. PREVENTION & IMPROVEMENT
+
+   Proactive Measures:
+   □ Regular chaos engineering exercises
+   □ Disaster recovery testing
+   □ Capacity planning and load testing
+   □ Security assessments and penetration testing
+   □ Dependency vulnerability scanning
+
+   Process Improvements:
+   □ Incident response training and drills
+   □ Tooling and automation enhancements
+   □ Monitoring and alerting improvements
+   □ Documentation updates and standardization
+
+9. METRICS & ANALYSIS
+
+   Key Metrics to Track:
+   □ Mean Time To Detect (MTTD)
+   □ Mean Time To Respond (MTTR)
+   □ Mean Time To Resolve (MTTR)
+   □ Incident frequency and severity
+   □ Customer impact duration
+   □ Post-mortem completion rate
+
+   Trend Analysis:
+   □ Common failure modes identification
+   □ Seasonal patterns and spikes
+   □ Team performance over time
+   □ Tool effectiveness evaluation
+
+10. TOOLS & RESOURCES
+
+    Communication Tools:
+    - Slack/Teams for real-time communication
+    - Zoom/Meet for incident calls
+    - Statuspage for external communication
+    - Jira/Linear for incident tracking
+
+    Monitoring & Alerting:
+    - Prometheus/Grafana for metrics
+    - PagerDuty/Opsgenie for alerting
+    - ELK/Splunk for log analysis
+    - Sentry/New Relic for error tracking
+
+    Documentation:
+    - Incident response runbooks
+    - System architecture diagrams
+    - Contact lists and escalation paths
+    - Post-mortem template and archive
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

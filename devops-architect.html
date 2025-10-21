@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 DevOps Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#cicd" class="nav-link">CI/CD</a>
+                <a href="#infrastructure" class="nav-link">Infrastructure</a>
+                <a href="#monitoring" class="nav-link">Monitoring</a>
+                <a href="#security" class="nav-link">Security</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🚀 DevOps Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master CI/CD Pipelines, Infrastructure as Code, and Cloud-Native Architecture
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">45+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Pipeline Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Architecture Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Cloud-Native</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="yaml"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <i class="fas fa-cogs section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🔄 CI/CD Pipeline Architecture</h2>
+                        <p class="section-description">Design scalable, secure, and maintainable CI/CD pipelines for enterprise applications</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">Advanced CI/CD Pipeline Design</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">CI/CD</span>
+                            <span class="question-badge">Architecture</span>
+                            <span class="question-badge">Jenkins</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design a comprehensive CI/CD pipeline that handles microservices, multiple environments, and complex deployment strategies.</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-project-diagram highlight-icon"></i>
+                                    <strong>Pipeline Components:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Source Control:</strong> Git flow, branching strategies, webhooks</li>
+                                    <li><strong>Build Stage:</strong> Multi-language support, dependency management</li>
+                                    <li><strong>Test Stage:</strong> Unit, integration, performance, security testing</li>
+                                    <li><strong>Artifact Management:</strong> Versioning, storage, distribution</li>
+                                    <li><strong>Deployment:</strong> Blue-green, canary, rolling deployments</li>
+                                    <li><strong>Monitoring:</strong> Pipeline metrics, error tracking, alerting</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="yaml" data-title="Advanced Jenkins Pipeline">
+// Advanced Jenkins Pipeline for Microservices
+// Jenkinsfile for a Spring Boot microservice
+
+pipeline {
+    agent {
+        kubernetes {
+            label 'microservice-build'
+            defaultContainer 'jnlp'
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: maven
+    image: maven:3.8.4-openjdk-11
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /root/.m2
+      name: maven-cache
+  - name: docker
+    image: docker:20.10.7
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-socket
+  - name: kubectl
+    image: bitnami/kubectl:1.21
+    command:
+    - cat
+    tty: true
+  volumes:
+  - name: maven-cache
+    persistentVolumeClaim:
+      claimName: maven-cache-pvc
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+"""
+        }
+    }
+
+    environment {
+        DOCKER_REGISTRY = 'my-registry.com'
+        KUBECONFIG = credentials('kubeconfig')
+        SONAR_TOKEN = credentials('sonar-token')
+        NEXUS_CREDENTIALS = credentials('nexus-credentials')
+    }
+
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'production'], description: 'Target environment')
+        booleanParam(name: 'RUN_PERFORMANCE_TESTS', defaultValue: false, description: 'Run performance tests')
+        booleanParam(name: 'DEPLOY_TO_PROD', defaultValue: false, description: 'Deploy to production')
+    }
+
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 1, unit: 'HOURS')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    stages {
+        stage('Checkout & Setup') {
+            steps {
+                script {
+                    // Checkout code
+                    checkout scm
+
+                    // Set build version
+                    env.BUILD_VERSION = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.take(8)}"
+                    env.ARTIFACT_NAME = "user-service-${env.BUILD_VERSION}"
+
+                    // Setup environment variables
+                    env.DOCKER_IMAGE = "${DOCKER_REGISTRY}/user-service:${BUILD_VERSION}"
+
+                    echo "Building version: ${BUILD_VERSION}"
+                }
+            }
+        }
+
+        stage('Code Quality & Security') {
+            parallel {
+                stage('Static Analysis') {
+                    steps {
+                        container('maven') {
+                            sh '''
+                                mvn clean compile
+                                mvn sonar:sonar \
+                                    -Dsonar.projectKey=user-service \
+                                    -Dsonar.host.url=http://sonar.example.com \
+                                    -Dsonar.login=$SONAR_TOKEN
+                            '''
+                        }
+                    }
+                }
+
+                stage('Security Scan') {
+                    steps {
+                        container('maven') {
+                            sh '''
+                                mvn org.owasp:dependency-check-maven:check \
+                                    -Dformat=XML \
+                                    -DoutputDirectory=security-reports
+                            '''
+                        }
+                    }
+                }
+
+                stage('License Compliance') {
+                    steps {
+                        container('maven') {
+                            sh '''
+                                mvn license:check
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Unit & Integration Tests') {
+            steps {
+                container('maven') {
+                    sh '''
+                        # Run unit tests with coverage
+                        mvn test jacoco:report
+
+                        # Run integration tests
+                        mvn verify -Dspring.profiles.active=test
+
+                        # Generate test reports
+                        mvn surefire-report:report
+                    '''
+                }
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                    jacoco execPattern: 'target/jacoco.exec'
+                    publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
+                }
+            }
+        }
+
+        stage('Performance Tests') {
+            when {
+                expression { params.RUN_PERFORMANCE_TESTS }
+            }
+            steps {
+                container('maven') {
+                    sh '''
+                        mvn gatling:test -Dgatling.simulationClass=UserServiceSimulation
+                    '''
+                }
+            }
+            post {
+                always {
+                    gatlingArchive()
+                }
+            }
+        }
+
+        stage('Build & Package') {
+            steps {
+                container('maven') {
+                    sh '''
+                        # Build application
+                        mvn clean package -DskipTests
+
+                        # Create Docker image
+                        docker build -t $DOCKER_IMAGE \
+                            --build-arg JAR_FILE=target/user-service-*.jar \
+                            --label version=$BUILD_VERSION \
+                            --label git_commit=$GIT_COMMIT \
+                            --label build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+                            .
+                    '''
+                }
+
+                container('docker') {
+                    sh '''
+                        # Push to registry
+                        docker push $DOCKER_IMAGE
+
+                        # Create and push manifest for multi-arch support
+                        docker manifest create $DOCKER_IMAGE \
+                            $DOCKER_IMAGE-amd64 \
+                            $DOCKER_IMAGE-arm64
+                        docker manifest push $DOCKER_IMAGE
+                    '''
+                }
+            }
+        }
+
+        stage('Artifact Management') {
+            steps {
+                script {
+                    // Upload artifacts to Nexus/Artifactory
+                    container('maven') {
+                        sh '''
+                            mvn deploy \
+                                -DrepositoryId=nexus \
+                                -Durl=http://nexus.example.com/repository/maven-releases \
+                                -Dusername=$NEXUS_CREDENTIALS_USR \
+                                -Dpassword=$NEXUS_CREDENTIALS_PSW
+                        '''
+                    }
+
+                    // Store build metadata
+                    writeFile file: 'build-metadata.json', text: """
+                    {
+                        "version": "${BUILD_VERSION}",
+                        "git_commit": "${GIT_COMMIT}",
+                        "build_number": "${BUILD_NUMBER}",
+                        "docker_image": "${DOCKER_IMAGE}",
+                        "environment": "${params.ENVIRONMENT}",
+                        "build_timestamp": "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+                    }
+                    """
+
+                    archiveArtifacts artifacts: 'build-metadata.json', fingerprint: true
+                }
+            }
+        }
+
+        stage('Deploy to Dev') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    expression { params.ENVIRONMENT == 'dev' }
+                }
+            }
+            steps {
+                container('kubectl') {
+                    sh '''
+                        # Update deployment
+                        sed -i "s|image:.*|image: $DOCKER_IMAGE|g" k8s/deployment.yaml
+                        kubectl apply -f k8s/deployment.yaml -n dev
+
+                        # Wait for rollout
+                        kubectl rollout status deployment/user-service -n dev --timeout=300s
+
+                        # Run smoke tests
+                        kubectl run smoke-test --image=curlimages/curl --rm -i --restart=Never \
+                            -- curl -f http://user-service.dev.svc.cluster.local/health
+                    '''
+                }
+            }
+        }
+
+        stage('Integration Tests') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    expression { params.ENVIRONMENT == 'dev' }
+                }
+            }
+            steps {
+                container('maven') {
+                    sh '''
+                        # Run API integration tests against deployed service
+                        mvn test -Dtest=IntegrationTest \
+                            -Dbase.url=http://user-service.dev.svc.cluster.local
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to Staging') {
+            when {
+                anyOf {
+                    branch 'main'
+                    expression { params.ENVIRONMENT == 'staging' }
+                }
+            }
+            steps {
+                container('kubectl') {
+                    script {
+                        // Blue-green deployment
+                        env.GREEN_TAG = "${BUILD_VERSION}-green"
+                        env.BLUE_TAG = "${BUILD_VERSION}-blue"
+
+                        sh '''
+                            # Deploy green version
+                            sed -i "s|image:.*|image: $DOCKER_IMAGE|g" k8s/deployment-green.yaml
+                            sed -i "s|version:.*|version: $GREEN_TAG|g" k8s/deployment-green.yaml
+                            kubectl apply -f k8s/deployment-green.yaml -n staging
+
+                            # Wait for green deployment
+                            kubectl rollout status deployment/user-service-green -n staging --timeout=300s
+
+                            # Run health checks
+                            kubectl run health-check --image=curlimages/curl --rm -i --restart=Never \
+                                -- curl -f http://user-service-green.staging.svc.cluster.local/health
+
+                            # Switch traffic to green
+                            kubectl patch service user-service -n staging \
+                                -p '{"spec":{"selector":{"version":"'$GREEN_TAG'"}}}'
+
+                            # Wait for traffic switch
+                            sleep 30
+
+                            # Remove blue deployment
+                            kubectl delete deployment user-service-blue -n staging
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Production Deployment') {
+            when {
+                allOf {
+                    expression { params.DEPLOY_TO_PROD }
+                    expression { params.ENVIRONMENT == 'production' }
+                    anyOf {
+                        branch 'main'
+                        tag pattern: "v.*", comparator: "REGEXP"
+                    }
+                }
+            }
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    input message: 'Deploy to Production?', ok: 'Deploy'
+                }
+
+                container('kubectl') {
+                    script {
+                        // Canary deployment for production
+                        sh '''
+                            # Deploy canary version (10% traffic)
+                            sed -i "s|image:.*|image: $DOCKER_IMAGE|g" k8s/canary-deployment.yaml
+                            kubectl apply -f k8s/canary-deployment.yaml -n production
+
+                            # Monitor canary
+                            kubectl run canary-monitor --image=monitoring/canary-monitor \
+                                --env="SERVICE_URL=http://user-service.production.svc.cluster.local" \
+                                --rm -i --restart=Never
+
+                            # If successful, scale to 100%
+                            kubectl scale deployment user-service-canary -n production --replicas=10
+                            kubectl delete deployment user-service-stable -n production
+                            kubectl apply -f k8s/stable-deployment.yaml -n production
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Post-Deployment Validation') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                        # Run comprehensive validation
+                        ./scripts/post-deployment-validation.sh
+
+                        # Generate deployment report
+                        ./scripts/generate-deployment-report.sh > deployment-report.json
+                    '''
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'deployment-report.json', fingerprint: true
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                // Cleanup
+                container('docker') {
+                    sh 'docker system prune -f'
+                }
+
+                // Send notifications
+                def status = currentBuild.currentResult
+                def color = status == 'SUCCESS' ? 'good' : 'danger'
+
+                slackSend(
+                    channel: '#ci-cd',
+                    color: color,
+                    message: """
+                    Pipeline ${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}
+                    Version: ${BUILD_VERSION}
+                    Environment: ${params.ENVIRONMENT}
+                    Duration: ${currentBuild.durationString}
+                    URL: ${env.BUILD_URL}
+                    """.stripIndent()
+                )
+            }
+        }
+
+        success {
+            script {
+                // Update deployment status
+                updateGitlabCommitStatus name: 'build', state: 'success'
+
+                // Tag successful build
+                if (env.BRANCH_NAME == 'main') {
+                    sh "git tag -a v${BUILD_VERSION} -m 'Release ${BUILD_VERSION}'"
+                    sh 'git push --tags'
+                }
+            }
+        }
+
+        failure {
+            script {
+                updateGitlabCommitStatus name: 'build', state: 'failed'
+
+                // Collect failure artifacts
+                archiveArtifacts artifacts: '**/target/surefire-reports/*.txt', allowEmptyArchive: true
+                archiveArtifacts artifacts: '**/target/site/jacoco/**', allowEmptyArchive: true
+            }
+        }
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">2</div>
+                            <h3 class="question-title">Infrastructure as Code with Terraform</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Infrastructure</span>
+                            <span class="question-badge">Terraform</span>
+                            <span class="question-badge">Cloud</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design and implement infrastructure as code solutions using Terraform for multi-cloud, multi-environment deployments.</p>
+
+                            <div class="highlight-box success">
+                                <div class="highlight-header">
+                                    <i class="fas fa-cloud highlight-icon"></i>
+                                    <strong>Terraform Best Practices:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Modular Design:</strong> Reusable modules for common infrastructure patterns</li>
+                                    <li><strong>State Management:</strong> Remote state with locking and versioning</li>
+                                    <li><strong>Workspaces:</strong> Environment isolation without code duplication</li>
+                                    <li><strong>Testing:</strong> Validate configurations and plan changes</li>
+                                    <li><strong>Security:</strong> Least privilege access and secret management</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="hcl" data-title="Advanced Terraform Infrastructure">
+// Advanced Terraform Infrastructure as Code
+// Multi-environment, multi-cloud deployment
+
+terraform {
+  required_version = ">= 1.0.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 4.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.0"
+    }
+  }
+
+  backend "s3" {
+    bucket         = "terraform-state-bucket"
+    key            = "infrastructure/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+    kms_key_id     = "alias/terraform-state-key"
+  }
+}
+
+locals {
+  environment = terraform.workspace
+  common_tags = {
+    Environment = local.environment
+    Project     = "microservices-platform"
+    ManagedBy   = "Terraform"
+    Owner       = "DevOps Team"
+  }
+
+  // Environment-specific configurations
+  env_config = {
+    dev = {
+      instance_count = 2
+      instance_type  = "t3.medium"
+      enable_monitoring = false
+    }
+    staging = {
+      instance_count = 3
+      instance_type  = "t3.large"
+      enable_monitoring = true
+    }
+    production = {
+      instance_count = 6
+      instance_type  = "t3.xlarge"
+      enable_monitoring = true
+    }
+  }
+
+  config = local.env_config[local.environment]
+}
+
+// AWS Provider
+provider "aws" {
+  region = var.aws_region
+
+  assume_role {
+    role_arn = "arn:aws:iam::${var.aws_account_id}:role/TerraformExecutionRole"
+  }
+
+  default_tags {
+    tags = local.common_tags
+  }
+}
+
+// Google Cloud Provider
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+
+  impersonate_service_account = var.gcp_service_account
+}
+
+// Data sources
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+data "google_client_config" "default" {}
+
+data "terraform_remote_state" "networking" {
+  backend = "s3"
+  config = {
+    bucket = "terraform-state-bucket"
+    key    = "networking/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+// VPC and Networking Module
+module "vpc" {
+  source = "./modules/vpc"
+
+  environment         = local.environment
+  vpc_cidr           = var.vpc_cidr
+  availability_zones = var.availability_zones
+  public_subnets     = var.public_subnets
+  private_subnets    = var.private_subnets
+  database_subnets   = var.database_subnets
+
+  enable_nat_gateway = true
+  single_nat_gateway = local.environment == "dev"
+
+  tags = local.common_tags
+}
+
+// Security Groups
+resource "aws_security_group" "application" {
+  name_prefix = "app-sg-${local.environment}"
+  vpc_id      = module.vpc.vpc_id
+
+  dynamic "ingress" {
+    for_each = var.application_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = [module.vpc.vpc_cidr_block]
+      description = "Application port ${ingress.value}"
+    }
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(local.common_tags, {
+    Name = "application-sg-${local.environment}"
+  })
+}
+
+// Application Load Balancer
+resource "aws_lb" "application" {
+  name               = "app-alb-${local.environment}"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = module.vpc.public_subnets
+
+  enable_deletion_protection = local.environment == "production"
+
+  tags = local.common_tags
+}
+
+resource "aws_lb_target_group" "application" {
+  name        = "app-tg-${local.environment}"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = module.vpc.vpc_id
+  target_type = "ip"
+
+  health_check {
+    enabled             = true
+    healthy_threshold   = 2
+    interval            = 30
+    matcher             = "200"
+    path                = "/health"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+  }
+
+  tags = local.common_tags
+}
+
+resource "aws_lb_listener" "application" {
+  load_balancer_arn = aws_lb.application.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.application.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.application.arn
+  }
+}
+
+// ECS Cluster and Services
+module "ecs" {
+  source = "./modules/ecs"
+
+  environment     = local.environment
+  cluster_name    = "microservices-${local.environment}"
+  vpc_id         = module.vpc.vpc_id
+  subnet_ids     = module.vpc.private_subnets
+  instance_count = local.config.instance_count
+  instance_type  = local.config.instance_type
+
+  services = {
+    "user-service" = {
+      cpu    = 512
+      memory = 1024
+      image  = var.user_service_image
+      port   = 8080
+    }
+    "order-service" = {
+      cpu    = 256
+      memory = 512
+      image  = var.order_service_image
+      port   = 8081
+    }
+    "payment-service" = {
+      cpu    = 256
+      memory = 512
+      image  = var.payment_service_image
+      port   = 8082
+    }
+  }
+
+  target_group_arn = aws_lb_target_group.application.arn
+
+  tags = local.common_tags
+}
+
+// RDS Database
+module "rds" {
+  source = "./modules/rds"
+
+  environment          = local.environment
+  identifier          = "microservices-${local.environment}"
+  engine              = "postgres"
+  engine_version      = "14.2"
+  instance_class      = "db.t3.medium"
+  allocated_storage   = 20
+  max_allocated_storage = 100
+
+  db_name  = var.database_name
+  username = var.database_username
+  password = var.database_password
+
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.database_subnets
+  security_group_ids = [aws_security_group.database.id]
+
+  backup_retention_period = local.environment == "production" ? 30 : 7
+  multi_az               = local.environment == "production"
+  deletion_protection    = local.environment == "production"
+
+  tags = local.common_tags
+}
+
+// Redis Cache
+module "redis" {
+  source = "./modules/redis"
+
+  environment       = local.environment
+  cluster_id        = "cache-${local.environment}"
+  node_type         = "cache.t3.micro"
+  num_cache_nodes   = 1
+
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.database_subnets
+  security_group_ids = [aws_security_group.redis.id]
+
+  tags = local.common_tags
+}
+
+// Monitoring and Logging
+module "monitoring" {
+  source = "./modules/monitoring"
+
+  environment = local.environment
+  enable_detailed_monitoring = local.config.enable_monitoring
+
+  # CloudWatch Alarms
+  alarms = {
+    "high_cpu" = {
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = "2"
+      metric_name         = "CPUUtilization"
+      namespace           = "AWS/ECS"
+      period              = "300"
+      statistic           = "Average"
+      threshold           = "80"
+      alarm_description   = "This metric monitors ecs cpu utilization"
+    }
+    "high_memory" = {
+      comparison_operator = "GreaterThanThreshold"
+      evaluation_periods  = "2"
+      metric_name         = "MemoryUtilization"
+      namespace           = "AWS/ECS"
+      period              = "300"
+      statistic           = "Average"
+      threshold           = "85"
+      alarm_description   = "This metric monitors ecs memory utilization"
+    }
+  }
+
+  tags = local.common_tags
+}
+
+// Kubernetes Resources (Multi-cloud)
+resource "google_container_cluster" "gke" {
+  count = var.enable_gcp ? 1 : 0
+
+  name     = "microservices-${local.environment}"
+  location = var.gcp_region
+
+  remove_default_node_pool = true
+  initial_node_count       = 1
+
+  network    = google_compute_network.vpc[0].name
+  subnetwork = google_compute_subnetwork.subnet[0].name
+
+  master_auth {
+    username = ""
+    password = ""
+
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
+}
+
+resource "kubernetes_namespace" "microservices" {
+  count = var.enable_gcp ? 1 : 0
+
+  metadata {
+    name = "microservices"
+  }
+}
+
+// CI/CD Integration
+resource "aws_codepipeline" "application" {
+  name     = "microservices-pipeline-${local.environment}"
+  role_arn = aws_iam_role.codepipeline.arn
+
+  artifact_store {
+    location = aws_s3_bucket.artifacts.bucket
+    type     = "S3"
+  }
+
+  stage {
+    name = "Source"
+
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeCommit"
+      version          = "1"
+      output_artifacts = ["source_output"]
+
+      configuration = {
+        RepositoryName = "microservices-repo"
+        BranchName     = local.environment == "production" ? "main" : "develop"
+      }
+    }
+  }
+
+  stage {
+    name = "Build"
+
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["build_output"]
+      version          = "1"
+
+      configuration = {
+        ProjectName = aws_codebuild_project.build.name
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      input_artifacts = ["build_output"]
+      version         = "1"
+
+      configuration = {
+        ClusterName = module.ecs.cluster_name
+        ServiceName = "user-service"
+        FileName    = "imagedefinitions.json"
+      }
+    }
+  }
+
+  tags = local.common_tags
+}
+
+// Outputs
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = module.vpc.vpc_id
+}
+
+output "alb_dns_name" {
+  description = "The DNS name of the load balancer"
+  value       = aws_lb.application.dns_name
+}
+
+output "rds_endpoint" {
+  description = "The endpoint of the RDS instance"
+  value       = module.rds.db_instance_endpoint
+  sensitive   = true
+}
+
+output "redis_endpoint" {
+  description = "The endpoint of the Redis cluster"
+  value       = module.redis.redis_endpoint
+}
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">3</div>
+                            <h3 class="question-title">Docker & Container Orchestration</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Containers</span>
+                            <span class="question-badge">Kubernetes</span>
+                            <span class="question-badge">Docker</span>
+                        </div>
+                        <div class="question-content">
+                            <p>Design containerized applications and orchestration strategies for production environments.</p>
+
+                            <div class="highlight-box warning">
+                                <div class="highlight-header">
+                                    <i class="fas fa-docker highlight-icon"></i>
+                                    <strong>Container Best Practices:</strong>
+                                </div>
+                                <ul>
+                                    <li><strong>Security:</strong> Non-root users, minimal base images, vulnerability scanning</li>
+                                    <li><strong>Performance:</strong> Multi-stage builds, layer caching, resource limits</li>
+                                    <li><strong>Reliability:</strong> Health checks, graceful shutdown, proper logging</li>
+                                    <li><strong>Observability:</strong> Structured logging, metrics, distributed tracing</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="code-toggle-btn">
+                            <i class="fas fa-code"></i> View Code Example
+                        </button>
+
+                        <div class="code-block" data-lang="yaml" data-title="Kubernetes Production Deployment">
+# Production-Ready Kubernetes Deployment
+# Multi-service microservices platform
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microservices-prod
+  labels:
+    name: microservices-prod
+    environment: production
+
+---
+# ConfigMaps for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: microservices-prod
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  LOG_LEVEL: "INFO"
+  DB_HOST: "postgresql.microservices-prod.svc.cluster.local"
+  REDIS_HOST: "redis.microservices-prod.svc.cluster.local"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka.microservices-prod.svc.cluster.local:9092"
+
+---
+# Secrets for sensitive data
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  namespace: microservices-prod
+type: Opaque
+data:
+  db-password: <base64-encoded-password>
+  jwt-secret: <base64-encoded-secret>
+  api-keys: <base64-encoded-keys>
+
+---
+# Service Account with minimal permissions
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice-sa
+  namespace: microservices-prod
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/microservice-role
+
+---
+# Network Policies for security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: microservice-network-policy
+  namespace: microservices-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: microservice
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8080
+  - from:
+    - podSelector:
+        matchLabels:
+          app: microservice
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  - to:
+    - podSelector:
+        matchLabels:
+          app: kafka
+    ports:
+    - protocol: TCP
+      port: 9092
+
+---
+# Pod Security Standards
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: microservice-psp
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+
+---
+# Deployment with advanced features
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: microservices-prod
+  labels:
+    app: user-service
+    version: v1.2.3
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+        version: v1.2.3
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/actuator/prometheus"
+    spec:
+      serviceAccountName: microservice-sa
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      containers:
+      - name: user-service
+        image: myregistry.com/user-service:v1.2.3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: SPRING_PROFILES_ACTIVE
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: db-password
+        envFrom:
+        - configMapRef:
+            name: app-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 30
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 15"]
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      nodeSelector:
+        environment: production
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: user-service
+              topologyKey: kubernetes.io/hostname
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "microservices"
+        effect: "NoSchedule"
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: user-service-hpa
+  namespace: microservices-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: user-service
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Pods
+    pods:
+      metric:
+        name: http_requests_per_second
+      target:
+        type: AverageValue
+        averageValue: 1000
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+      - type: Pods
+        value: 2
+        periodSeconds: 60
+
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: microservices-prod
+  labels:
+    app: user-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: user-service
+
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user-service-ingress
+  namespace: microservices-prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.example.com
+    secretName: user-service-tls
+  rules:
+  - host: api.example.com
+    http:
+      paths:
+      - path: /api/users
+        pathType: Prefix
+        backend:
+          service:
+            name: user-service
+            port:
+              number: 8080
+
+---
+# Certificate for HTTPS
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: user-service-tls
+  namespace: microservices-prod
+spec:
+  secretName: user-service-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - api.example.com
+
+---
+# Prometheus ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: user-service-monitor
+  namespace: microservices-prod
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  endpoints:
+  - port: http
+    path: /actuator/prometheus
+    interval: 30s
+    scrapeTimeout: 10s
+
+---
+# ConfigMap for Prometheus rules
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: monitoring
+data:
+  user-service.rules: |
+    groups:
+    - name: user-service
+      rules:
+      - alert: UserServiceDown
+        expr: up{job="user-service"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "User Service is down"
+          description: "User Service has been down for more than 5 minutes."
+
+      - alert: UserServiceHighErrorRate
+        expr: rate(http_requests_total{job="user-service", status=~"5.."}[5m]) / rate(http_requests_total{job="user-service"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate on User Service"
+          description: "User Service error rate is {{ $value }}%."
+
+      - alert: UserServiceHighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="user-service"}[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency on User Service"
+          description: "95th percentile latency is {{ $value }}s."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

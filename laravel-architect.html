@@ -1,0 +1,2677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Laravel Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Modern Color Palette */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+
+            /* Brand Colors */
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #8b5cf6;
+            --secondary-color: #f59e0b;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+
+            /* Neutral Colors */
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+
+            /* Background Colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-dark: #0f172a;
+            --bg-code: #1e293b;
+
+            /* Text Colors */
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --text-inverse: #ffffff;
+            --text-muted: #94a3b8;
+
+            /* Border & Shadow */
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+            /* Spacing & Radius */
+            --radius-sm: 6px;
+            --radius: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            color: var(--text-primary);
+            background:
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+
+        .nav-container.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5em;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: var(--radius-full);
+            transition: all var(--transition-fast);
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-full);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all var(--transition-fast);
+        }
+
+        .nav-link:hover::before {
+            opacity: 0.1;
+            transform: scale(1);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .back-button {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left var(--transition-normal);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 96px auto 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background:
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%),
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.4) 0%, transparent 50%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            opacity: 0.95;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: clamp(20px, 4vw, 60px);
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 120px;
+            transition: all var(--transition-fast);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            display: block;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .section-icon {
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        /* Question Cards */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .question-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .question-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--primary-gradient);
+            opacity: 0;
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-slow);
+            transform: rotate(45deg) scale(0.5);
+            z-index: -1;
+        }
+
+        .question-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .question-card:hover::after {
+            opacity: 0.03;
+            transform: rotate(45deg) scale(1);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .question-number {
+            background: var(--primary-gradient);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2em;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-number::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .question-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin: 0;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .question-badge {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .question-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .question-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-size: 1.05em;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--dark-bg);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid #2d3748;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-title {
+            color: #a0aec0;
+            font-size: 0.9em;
+        }
+
+        .copy-button {
+            background: #404040;
+            color: #a0aec0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: #505050;
+            color: white;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
+            padding: 25px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--warning-color);
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .highlight-box.success {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-left-color: var(--success-color);
+        }
+
+        .highlight-box.info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: var(--accent-color);
+        }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
+            border-left-color: var(--warning-color);
+        }
+
+        .highlight-box.danger {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left-color: var(--danger-color);
+        }
+
+        .highlight-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .highlight-icon {
+            font-size: 1.2em;
+        }
+
+        /* Real World Examples */
+        .example-section {
+            background: #f8f9fa;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 25px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .example-icon {
+            color: var(--success-color);
+            font-size: 1.5em;
+        }
+
+        .example-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .example-scenario {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .question-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                padding: 0 15px;
+            }
+
+            .hero-section {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .question-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2em;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e55a2b;
+        }
+
+        /* Focus States */
+        .question-card:focus-within,
+        .code-block:focus-within {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Modal System */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+                rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--primary-gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: headerShine 4s ease-in-out infinite;
+        }
+
+        @keyframes headerShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.8em;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-full);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-body {
+            padding: 32px;
+            max-height: calc(95vh - 140px);
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .code-modal-content {
+            background: var(--bg-code);
+            color: #e2e8f0;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            font-family: var(--font-mono);
+            font-size: 0.95em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-modal-content::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .code-actions {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .code-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .code-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Code Block Buttons */
+        .code-toggle-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95em;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .code-toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left var(--transition-normal);
+        }
+
+        .code-toggle-btn:hover::before {
+            left: 100%;
+        }
+
+        .code-toggle-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .code-toggle-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .code-toggle-btn i {
+            font-size: 1.1em;
+            transition: all var(--transition-fast);
+        }
+
+        .code-toggle-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Hide original code blocks */
+        .code-block {
+            display: none;
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav-container,
+            .back-button,
+            .code-toggle-btn,
+            .modal {
+                display: none !important;
+            }
+
+            .main-container {
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .question-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            /* Show code blocks in print */
+            .code-block {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#performance" class="nav-link">Performance</a>
+                <a href="#fullstack" class="nav-link">Full Stack</a>
+                <a href="#leadership" class="nav-link">Leadership</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🎯 Laravel Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master Laravel at the Architect Level - Full Stack Development, Performance & Scalability
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Real Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Code Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Architect Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modalCode" class="code-modal-content" data-lang="php"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Stack Development Section -->
+            <section class="section" id="fullstack">
+                <div class="section-header">
+                    <i class="fas fa-layer-group section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🚀 Full Stack Development Questions</h2>
+                        <p class="section-description">Advanced questions for senior full stack developers and technical leads</p>
+                    </div>
+                </div>
+
+                <div class="question-grid">
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">1</div>
+                            <h3 class="question-title">Microservices API Design & Communication</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Full Stack</span>
+                            <span class="question-badge">Microservices</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you design APIs for a microservices architecture with proper service communication, versioning, and documentation?</p>
+
+                            <div class="highlight-box warning">
+                                <div class="highlight-header">
+                                    <i class="fas fa-exclamation-triangle highlight-icon"></i>
+                                    <strong>Common Pitfalls:</strong>
+                                </div>
+                                <ul>
+                                    <li>Tight coupling between services</li>
+                                    <li>Inconsistent API versioning</li>
+                                    <li>Missing contract testing</li>
+                                    <li>Poor error handling</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-lang="php" data-title="Advanced Service Container Implementation">
+&lt;?php
+
+// Advanced API Resource with HATEOAS and Content Negotiation
+class ApiResource
+{
+    protected $resource;
+    protected $request;
+    protected $includes = [];
+    protected $fields = [];
+
+    public function __construct($resource, Request $request)
+    {
+        $this->resource = $resource;
+        $this->request = $request;
+        $this->parseQueryParameters();
+    }
+
+    protected function parseQueryParameters(): void
+    {
+        // Parse includes: ?include=author,comments
+        $this->includes = explode(',', $this->request->get('include', ''));
+
+        // Parse fields: ?fields[posts]=title,content&fields[users]=name,email
+        $this->fields = $this->request->get('fields', []);
+    }
+
+    public function toArray(): array
+    {
+        $data = $this->transformResource();
+
+        // Add relationships if requested
+        if (in_array('relationships', $this->includes)) {
+            $data['relationships'] = $this->getRelationships();
+        }
+
+        // Add links (HATEOAS)
+        $data['links'] = $this->getLinks();
+
+        // Filter fields if specified
+        if (!empty($this->fields)) {
+            $resourceType = $this->getResourceType();
+            if (isset($this->fields[$resourceType])) {
+                $allowedFields = array_merge(
+                    ['id', 'type'], // Always include
+                    explode(',', $this->fields[$resourceType])
+                );
+                $data = array_intersect_key($data, array_flip($allowedFields));
+            }
+        }
+
+        return $data;
+    }
+
+    protected function transformResource()
+    {
+        // Base transformation - override in subclasses
+        return [
+            'id' => $this->resource->id,
+            'type' => $this->getResourceType(),
+            'attributes' => $this->getAttributes(),
+        ];
+    }
+
+    protected function getAttributes(): array
+    {
+        // Override in subclasses to return resource attributes
+        return [];
+    }
+
+    protected function getResourceType(): string
+    {
+        // Override in subclasses
+        return 'resource';
+    }
+
+    protected function getRelationships(): array
+    {
+        // Override to define relationships
+        return [];
+    }
+
+    protected function getLinks(): array
+    {
+        $type = $this->getResourceType();
+        $id = $this->resource->id;
+
+        return [
+            'self' => route("api.{$type}.show", $id),
+            'collection' => route("api.{$type}.index"),
+        ];
+    }
+
+    public function with($relationships): self
+    {
+        $this->includes = array_merge($this->includes, (array) $relationships);
+        return $this;
+    }
+
+    public function fields($fields): self
+    {
+        $this->fields = array_merge($this->fields, $fields);
+        return $this;
+    }
+}
+
+// API Versioning Strategy
+abstract class VersionedController extends Controller
+{
+    protected string $apiVersion = 'v1';
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            // Set API version from header or URL
+            $this->apiVersion = $this->determineApiVersion($request);
+            return $next($request);
+        });
+    }
+
+    protected function determineApiVersion(Request $request): string
+    {
+        // Check Accept header: application/vnd.api.v2+json
+        $accept = $request->header('Accept');
+        if (preg_match('/application\/vnd\.api\.(\w+)\+json/', $accept, $matches)) {
+            return $matches[1];
+        }
+
+        // Check URL prefix: /api/v2/...
+        $path = $request->path();
+        if (preg_match('#^api/(v\d+)/#', $path, $matches)) {
+            return $matches[1];
+        }
+
+        return 'v1'; // default
+    }
+
+    protected function getTransformerClass(): string
+    {
+        $resource = $this->getResourceName();
+        return "App\\Http\\Resources\\{$this->apiVersion}\\{$resource}Resource";
+    }
+
+    protected function transform($resource, $includes = [])
+    {
+        $transformerClass = $this->getTransformerClass();
+
+        if (!class_exists($transformerClass)) {
+            // Fallback to v1 if version doesn't exist
+            $transformerClass = str_replace($this->apiVersion, 'v1', $transformerClass);
+        }
+
+        return new $transformerClass($resource, $includes);
+    }
+
+    abstract protected function getResourceName(): string;
+}
+
+// Service Communication with Circuit Breaker
+class ServiceClient
+{
+    protected HttpClient $httpClient;
+    protected CircuitBreaker $circuitBreaker;
+    protected array $serviceConfig;
+
+    public function __construct(string $serviceName)
+    {
+        $this->serviceConfig = config("services.{$serviceName}");
+        $this->circuitBreaker = new CircuitBreaker(
+            $serviceName,
+            $this->serviceConfig['circuit_breaker'] ?? []
+        );
+        $this->httpClient = $this->createHttpClient();
+    }
+
+    protected function createHttpClient(): HttpClient
+    {
+        return HttpClient::create()
+            ->withOptions([
+                'base_uri' => $this->serviceConfig['base_url'],
+                'timeout' => $this->serviceConfig['timeout'] ?? 30,
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                    'X-API-Key' => $this->serviceConfig['api_key'] ?? null,
+                ]
+            ]);
+    }
+
+    protected function call(string $method, string $endpoint, array $options = [])
+    {
+        return $this->circuitBreaker->call(function () use ($method, $endpoint, $options) {
+            $response = $this->httpClient->request($method, $endpoint, $options);
+
+            if ($response->getStatusCode() >= 500) {
+                throw new ServiceUnavailableException("Service returned {$response->getStatusCode()}");
+            }
+
+            return json_decode($response->getContent(), true);
+        });
+    }
+
+    public function get(string $endpoint, array $query = []): array
+    {
+        return $this->call('GET', $endpoint, ['query' => $query]);
+    }
+
+    public function post(string $endpoint, array $data = []): array
+    {
+        return $this->call('POST', $endpoint, ['json' => $data]);
+    }
+
+    public function put(string $endpoint, array $data = []): array
+    {
+        return $this->call('PUT', $endpoint, ['json' => $data]);
+    }
+
+    public function delete(string $endpoint): array
+    {
+        return $this->call('DELETE', $endpoint);
+    }
+}
+
+// Event-Driven Communication
+class EventPublisher
+{
+    protected Queue $queue;
+    protected Serializer $serializer;
+
+    public function __construct(Queue $queue, Serializer $serializer)
+    {
+        $this->queue = $queue;
+        $this->serializer = $serializer;
+    }
+
+    public function publish(DomainEvent $event, string $exchange = null): void
+    {
+        $routingKey = $this->getRoutingKey($event);
+        $exchange = $exchange ?? $this->getExchange($event);
+
+        $message = [
+            'event_id' => $event->getEventId(),
+            'event_type' => get_class($event),
+            'aggregate_id' => $event->getAggregateId(),
+            'aggregate_type' => $event->getAggregateType(),
+            'occurred_at' => $event->occurredAt()->format('c'),
+            'payload' => $this->serializer->serialize($event->getPayload()),
+            'metadata' => $event->getMetadata()
+        ];
+
+        $this->queue->publish(
+            json_encode($message),
+            $exchange,
+            $routingKey,
+            [
+                'content_type' => 'application/json',
+                'message_id' => $event->getEventId(),
+                'timestamp' => $event->occurredAt()->getTimestamp()
+            ]
+        );
+    }
+
+    protected function getRoutingKey(DomainEvent $event): string
+    {
+        return strtolower(str_replace('\\', '.', get_class($event)));
+    }
+
+    protected function getExchange(DomainEvent $event): string
+    {
+        return 'domain_events';
+    }
+}
+
+// API Documentation with OpenAPI
+class OpenApiSpec
+{
+    protected array $spec = [];
+
+    public function __construct(string $title, string $version)
+    {
+        $this->spec = [
+            'openapi' => '3.0.3',
+            'info' => [
+                'title' => $title,
+                'version' => $version,
+                'description' => 'API for ' . $title
+            ],
+            'servers' => [
+                ['url' => config('app.url') . '/api/v1']
+            ],
+            'paths' => [],
+            'components' => [
+                'schemas' => [],
+                'securitySchemes' => [
+                    'bearerAuth' => [
+                        'type' => 'http',
+                        'scheme' => 'bearer',
+                        'bearerFormat' => 'JWT'
+                    ]
+                ]
+            ],
+            'security' => [
+                ['bearerAuth' => []]
+            ]
+        ];
+    }
+
+    public function addPath(string $path, array $operations): self
+    {
+        $this->spec['paths'][$path] = $operations;
+        return $this;
+    }
+
+    public function addSchema(string $name, array $schema): self
+    {
+        $this->spec['components']['schemas'][$name] = $schema;
+        return $this;
+    }
+
+    public function toArray(): array
+    {
+        return $this->spec;
+    }
+
+    public function toJson(): string
+    {
+        return json_encode($this->spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    }
+}
+
+// Contract Testing
+class ContractTest
+{
+    protected ServiceClient $serviceClient;
+    protected array $contracts = [];
+
+    public function testContract(string $serviceName, string $endpoint, array $contract): bool
+    {
+        try {
+            $response = $this->serviceClient->get($endpoint);
+
+            // Validate response structure
+            return $this->validateResponse($response, $contract['response']);
+        } catch (Exception $e) {
+            // Log contract violation
+            Log::error("Contract violation for {$serviceName}:{$endpoint}", [
+                'error' => $e->getMessage(),
+                'contract' => $contract
+            ]);
+            return false;
+        }
+    }
+
+    protected function validateResponse(array $response, array $schema): bool
+    {
+        // Simple schema validation
+        foreach ($schema as $field => $rules) {
+            if (!isset($response[$field])) {
+                if (!isset($rules['optional']) || !$rules['optional']) {
+                    return false;
+                }
+                continue;
+            }
+
+            if (isset($rules['type']) && gettype($response[$field]) !== $rules['type']) {
+                return false;
+            }
+
+            if (isset($rules['enum']) && !in_array($response[$field], $rules['enum'])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+?&gt;
+                        </div>
+
+                        <div class="example-section">
+                            <div class="example-header">
+                                <i class="fas fa-project-diagram example-icon"></i>
+                                <h4 class="example-title">Real-World Implementation: E-Commerce API Gateway</h4>
+                            </div>
+
+                            <div class="example-scenario">
+                                <div class="scenario-title">Scenario: Multi-Service API Orchestration</div>
+                                <p><strong>Challenge:</strong> Coordinate between Product, Inventory, Order, and Payment services while maintaining data consistency and providing unified API responses.</p>
+
+                                <div class="code-block" data-lang="php" data-title="Advanced Service Container Implementation">
+&lt;?php
+
+class ProductController extends VersionedController
+{
+    protected function getResourceName(): string
+    {
+        return 'Product';
+    }
+
+    public function show(Request $request, $productId)
+    {
+        // Get product from Product service
+        $productService = new ServiceClient('product-service');
+        $product = $productService->get("/products/{$productId}");
+
+        // Get inventory from Inventory service
+        $inventoryService = new ServiceClient('inventory-service');
+        $inventory = $inventoryService->get("/products/{$productId}/inventory");
+
+        // Combine data
+        $product['inventory'] = $inventory;
+
+        // Transform with API versioning
+        $resource = $this->transform($product, $request->get('include', []));
+
+        return response()->json($resource);
+    }
+
+    public function purchase(Request $request, $productId)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Reserve inventory
+            $inventoryService = new ServiceClient('inventory-service');
+            $reservation = $inventoryService->post("/products/{$productId}/reserve", [
+                'quantity' => $request->quantity,
+                'user_id' => auth()->id()
+            ]);
+
+            // Create order
+            $orderService = new ServiceClient('order-service');
+            $order = $orderService->post('/orders', [
+                'product_id' => $productId,
+                'quantity' => $request->quantity,
+                'user_id' => auth()->id(),
+                'reservation_id' => $reservation['id']
+            ]);
+
+            // Process payment
+            $paymentService = new ServiceClient('payment-service');
+            $payment = $paymentService->post('/payments', [
+                'order_id' => $order['id'],
+                'amount' => $order['total'],
+                'payment_method' => $request->payment_method
+            ]);
+
+            // Confirm order if payment successful
+            if ($payment['status'] === 'completed') {
+                $orderService->put("/orders/{$order['id']}/confirm");
+
+                // Publish order confirmed event
+                event(new OrderConfirmed($order['id']));
+
+                DB::commit();
+
+                return response()->json([
+                    'order' => $order,
+                    'payment' => $payment
+                ], 201);
+            } else {
+                // Cancel reservation and order
+                $inventoryService->delete("/reservations/{$reservation['id']}");
+                $orderService->delete("/orders/{$order['id']}");
+
+                DB::rollback();
+
+                return response()->json([
+                    'error' => 'Payment failed'
+                ], 400);
+            }
+
+        } catch (Exception $e) {
+            DB::rollback();
+
+            // Compensate any completed operations
+            $this->compensateFailedPurchase($productId, $request->quantity);
+
+            throw $e;
+        }
+    }
+
+    private function compensateFailedPurchase($productId, $quantity)
+    {
+        try {
+            $inventoryService = new ServiceClient('inventory-service');
+            $inventoryService->post("/products/{$productId}/release", [
+                'quantity' => $quantity,
+                'reason' => 'purchase_failed'
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to compensate inventory release', [
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+}
+
+// Event Sourcing for Order State
+class OrderAggregate
+{
+    private array $events = [];
+    private OrderState $state;
+
+    public function __construct(OrderState $initialState = null)
+    {
+        $this->state = $initialState ?? new OrderState();
+    }
+
+    public function create(CreateOrderCommand $command): void
+    {
+        $this->apply(new OrderCreated(
+            orderId: $command->orderId,
+            customerId: $command->customerId,
+            items: $command->items,
+            total: $command->total
+        ));
+    }
+
+    public function confirm(ConfirmOrderCommand $command): void
+    {
+        if (!$this->state->canBeConfirmed()) {
+            throw new DomainException('Order cannot be confirmed');
+        }
+
+        $this->apply(new OrderConfirmed(
+            orderId: $command->orderId,
+            confirmedAt: now()
+        ));
+    }
+
+    public function cancel(CancelOrderCommand $command): void
+    {
+        if (!$this->state->canBeCancelled()) {
+            throw new DomainException('Order cannot be cancelled');
+        }
+
+        $this->apply(new OrderCancelled(
+            orderId: $command->orderId,
+            reason: $command->reason,
+            cancelledAt: now()
+        ));
+    }
+
+    private function apply(DomainEvent $event): void
+    {
+        $this->events[] = $event;
+        $this->state = $this->state->apply($event);
+    }
+
+    public function getUncommittedEvents(): array
+    {
+        return $this->events;
+    }
+
+    public function markEventsAsCommitted(): void
+    {
+        $this->events = [];
+    }
+
+    public function getState(): OrderState
+    {
+        return $this->state;
+    }
+}
+
+class OrderState
+{
+    public string $status = 'pending';
+    public ?DateTime $createdAt = null;
+    public ?DateTime $confirmedAt = null;
+    public ?DateTime $cancelledAt = null;
+    public ?string $cancelReason = null;
+
+    public function apply(DomainEvent $event): self
+    {
+        $newState = clone $this;
+
+        switch (get_class($event)) {
+            case OrderCreated::class:
+                $newState->status = 'created';
+                $newState->createdAt = $event->occurredAt();
+                break;
+
+            case OrderConfirmed::class:
+                $newState->status = 'confirmed';
+                $newState->confirmedAt = $event->confirmedAt;
+                break;
+
+            case OrderCancelled::class:
+                $newState->status = 'cancelled';
+                $newState->cancelledAt = $event->cancelledAt;
+                $newState->cancelReason = $event->reason;
+                break;
+        }
+
+        return $newState;
+    }
+
+    public function canBeConfirmed(): bool
+    {
+        return $this->status === 'created';
+    }
+
+    public function canBeCancelled(): bool
+    {
+        return in_array($this->status, ['created', 'confirmed']);
+    }
+}
+
+// Saga Pattern for Distributed Transactions
+class OrderFulfillmentSaga
+{
+    private array $steps = [];
+    private EventPublisher $eventPublisher;
+
+    public function __construct(EventPublisher $eventPublisher)
+    {
+        $this->eventPublisher = $eventPublisher;
+    }
+
+    public function start(Order $order): void
+    {
+        // Step 1: Reserve inventory
+        $this->addStep('reserve_inventory', function() use ($order) {
+            $inventoryService = new ServiceClient('inventory-service');
+            return $inventoryService->post('/reserve', [
+                'order_id' => $order->id,
+                'items' => $order->items
+            ]);
+        }, function($reservation) {
+            // Compensation: Release inventory
+            $inventoryService = new ServiceClient('inventory-service');
+            $inventoryService->delete("/reservations/{$reservation['id']}");
+        });
+
+        // Step 2: Process payment
+        $this->addStep('process_payment', function() use ($order) {
+            $paymentService = new ServiceClient('payment-service');
+            return $paymentService->post('/charge', [
+                'order_id' => $order->id,
+                'amount' => $order->total,
+                'customer_id' => $order->customer_id
+            ]);
+        }, function($payment) {
+            // Compensation: Refund payment
+            $paymentService = new ServiceClient('payment-service');
+            $paymentService->post("/payments/{$payment['id']}/refund");
+        });
+
+        // Step 3: Ship order
+        $this->addStep('ship_order', function() use ($order) {
+            $shippingService = new ServiceClient('shipping-service');
+            return $shippingService->post('/shipments', [
+                'order_id' => $order->id,
+                'items' => $order->items,
+                'address' => $order->shipping_address
+            ]);
+        }, function($shipment) {
+            // Compensation: Cancel shipment
+            $shippingService = new ServiceClient('shipping-service');
+            $shippingService->delete("/shipments/{$shipment['id']}");
+        });
+
+        $this->execute();
+    }
+
+    private function addStep(string $name, callable $action, callable $compensation): void
+    {
+        $this->steps[$name] = [
+            'action' => $action,
+            'compensation' => $compensation,
+            'completed' => false,
+            'result' => null
+        ];
+    }
+
+    private function execute(): void
+    {
+        $completedSteps = [];
+
+        foreach ($this->steps as $stepName => $step) {
+            try {
+                $result = call_user_func($step['action']);
+                $step['completed'] = true;
+                $step['result'] = $result;
+                $completedSteps[] = $stepName;
+
+                $this->eventPublisher->publish(new StepCompleted($stepName, $result));
+
+            } catch (Exception $e) {
+                // Compensate completed steps in reverse order
+                $this->compensate($completedSteps);
+                $this->eventPublisher->publish(new SagaFailed($stepName, $e->getMessage()));
+                throw $e;
+            }
+        }
+
+        $this->eventPublisher->publish(new SagaCompleted($completedSteps));
+    }
+
+    private function compensate(array $completedSteps): void
+    {
+        $completedSteps = array_reverse($completedSteps);
+
+        foreach ($completedSteps as $stepName) {
+            try {
+                $step = $this->steps[$stepName];
+                if ($step['compensation'] && $step['result']) {
+                    call_user_func($step['compensation'], $step['result']);
+                }
+            } catch (Exception $e) {
+                Log::error("Compensation failed for step {$stepName}", [
+                    'error' => $e->getMessage()
+                ]);
+                // Continue compensating other steps
+            }
+        }
+    }
+}
+
+?&gt;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-card fade-in-up">
+                        <div class="question-header">
+                            <div class="question-number">2</div>
+                            <h3 class="question-title">Frontend Architecture & State Management</h3>
+                        </div>
+                        <div class="question-meta">
+                            <span class="question-badge">Full Stack</span>
+                            <span class="question-badge">Frontend</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                        <div class="question-content">
+                            <p>How do you design scalable frontend architecture with advanced state management, component patterns, and performance optimization?</p>
+
+                            <div class="highlight-box info">
+                                <div class="highlight-header">
+                                    <i class="fas fa-cogs highlight-icon"></i>
+                                    <strong>Architecture Decisions:</strong>
+                                </div>
+                                <ul>
+                                    <li>State management strategy</li>
+                                    <li>Component composition patterns</li>
+                                    <li>Performance optimization techniques</li>
+                                    <li>Testing strategies</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block" data-lang="javascript" data-title="Advanced React Architecture with TypeScript">
+// Advanced React Architecture with TypeScript
+
+// 1. Custom Hooks for Business Logic
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'moderator';
+}
+
+interface UseUsersOptions {
+  filters?: {
+    role?: User['role'];
+    search?: string;
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+  };
+}
+
+export function useUsers(options: UseUsersOptions = {}) {
+  const { filters = {}, pagination = { page: 1, limit: 10 } } = options;
+
+  const queryKey = useMemo(() => [
+    'users',
+    filters,
+    pagination
+  ], [filters, pagination]);
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey,
+    queryFn: () => fetchUsers(filters, pagination),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes
+  });
+
+  const updateUserMutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+
+  const deleteUserMutation = useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+
+  return {
+    users: data?.users ?? [],
+    total: data?.total ?? 0,
+    isLoading,
+    error,
+    refetch,
+    updateUser: updateUserMutation.mutate,
+    deleteUser: deleteUserMutation.mutate,
+    isUpdating: updateUserMutation.isLoading,
+    isDeleting: deleteUserMutation.isLoading,
+  };
+}
+
+// 2. Advanced State Management with Zustand
+import create from 'zustand';
+import { devtools, persist, combine } from 'zustand/middleware';
+
+interface AppState {
+  user: User | null;
+  theme: 'light' | 'dark';
+  sidebar: {
+    collapsed: boolean;
+    activeItem: string;
+  };
+  notifications: Notification[];
+}
+
+interface AppActions {
+  setUser: (user: User | null) => void;
+  toggleTheme: () => void;
+  toggleSidebar: () => void;
+  setActiveSidebarItem: (item: string) => void;
+  addNotification: (notification: Omit<Notification, 'id'>) => void;
+  removeNotification: (id: string) => void;
+  clearNotifications: () => void;
+}
+
+const initialState = {
+  user: null,
+  theme: 'light' as const,
+  sidebar: {
+    collapsed: false,
+    activeItem: 'dashboard',
+  },
+  notifications: [],
+};
+
+export const useAppStore = create<AppState & AppActions>()(
+  devtools(
+    persist(
+      combine(initialState, (set, get) => ({
+        setUser: (user) => set({ user }),
+
+        toggleTheme: () =>
+          set((state) => ({
+            theme: state.theme === 'light' ? 'dark' : 'light'
+          })),
+
+        toggleSidebar: () =>
+          set((state) => ({
+            sidebar: {
+              ...state.sidebar,
+              collapsed: !state.sidebar.collapsed
+            }
+          })),
+
+        setActiveSidebarItem: (item) =>
+          set((state) => ({
+            sidebar: {
+              ...state.sidebar,
+              activeItem: item
+            }
+          })),
+
+        addNotification: (notification) =>
+          set((state) => ({
+            notifications: [
+              ...state.notifications,
+              {
+                ...notification,
+                id: Date.now().toString(),
+                timestamp: new Date(),
+              }
+            ]
+          })),
+
+        removeNotification: (id) =>
+          set((state) => ({
+            notifications: state.notifications.filter(n => n.id !== id)
+          })),
+
+        clearNotifications: () =>
+          set({ notifications: [] }),
+      })),
+      {
+        name: 'app-storage',
+        partialize: (state) => ({
+          theme: state.theme,
+          sidebar: state.sidebar,
+        }),
+      }
+    ),
+    { name: 'app-store' }
+  )
+);
+
+// 3. Component Composition Patterns
+import React, { memo, useMemo } from 'react';
+
+// Higher-Order Component for Data Loading
+function withDataLoader<T extends {}>(
+  WrappedComponent: React.ComponentType<T & DataLoaderProps>,
+  dataLoader: () => Promise<any>
+) {
+  return memo((props: T) => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+      let isMounted = true;
+
+      const loadData = async () => {
+        try {
+          setLoading(true);
+          const result = await dataLoader();
+          if (isMounted) {
+            setData(result);
+            setError(null);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setError(err);
+          }
+        } finally {
+          if (isMounted) {
+            setLoading(false);
+          }
+        }
+      };
+
+      loadData();
+
+      return () => {
+        isMounted = false;
+      };
+    }, []);
+
+    return (
+      <WrappedComponent
+        {...props}
+        data={data}
+        loading={loading}
+        error={error}
+      />
+    );
+  });
+}
+
+// Render Props Pattern for Reusable Logic
+interface ToggleProps {
+  on: boolean;
+  toggle: () => void;
+}
+
+interface ToggleState {
+  on: boolean;
+  toggle: () => void;
+}
+
+class Toggle extends React.Component<
+  { children: (state: ToggleState) => React.ReactNode },
+  { on: boolean }
+> {
+  state = { on: false };
+
+  toggle = () => {
+    this.setState(prevState => ({ on: !prevState.on }));
+  };
+
+  render() {
+    return this.props.children({
+      on: this.state.on,
+      toggle: this.toggle,
+    });
+  }
+}
+
+// Compound Components Pattern
+interface TabsProps {
+  children: React.ReactNode;
+  defaultActive?: string;
+}
+
+interface TabContextValue {
+  activeTab: string;
+  setActiveTab: (id: string) => void;
+}
+
+const TabContext = React.createContext<TabContextValue | null>(null);
+
+export function Tabs({ children, defaultActive = '' }: TabsProps) {
+  const [activeTab, setActiveTab] = useState(defaultActive);
+
+  const value = useMemo(() => ({
+    activeTab,
+    setActiveTab,
+  }), [activeTab]);
+
+  return (
+    <TabContext.Provider value={value}>
+      <div className="tabs">{children}</div>
+    </TabContext.Provider>
+  );
+}
+
+export function TabList({ children }: { children: React.ReactNode }) {
+  return <div className="tab-list">{children}</div>;
+}
+
+export function Tab({ id, children }: { id: string; children: React.ReactNode }) {
+  const context = React.useContext(TabContext);
+
+  if (!context) {
+    throw new Error('Tab must be used within Tabs');
+  }
+
+  const isActive = context.activeTab === id;
+
+  return (
+    <button
+      className={`tab ${isActive ? 'active' : ''}`}
+      onClick={() => context.setActiveTab(id)}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function TabPanel({ id, children }: { id: string; children: React.ReactNode }) {
+  const context = React.useContext(TabContext);
+
+  if (!context) {
+    throw new Error('TabPanel must be used within Tabs');
+  }
+
+  if (context.activeTab !== id) {
+    return null;
+  }
+
+  return <div className="tab-panel">{children}</div>;
+}
+
+// 4. Performance Optimization Hooks
+import { useCallback, useRef, useEffect } from 'react';
+
+// Debounced callback hook
+export function useDebounce<T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+): T {
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const debouncedCallback = useCallback((...args: Parameters<T>) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  }, [callback, delay]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return debouncedCallback as T;
+}
+
+// Intersection Observer hook for lazy loading
+export function useIntersectionObserver(
+  ref: React.RefObject<Element>,
+  options: IntersectionObserverInit = {}
+) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      options
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.unobserve(element);
+    };
+  }, [ref, options]);
+
+  return isIntersecting;
+}
+
+// Virtual scrolling hook
+export function useVirtualScroll<T>({
+  items,
+  itemHeight,
+  containerHeight,
+  overscan = 5,
+}: {
+  items: T[];
+  itemHeight: number;
+  containerHeight: number;
+  overscan?: number;
+}) {
+  const [scrollTop, setScrollTop] = useState(0);
+
+  const visibleRange = useMemo(() => {
+    const start = Math.floor(scrollTop / itemHeight);
+    const end = Math.min(
+      start + Math.ceil(containerHeight / itemHeight) + overscan,
+      items.length
+    );
+
+    return {
+      start: Math.max(0, start - overscan),
+      end,
+    };
+  }, [scrollTop, itemHeight, containerHeight, items.length, overscan]);
+
+  const totalHeight = items.length * itemHeight;
+  const offsetY = visibleRange.start * itemHeight;
+
+  const visibleItems = useMemo(() => {
+    return items.slice(visibleRange.start, visibleRange.end).map((item, index) => ({
+      item,
+      index: visibleRange.start + index,
+    }));
+  }, [items, visibleRange]);
+
+  return {
+    visibleItems,
+    totalHeight,
+    offsetY,
+    onScroll: (event: React.UIEvent<HTMLDivElement>) => {
+      setScrollTop(event.currentTarget.scrollTop);
+    },
+  };
+}
+
+// 5. Error Boundaries and Suspense
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback?: React.ComponentType<{ error: Error }> },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Log error to monitoring service
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      const FallbackComponent = this.props.fallback || DefaultErrorFallback;
+      return <FallbackComponent error={this.state.error!} />;
+    }
+
+    return this.props.children;
+  }
+}
+
+function DefaultErrorFallback({ error }: { error: Error }) {
+  return (
+    <div className="error-fallback">
+      <h2>Something went wrong</h2>
+      <p>{error.message}</p>
+      <button onClick={() => window.location.reload()}>
+        Reload Page
+      </button>
+    </div>
+  );
+}
+
+// Suspense wrapper with error handling
+function AsyncBoundary({ children }: { children: React.ReactNode }) {
+  return (
+    <ErrorBoundary fallback={DefaultErrorFallback}>
+      <React.Suspense fallback={<LoadingSpinner />}>
+        {children}
+      </React.Suspense>
+    </ErrorBoundary>
+  );
+}
+
+function LoadingSpinner() {
+  return <div className="loading-spinner">Loading...</div>;
+}
+
+// 6. Testing Utilities
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Custom render function with providers
+function renderWithProviders(
+  component: React.ReactElement,
+  options: {
+    queryClient?: QueryClient;
+    initialEntries?: string[];
+  } = {}
+) {
+  const {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+        mutations: { retry: false },
+      },
+    }),
+    initialEntries = ['/'],
+  } = options;
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={initialEntries}>
+        {component}
+      </MemoryRouter>
+    </QueryClientProvider>
+  );
+}
+
+// Custom test hooks
+export function createTestHook(hook: () => any, wrapper?: React.ComponentType) {
+  return function TestComponent({ callback }: { callback: (result: any) => void }) {
+    const result = hook();
+    useEffect(() => callback(result), [result, callback]);
+
+    return null;
+  };
+}
+
+export async function renderHook<T>(
+  hook: () => T,
+  options: { wrapper?: React.ComponentType } = {}
+): Promise<{ result: { current: T } }> {
+  let result: T = {} as T;
+
+  const TestComponent = createTestHook(hook, options.wrapper);
+
+  renderWithProviders(
+    <TestComponent callback={(r) => { result = r; }} />,
+    options
+  );
+
+  return { result: { current: result } };
+}
+
+// Integration test utilities
+export async function setupUserAndRender(
+  component: React.ReactElement,
+  userOverrides: Partial<User> = {}
+) {
+  const user = {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@example.com',
+    role: 'user' as const,
+    ...userOverrides,
+  };
+
+  // Mock API responses
+  server.use(
+    rest.get('/api/user', (req, res, ctx) => {
+      return res(ctx.json(user));
+    })
+  );
+
+  return renderWithProviders(component);
+}
+
+export { renderWithProviders, renderHook, setupUserAndRender };
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+    <script>
+        // Global variables for modal
+        let currentCodeContent = '';
+        let currentCodeLanguage = 'php';
+
+        // Modal functions
+        function openCodeModal(title, code, language = 'php') {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalCode').textContent = code;
+            document.getElementById('modalCode').setAttribute('data-lang', language);
+            document.getElementById('codeModal').classList.add('show');
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+
+            // Apply syntax highlighting if available
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightElement(document.getElementById('modalCode'));
+            }
+        }
+
+        function closeCodeModal() {
+            document.getElementById('codeModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCodeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('codeModal').classList.contains('show')) {
+                closeCodeModal();
+            }
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Replace code blocks with buttons
+            document.querySelectorAll('.code-block').forEach((codeBlock, index) => {
+                const code = codeBlock.textContent || codeBlock.innerText;
+                const language = codeBlock.getAttribute('data-lang') || 'php';
+                const title = codeBlock.getAttribute('data-title') || `Code Example ${index + 1}`;
+
+                // Create button
+                const button = document.createElement('button');
+                button.className = 'code-toggle-btn';
+                button.innerHTML = `<i class="fas fa-code"></i> View Code Example`;
+                button.onclick = () => openCodeModal(title, code.trim(), language);
+
+                // Replace code block with button
+                codeBlock.parentNode.replaceChild(button, codeBlock);
+            });
+
+            // Copy functionality for modal
+            document.querySelectorAll('.code-action-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = document.getElementById('modalCode').textContent;
+
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        this.style.background = '#06D6A0';
+
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = '#404040';
+                        }, 2000);
+                    });
+                });
+            });
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('.nav-link[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.question-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Add loading animation to code buttons
+            document.querySelectorAll('.code-toggle-btn').forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.innerHTML = `<i class="fas fa-eye"></i> Click to View Code`;
+                });
+
+                button.addEventListener('mouseleave', function() {
+                    this.innerHTML = `<i class="fas fa-code"></i> View Code Example`;
+                });
+            });
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav-container');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll to top functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a scroll to top button
+            const scrollTopBtn = document.createElement('button');
+            scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            scrollTopBtn.className = 'scroll-to-top';
+            scrollTopBtn.style.cssText = `
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: var(--primary-gradient);
+                color: white;
+                border: none;
+                box-shadow: var(--shadow-lg);
+                cursor: pointer;
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition-normal);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2em;
+            `;
+            scrollTopBtn.onmouseover = () => {
+                scrollTopBtn.style.transform = 'scale(1.1)';
+                scrollTopBtn.style.boxShadow = 'var(--shadow-xl), var(--shadow-glow)';
+            };
+            scrollTopBtn.onmouseout = () => {
+                scrollTopBtn.style.transform = 'scale(1)';
+                scrollTopBtn.style.boxShadow = 'var(--shadow-lg)';
+            };
+            scrollTopBtn.onclick = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            document.body.appendChild(scrollTopBtn);
+
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                    scrollTopBtn.style.visibility = 'visible';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                    scrollTopBtn.style.visibility = 'hidden';
+                }
+            });
+        });
+
+        // Performance optimization: Lazy load Prism.js
+        if (!window.Prism) {
+            const prismScript = document.createElement('script');
+            prismScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js';
+            document.head.appendChild(prismScript);
+        }
+    </script>
+</body>
+</html>

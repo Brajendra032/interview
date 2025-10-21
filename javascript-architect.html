@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 JavaScript Architect Interview Guide - Full Stack Developer Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Modern Color Palette */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+
+            /* Brand Colors */
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #8b5cf6;
+            --secondary-color: #f59e0b;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+
+            /* Neutral Colors */
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+
+            /* Background Colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-dark: #0f172a;
+            --bg-code: #1e293b;
+
+            /* Text Colors */
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --text-inverse: #ffffff;
+            --text-muted: #94a3b8;
+
+            /* Border & Shadow */
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+            /* Spacing & Radius */
+            --radius-sm: 6px;
+            --radius: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Combined CSS Variables - Second :root removed to avoid conflicts */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .back-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .back-button:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 90px auto 0;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content */
+        /* Section Styles */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .section-icon {
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        /* Table Styles for Interview Questions */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+            transition: background 0.2s ease;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .example {
+            background: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .lead-tip {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-style: italic;
+            color: #e65100;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .code-inline {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .question-badge {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .action-cell {
+            text-align: center;
+        }
+
+        .view-answer-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .view-answer-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .view-answer-btn i {
+            font-size: 0.9em;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--dark-bg);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid #2d3748;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-title {
+            color: #a0aec0;
+            font-size: 0.9em;
+        }
+
+        .copy-button {
+            background: #404040;
+            color: #a0aec0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: #505050;
+            color: white;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
+            padding: 25px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--warning-color);
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .highlight-box.success {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-left-color: var(--success-color);
+        }
+
+        .highlight-box.info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: var(--accent-color);
+        }
+
+        .highlight-box.warning {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
+            border-left-color: var(--warning-color);
+        }
+
+        .highlight-box.danger {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left-color: var(--danger-color);
+        }
+
+        .highlight-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .highlight-icon {
+            font-size: 1.2em;
+        }
+
+        /* Real World Examples */
+        .example-section {
+            background: #f8f9fa;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 25px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .example-icon {
+            color: var(--success-color);
+            font-size: 1.5em;
+        }
+
+        .example-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .example-scenario {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        /* Modal System */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); /* Safari support */
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--dark-bg);
+            color: white;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #404040;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 25px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+        }
+
+        .code-modal-content {
+            background: var(--dark-bg);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-modal-content::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-actions {
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-action-btn {
+            background: #404040;
+            color: #a0aec0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .code-action-btn:hover {
+            background: #505050;
+            color: white;
+        }
+
+        /* Code Block Buttons */
+        .code-toggle-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-toggle-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .code-toggle-btn i {
+            font-size: 1em;
+        }
+
+        .code-toggle-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Hide original code blocks */
+        .code-block {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .question-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                padding: 0 15px;
+            }
+
+            .hero-section {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .question-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2em;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e55a2b;
+        }
+
+        /* Focus States */
+        .question-card:focus-within,
+        .code-block:focus-within {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav-container,
+            .back-button,
+            .code-toggle-btn,
+            .modal {
+                display: none !important;
+            }
+
+            .main-container {
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .question-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            /* Show code blocks in print */
+            .code-block {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-code"></i>
+                Interview Prep
+            </a>
+            <div class="nav-links">
+                <a href="#architecture" class="nav-link">Core JS</a>
+                <a href="#async-patterns" class="nav-link">Async Patterns</a>
+                <a href="#functional" class="nav-link">Functional</a>
+                <a href="#typescript" class="nav-link">TypeScript</a>
+                <a href="#microfrontends" class="nav-link">Micro-frontends</a>
+                <a href="index.html" class="back-button">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🚀 JavaScript Architect Interview Guide</h1>
+                <p class="hero-subtitle">
+                    Master JavaScript at the Architect Level - Clean table layout with popup answers for better UX
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">60+</span>
+                        <span class="stat-label">Questions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">35+</span>
+                        <span class="stat-label">Code Examples</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Design Patterns</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Architect Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content">
+            <!-- Layout Update Notice -->
+            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border: 2px solid #2196f3; border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: center;">
+                <h3 style="color: #1976d2; margin-bottom: 10px;">🎯 Enhanced UX Layout</h3>
+                <p style="color: #424242; margin: 0;">Clean table layout with popup answers - click "View Answer" buttons to see detailed explanations, code examples, and architectural insights in modal windows.</p>
+            </div>
+
+            <!-- Code Modal -->
+            <div id="codeModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
+                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="code-actions">
+                            <button class="code-action-btn" id="copyCodeBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div id="modalCode" class="code-modal-content" data-lang="javascript"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Answer Modal -->
+            <div id="answerModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="answerModalTitle" class="modal-title">Answer & Example</h2>
+                        <button class="modal-close" onclick="closeAnswerModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="answerModalContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Section -->
+            <section class="section" id="architecture">
+                <div class="section-header">
+                    <i class="fas fa-cogs section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🎯 Core JavaScript Architecture</h2>
+                        <p class="section-description">Master advanced JavaScript concepts, event loops, and architectural patterns</p>
+                    </div>
+                </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Topic</th>
+                            <th style="width: 35%">Question</th>
+                            <th style="width: 40%">Answer & Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td class="topic">JavaScript Event Loop</td>
+                                <td class="definition">
+                        <div class="question-meta">
+                            <span class="question-badge">Core JS</span>
+                            <span class="question-badge">Async</span>
+                            <span class="question-badge">Senior</span>
+                        </div>
+                                    <strong>Explain JavaScript Event Loop and how it handles async operations. Provide a practical example with setTimeout, Promises, and async/await.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('JavaScript Event Loop', 'event-loop')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                        <tr>
+                            <td class="topic">Custom Promise Implementation</td>
+                            <td class="definition">
+                                <div class="question-meta">
+                                    <span class="question-badge">Promises</span>
+                                    <span class="question-badge">Async</span>
+                                    <span class="question-badge">Advanced</span>
+                                </div>
+                                <strong>How would you implement a custom Promise from scratch? Understanding Promise internals is crucial for architects.</strong>
+                            </td>
+                            <td class="action-cell">
+                                <button class="view-answer-btn" onclick="openAnswerModal('Custom Promise Implementation', 'custom-promise')">
+                                    <i class="fas fa-eye"></i> View Answer
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="topic">JavaScript Closures</td>
+                            <td class="definition">
+                                <div class="question-meta">
+                                    <span class="question-badge">Closures</span>
+                                    <span class="question-badge">Scope</span>
+                                    <span class="question-badge">Architecture</span>
+                            </div>
+                                <strong>Explain closures and their practical applications in JavaScript architecture.</strong>
+                            </td>
+                            <td class="action-cell">
+                                <button class="view-answer-btn" onclick="openAnswerModal('JavaScript Closures', 'closures')">
+                                    <i class="fas fa-eye"></i> View Answer
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                        </div>
+
+            <div class="section">
+                <h2>🏗️ Design Patterns & Architecture</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Singleton Pattern</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Design Patterns</span>
+                                        <span class="question-badge">Singleton</span>
+                                        <span class="question-badge">Architecture</span>
+                                    </div>
+                                    <strong>Implement the Singleton pattern and explain when to use it in JavaScript applications.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Singleton Pattern', 'singleton-pattern')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">Observer Pattern</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Observer Pattern</span>
+                                        <span class="question-badge">Event Management</span>
+                                        <span class="question-badge">Architecture</span>
+                                    </div>
+                                    <strong>How would you implement the Observer pattern for event management?</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Observer Pattern', 'observer-pattern')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚡ Performance & Optimization</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">JavaScript Performance Optimization</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Performance</span>
+                                        <span class="question-badge">Optimization</span>
+                                        <span class="question-badge">Architecture</span>
+                                    </div>
+                                    <strong>How do you optimize JavaScript applications for performance?</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('JavaScript Performance Optimization', 'performance-optimization')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">Memory Leaks in JavaScript</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Memory Management</span>
+                                        <span class="question-badge">Performance</span>
+                                        <span class="question-badge">Architecture</span>
+                                    </div>
+                                    <strong>Explain memory leaks in JavaScript and how to prevent them.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Memory Leaks in JavaScript', 'memory-leaks')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔧 Advanced JavaScript Concepts</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Prototypal Inheritance</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Prototypes</span>
+                                        <span class="question-badge">Inheritance</span>
+                                        <span class="question-badge">OOP</span>
+                                    </div>
+                                    <strong>How does prototypal inheritance work in JavaScript?</strong>
+                                    <br><br>
+                                    <em>JavaScript uses prototypal inheritance where objects inherit properties from other objects via the prototype chain.</em>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Prototypal Inheritance', 'proto-inheritance')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">async/await vs Promises</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">async/await</span>
+                                        <span class="question-badge">Promises</span>
+                                        <span class="question-badge">ES2017</span>
+                                    </div>
+                                    <strong>Explain async/await and how it differs from Promises.</strong>
+                                    <br><br>
+                                    <em>async/await is syntactic sugar over Promises, making asynchronous code look synchronous.</em>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('async/await vs Promises', 'async-await-promises')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">Debounce Function</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Performance</span>
+                                        <span class="question-badge">Optimization</span>
+                                        <span class="question-badge">Functional</span>
+                                    </div>
+                                    <strong>How would you implement a debounce function?</strong>
+                                    <br><br>
+                                    <em>Debounce delays function execution until after a certain time has passed since the last call.</em>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Debounce Function', 'debounce-function')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Advanced Async Patterns Section -->
+            <section class="section" id="async-patterns">
+                <div class="section-header">
+                    <i class="fas fa-sync section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🔄 Advanced Async Patterns & Concurrency</h2>
+                        <p class="section-description">Master complex asynchronous operations, concurrency control, and reactive programming</p>
+                        </div>
+                    </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Concurrent API Calls</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Concurrency</span>
+                                        <span class="question-badge">Async</span>
+                                        <span class="question-badge">Architect</span>
+                                    </div>
+                                    <strong>How would you implement concurrent API calls with proper error handling and race condition prevention?</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Concurrent API Calls', 'concurrent-api-calls')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Functional Programming Section -->
+            <section class="section" id="functional">
+                <div class="section-header">
+                    <i class="fas fa-infinity section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🔄 Functional Programming & Composition</h2>
+                        <p class="section-description">Master functional programming concepts, immutability, and function composition for scalable applications</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Function Composition</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Functional</span>
+                                        <span class="question-badge">Composition</span>
+                                        <span class="question-badge">Advanced</span>
+                                    </div>
+                                    <strong>How would you implement function composition and piping for data transformation pipelines?</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Function Composition', 'function-composition')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">Reactive Observables</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Reactive</span>
+                                        <span class="question-badge">Functional</span>
+                                        <span class="question-badge">Streams</span>
+                                    </div>
+                                    <strong>Implement a functional reactive programming system using Observables.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Reactive Observables', 'reactive-observables')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- TypeScript at Architect Level -->
+            <section class="section" id="typescript">
+                <div class="section-header">
+                    <i class="fas fa-code-branch section-icon"></i>
+                    <div>
+                        <h2 class="section-title">🔷 TypeScript Architecture & Advanced Patterns</h2>
+                        <p class="section-description">Master TypeScript for large-scale applications, advanced types, and architectural patterns</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Topic</th>
+                                <th style="width: 55%">Question</th>
+                                <th style="width: 15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Enterprise TypeScript Architecture</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">TypeScript</span>
+                                        <span class="question-badge">Architecture</span>
+                                        <span class="question-badge">Enterprise</span>
+                                    </div>
+                                    <strong>How would you design a scalable TypeScript architecture for a large enterprise application?</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Enterprise TypeScript Architecture', 'enterprise-typescript')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="topic">Advanced TypeScript Patterns</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Advanced Types</span>
+                                        <span class="question-badge">TypeScript</span>
+                                        <span class="question-badge">Meta Programming</span>
+                                    </div>
+                                    <strong>Implement advanced TypeScript patterns: conditional types, mapped types, and utility types.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Advanced TypeScript Patterns', 'advanced-typescript')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+                <!-- Micro-frontends Section -->
+                <section class="section" id="microfrontends">
+                    <div class="section-header">
+                        <i class="fas fa-puzzle-piece section-icon"></i>
+                        <div>
+                            <h2 class="section-title">🏗️ Micro-frontends & Module Federation</h2>
+                            <p class="section-description">Architect scalable frontend applications with micro-frontend patterns and Webpack Module Federation</p>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%">Topic</th>
+                                    <th style="width: 35%">Question</th>
+                                    <th style="width: 40%">Answer & Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="topic">Micro-frontend Architecture</td>
+                                <td class="definition">
+                                    <div class="question-meta">
+                                        <span class="question-badge">Micro-frontends</span>
+                                        <span class="question-badge">Module Federation</span>
+                                        <span class="question-badge">Scalability</span>
+                                    </div>
+                                    <strong>Design a micro-frontend architecture with Module Federation for a large-scale application.</strong>
+                                </td>
+                                <td class="action-cell">
+                                    <button class="view-answer-btn" onclick="openAnswerModal('Micro-frontend Architecture', 'micro-frontend-architecture')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+    <script>
+        // Global variables for modal
+        let currentCodeContent = '';
+        let currentCodeLanguage = 'javascript';
+
+        // Modal functions
+        function openCodeModal(title, code, language = 'javascript') {
+            const modal = document.getElementById('codeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalCode = document.getElementById('modalCode');
+
+            if (!modal || !modalTitle || !modalCode) {
+                console.error('Modal elements not found');
+                return;
+            }
+
+            modalTitle.textContent = title;
+            modalCode.textContent = code;
+            modalCode.setAttribute('data-lang', language);
+            modal.classList.add('show');
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+
+            // Apply syntax highlighting if available
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightElement(modalCode);
+            }
+        }
+
+        function closeCodeModal() {
+            document.getElementById('codeModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('codeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCodeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('codeModal').classList.contains('show')) {
+                closeCodeModal();
+            }
+            if (e.key === 'Escape' && document.getElementById('answerModal').classList.contains('show')) {
+                closeAnswerModal();
+            }
+        });
+
+        // Answer Modal Functions
+        function openAnswerModal(title, answerId) {
+            const modal = document.getElementById('answerModal');
+            const modalTitle = document.getElementById('answerModalTitle');
+            const modalContent = document.getElementById('answerModalContent');
+
+            if (!modal || !modalTitle || !modalContent) {
+                console.error('Answer modal elements not found');
+                return;
+            }
+
+            modalTitle.textContent = title;
+            modalContent.innerHTML = getAnswerContent(answerId);
+            modal.classList.add('show');
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAnswerModal() {
+            document.getElementById('answerModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close answer modal when clicking outside
+        document.getElementById('answerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAnswerModal();
+            }
+        });
+
+        // Answer content data
+        function getAnswerContent(answerId) {
+            const answers = {
+                'proto-inheritance': `
+                    <div class="example">
+// Constructor function
+function Animal(name) {
+    this.name = name;
+}
+
+Animal.prototype.speak = function() {
+    console.log(this.name + ' makes a sound');
+};
+
+// Child constructor
+function Dog(name, breed) {
+    Animal.call(this, name); // Call parent constructor
+    this.breed = breed;
+}
+
+// Set up inheritance
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+// Add child-specific methods
+Dog.prototype.bark = function() {
+    console.log(this.name + ' barks!');
+};
+
+// Usage
+const dog = new Dog('Buddy', 'Golden Retriever');
+dog.speak(); // "Buddy makes a sound"
+dog.bark();  // "Buddy barks!"
+
+// Check prototype chain
+console.log(dog instanceof Dog);     // true
+console.log(dog instanceof Animal);  // true
+                    </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Insight:</strong> Unlike classical inheritance, prototypal inheritance allows dynamic property addition and flexible object composition.
+                    </div>
+                `,
+                'async-await-promises': `
+                    <div class="example">
+// Promise-based approach
+function fetchUserData(userId) {
+    return fetch('/api/users/' + userId)
+        .then(response => response.json())
+        .then(user => {
+            return fetch('/api/posts/' + user.id)
+                .then(response => response.json())
+                .then(posts => ({ user, posts }));
+        })
+        .catch(error => console.error(error));
+}
+
+// async/await approach (much cleaner!)
+async function fetchUserData(userId) {
+    try {
+        const userResponse = await fetch('/api/users/' + userId);
+        const user = await userResponse.json();
+
+        const postsResponse = await fetch('/api/posts/' + user.id);
+        const posts = await postsResponse.json();
+
+        return { user, posts };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+}
+
+// Usage
+fetchUserData(123).then(data => console.log(data));
+                    </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Benefit:</strong> async/await provides synchronous-looking code while maintaining asynchronous execution, improving readability and error handling.
+                    </div>
+                `,
+                'debounce-function': `
+                    <div class="example">
+function debounce(func, delay) {
+    let timeoutId;
+
+    return function(...args) {
+        const context = this;
+
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+            func.apply(context, args);
+        }, delay);
+    };
+}
+
+// Practical example: Search input
+class SearchComponent {
+    constructor() {
+        this.searchInput = document.getElementById('search');
+        this.debouncedSearch = debounce(this.performSearch.bind(this), 300);
+        this.searchInput.addEventListener('input', this.debouncedSearch);
+    }
+
+    async performSearch(event) {
+        const query = event.target.value;
+
+        if (query.length < 3) return;
+
+        try {
+            const results = await this.searchAPI(query);
+            this.displayResults(results);
+        } catch (error) {
+            console.error('Search failed:', error);
+        }
+    }
+
+    async searchAPI(query) {
+        // Simulate API call
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(['Result for "' + query + '"']);
+            }, 100);
+        });
+    }
+
+    displayResults(results) {
+        console.log('Search results:', results);
+    }
+}
+                    </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Insight:</strong> Debounce prevents excessive function calls, reducing server load and improving user experience through controlled execution timing.
+                    </div>
+                `,
+                'event-loop': `
+                        <p>The JavaScript Event Loop is a mechanism that handles asynchronous operations in JavaScript. It consists of:</p>
+                        <ul>
+                            <li><strong>Call Stack:</strong> Where function calls are pushed and executed</li>
+                            <li><strong>Web APIs:</strong> Browser APIs for async operations (setTimeout, fetch, etc.)</li>
+                            <li><strong>Callback Queue:</strong> Where completed async operations wait</li>
+                            <li><strong>Event Loop:</strong> Checks if call stack is empty, then moves callbacks from queue</li>
+                        </ul>
+                    <div class="example">
+// Example: Understanding Event Loop
+console.log('Start'); // 1. Executed immediately
+
+setTimeout(() => {
+    console.log('Timeout callback'); // 4. Executed after call stack is clear
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log('Promise callback'); // 3. Microtasks execute before macrotasks
+});
+
+console.log('End'); // 2. Executed immediately
+
+// Output: Start → End → Promise callback → Timeout callback
+                        </div>
+                `,
+                'custom-promise': `
+                    <p>Here's a simplified implementation of a custom Promise class:</p>
+                    <div class="example">
+class CustomPromise {
+    constructor(executor) {
+        this.state = 'pending';
+        this.value = undefined;
+        this.handlers = [];
+
+        const resolve = (value) => {
+            if (this.state === 'pending') {
+                this.state = 'fulfilled';
+                this.value = value;
+                this.handlers.forEach(handler => handler.onFulfilled(value));
+            }
+        };
+
+        const reject = (reason) => {
+            if (this.state === 'pending') {
+                this.state = 'rejected';
+                this.value = reason;
+                this.handlers.forEach(handler => handler.onRejected(reason));
+            }
+        };
+
+        try {
+            executor(resolve, reject);
+        } catch (error) {
+            reject(error);
+        }
+    }
+
+    then(onFulfilled, onRejected) {
+        return new CustomPromise((resolve, reject) => {
+            const handleSuccess = (value) => {
+                try {
+                    const result = onFulfilled ? onFulfilled(value) : value;
+                    resolve(result);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+
+            const handleError = (reason) => {
+                try {
+                    const result = onRejected ? onRejected(reason) : reason;
+                    resolve(result);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+
+            if (this.state === 'fulfilled') {
+                setTimeout(() => handleSuccess(this.value), 0);
+            } else if (this.state === 'rejected') {
+                setTimeout(() => handleError(this.value), 0);
+            } else {
+                this.handlers.push({ onFulfilled: handleSuccess, onRejected: handleError });
+            }
+        });
+    }
+}
+
+// Usage
+const promise = new CustomPromise((resolve, reject) => {
+    setTimeout(() => resolve('Success!'), 1000);
+});
+
+promise.then(result => console.log(result));
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Insight:</strong> Understanding Promise internals helps with debugging complex async flows and implementing custom async utilities.
+                    </div>
+                `,
+                'closures': `
+                        <p>Closures are functions that remember their lexical scope even when executed outside that scope. They're fundamental for:</p>
+                        <ul>
+                            <li>Data encapsulation and privacy</li>
+                            <li>Factory functions</li>
+                            <li>Currying and function composition</li>
+                            <li>Module patterns</li>
+                        </ul>
+                    <div class="example">
+// Practical Example: Counter with private state
+function createCounter() {
+    let count = 0; // Private variable
+
+    return {
+        increment: () => ++count,
+        decrement: () => --count,
+        getCount: () => count,
+        reset: () => { count = 0; return count; }
+    };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.getCount());   // 2
+
+// count is not accessible from outside
+// console.log(counter.count); // undefined
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Benefit:</strong> Enables true encapsulation in JavaScript, allowing for private state without classes or symbols.
+                    </div>
+                `,
+                'singleton-pattern': `
+                        <p>The Singleton pattern ensures only one instance of a class exists. Use it for:</p>
+                        <ul>
+                            <li>Database connections</li>
+                            <li>Configuration managers</li>
+                            <li>Logger instances</li>
+                            <li>Cache managers</li>
+                        </ul>
+                    <div class="example">
+// ES6 Singleton with proper encapsulation
+class DatabaseConnection {
+    constructor() {
+        if (DatabaseConnection.instance) {
+            return DatabaseConnection.instance;
+        }
+
+        this.connection = null;
+        this.isConnected = false;
+        DatabaseConnection.instance = this;
+    }
+
+    static getInstance() {
+        if (!DatabaseConnection.instance) {
+            DatabaseConnection.instance = new DatabaseConnection();
+        }
+        return DatabaseConnection.instance;
+    }
+
+    async connect(config) {
+        if (this.isConnected) {
+            console.log('Already connected');
+            return this.connection;
+        }
+
+        try {
+            this.connection = { host: config.host, port: config.port };
+            this.isConnected = true;
+            console.log('Connected to database');
+            return this.connection;
+        } catch (error) {
+            throw new Error('Connection failed');
+        }
+    }
+}
+
+// Usage
+const db1 = DatabaseConnection.getInstance();
+const db2 = DatabaseConnection.getInstance();
+console.log(db1 === db2); // true - Same instance
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Consideration:</strong> Use Singleton for shared resources, but consider dependency injection for better testability.
+                    </div>
+                `,
+                'observer-pattern': `
+                        <p>The Observer pattern allows objects to subscribe to events and get notified when they occur. Perfect for:</p>
+                        <ul>
+                            <li>UI state management</li>
+                            <li>Event-driven architectures</li>
+                            <li>Real-time data updates</li>
+                        </ul>
+                    <div class="example">
+class EventEmitter {
+    constructor() {
+        this.events = {};
+    }
+
+    // Subscribe to an event
+    on(event, callback) {
+        if (!this.events[event]) {
+            this.events[event] = [];
+        }
+        this.events[event].push(callback);
+        return this;
+    }
+
+    // Emit an event
+    emit(event, ...args) {
+        if (!this.events[event]) return this;
+
+        this.events[event].forEach(callback => {
+            try { callback.apply(this, args); }
+            catch (error) { console.error(error); }
+        });
+        return this;
+    }
+}
+
+// Usage: Shopping Cart
+const cart = new EventEmitter();
+
+cart.on('itemAdded', (item, total) =>
+    console.log('Added ' + item.name + ', Total: $' + total)
+);
+
+cart.on('itemRemoved', (item, total) =>
+    console.log('Removed ' + item.name + ', Total: $' + total)
+);
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Benefit:</strong> Enables loose coupling between components through event-driven communication.
+                    </div>
+                `,
+                'performance-optimization': `
+                    <div class="example">
+// 1. Code Splitting - Dynamic imports
+const loadHeavyComponent = () => import('./HeavyComponent.js');
+
+loadHeavyComponent().then(module => {
+    const HeavyComponent = module.default;
+    // Use component
+});
+
+// 2. Memoization - Cache expensive results
+function memoize(fn) {
+    const cache = new Map();
+    return (...args) => {
+        const key = JSON.stringify(args);
+        if (cache.has(key)) return cache.get(key);
+
+        const result = fn.apply(this, args);
+        cache.set(key, result);
+        return result;
+    };
+}
+
+// 3. Virtual Scrolling - Render only visible items
+class VirtualScroller {
+    constructor(container, items, itemHeight) {
+        this.container = container;
+        this.items = items;
+        this.itemHeight = itemHeight;
+        this.visibleItems = 10;
+
+        this.container.addEventListener('scroll', () => {
+            const startIndex = Math.floor(this.container.scrollTop / this.itemHeight);
+            this.render(startIndex);
+        });
+        this.render();
+    }
+
+    render(startIndex = 0) {
+        const visibleItems = this.items.slice(startIndex, startIndex + this.visibleItems);
+        this.container.innerHTML = visibleItems
+            .map(item => '<div style="height: ' + this.itemHeight + 'px">' + item + '</div>')
+            .join('');
+    }
+}
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Performance Rule:</strong> Optimize for perceived performance (loading indicators, progressive enhancement) as much as actual performance.
+                    </div>
+                `,
+                'memory-leaks': `
+                    <div class="example">
+// 1. Closures - Extract needed data
+const largeObject = { data: new Array(1000000) };
+
+// Bad - captures entire object
+const callback = () => console.log(largeObject.data.length);
+
+// Good - extract only needed data
+const dataLength = largeObject.data.length;
+const callback = () => console.log(dataLength);
+
+// 2. Timers - Always cleanup
+class TimerComponent {
+    constructor() {
+        this.timer = null;
+    }
+
+    startTimer() {
+        this.timer = setInterval(() => {
+            console.log('Timer running');
+        }, 1000);
+    }
+
+    destroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+    }
+}
+
+// 3. Event Listeners - Remove when done
+class EventHandler {
+    constructor(element) {
+        this.element = element;
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    attach() {
+        this.element.addEventListener('click', this.handleClick);
+    }
+
+    detach() {
+        this.element.removeEventListener('click', this.handleClick);
+    }
+}
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Prevention Strategy:</strong> Use Chrome DevTools Memory tab, implement proper cleanup in component lifecycles, avoid global variables.
+                    </div>
+                `,
+                'concurrent-api-calls': `
+                    <p>A robust solution for concurrent API calls with proper error handling and race condition prevention:</p>
+                    <div class="example">
+class APIOrchestrator {
+    constructor(baseURL = '') {
+        this.baseURL = baseURL;
+        this.activeRequests = new Map();
+        this.requestQueue = new Map();
+    }
+
+    async fetchConcurrent(endpoints, options = {}) {
+        const {
+            concurrency = 3,
+            timeout = 5000,
+            retries = 2,
+            onProgress
+        } = options;
+
+        const semaphore = new Semaphore(concurrency);
+        const abortController = new AbortController();
+        const results = new Map();
+
+        const requestPromises = endpoints.map(async (endpoint, index) => {
+            const release = await semaphore.acquire();
+
+            try {
+                const result = await this.executeWithRetry(
+                    endpoint,
+                    { ...options, signal: abortController.signal, timeout },
+                    retries
+                );
+
+                results.set(endpoint, { success: true, data: result, index });
+
+                if (onProgress) {
+                    onProgress({
+                        completed: results.size,
+                        total: endpoints.length,
+                        results: Array.from(results.values())
+                    });
+                }
+
+                return result;
+            } catch (error) {
+                results.set(endpoint, { success: false, error: error.message, index });
+                throw error;
+            } finally {
+                release();
+            }
+        });
+
+        try {
+            await Promise.race([
+                Promise.allSettled(requestPromises),
+                new Promise((_, reject) => {
+                    setTimeout(() => {
+                        abortController.abort();
+                        reject(new Error('Concurrent requests timeout'));
+                    }, timeout * 2);
+                })
+            ]);
+        } catch (error) {
+            abortController.abort();
+            throw error;
+        }
+
+        return {
+            results: Array.from(results.values()),
+            summary: {
+                successful: Array.from(results.values()).filter(r => r.success).length,
+                failed: Array.from(results.values()).filter(r => !r.success).length,
+                total: endpoints.length
+            }
+        };
+    }
+}
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Benefits:</strong> Concurrency control prevents server overload, AbortController prevents race conditions, and proper error handling ensures graceful degradation.
+                    </div>
+                `,
+                'function-composition': `
+                    <p>A comprehensive function composition system with error handling, debugging, and performance monitoring:</p>
+                    <div class="example">
+class Pipeline {
+    constructor() {
+        this.steps = [];
+        this.middleware = [];
+        this.performanceData = new Map();
+    }
+
+    pipe(transform, options = {}) {
+        const step = {
+            transform,
+            name: options.name || transform.name || 'anonymous',
+            retry: options.retry || 0,
+            timeout: options.timeout || 5000,
+            validateInput: options.validateInput,
+            validateOutput: options.validateOutput
+        };
+
+        this.steps.push(step);
+        return this;
+    }
+
+    async process(input) {
+        const startTime = performance.now();
+        const context = {
+            input,
+            output: input,
+            step: 0,
+            errors: [],
+            warnings: [],
+            metadata: new Map(),
+            performance: {
+                startTime,
+                stepTimings: []
+            }
+        };
+
+        try {
+            for (let i = 0; i < this.steps.length; i++) {
+                const step = this.steps[i];
+                context.step = i;
+
+                const stepStartTime = performance.now();
+
+                try {
+                    if (step.validateInput) {
+                        const isValid = await step.validateInput(context.output);
+                        if (!isValid) {
+                            throw new Error('Input validation failed for step ' + step.name);
+                        }
+                    }
+
+                    context.output = await this.executeWithRetry(
+                        () => step.transform(context.output, context),
+                        step.retry,
+                        step.timeout
+                    );
+
+                    if (step.validateOutput) {
+                        const isValid = await step.validateOutput(context.output);
+                        if (!isValid) {
+                            throw new Error('Output validation failed for step ' + step.name);
+                        }
+                    }
+
+                    const stepDuration = performance.now() - stepStartTime;
+                    context.performance.stepTimings.push({
+                        step: step.name,
+                        duration: stepDuration,
+                        success: true
+                    });
+
+    } catch (error) {
+                    context.errors.push({
+                        step: step.name,
+                        error: error.message,
+                        stepIndex: i
+                    });
+
+                    if (!step.continueOnError) {
+        throw error;
+                    }
+                }
+            }
+
+            context.performance.totalDuration = performance.now() - startTime;
+
+            return {
+                success: context.errors.length === 0,
+                data: context.output,
+                errors: context.errors,
+                warnings: context.warnings,
+                performance: context.performance,
+                metadata: context.metadata
+            };
+
+        } catch (error) {
+            return {
+                success: false,
+                data: null,
+                errors: [...context.errors, { step: 'pipeline', error: error.message }],
+                warnings: context.warnings,
+                performance: {
+                    ...context.performance,
+                    totalDuration: performance.now() - startTime
+                },
+                metadata: context.metadata
+            };
+        }
+    }
+}
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Advantages:</strong> Composability, error resilience, observability, validation, and middleware support make this pattern ideal for complex data processing pipelines.
+                    </div>
+                `,
+                'reactive-observables': `
+                    <p>A functional reactive programming system with Observable streams:</p>
+                    <div class="example">
+class Observable {
+    constructor(subscribe) {
+        this.subscribe = subscribe;
+    }
+
+    // Create observable from array
+    static from(array) {
+        return new Observable(observer => {
+            array.forEach(value => observer.next(value));
+            observer.complete();
+        });
+    }
+
+    // Map operator
+    map(transform) {
+        return new Observable(observer => {
+            return this.subscribe({
+                next: value => observer.next(transform(value)),
+                error: err => observer.error(err),
+                complete: () => observer.complete()
+            });
+        });
+    }
+
+    // Filter operator
+    filter(predicate) {
+        return new Observable(observer => {
+            return this.subscribe({
+                next: value => {
+                    if (predicate(value)) observer.next(value);
+                },
+                error: err => observer.error(err),
+                complete: () => observer.complete()
+            });
+        });
+    }
+
+    // Subscribe to observable
+    subscribe(observer) {
+        const subscription = this.subscribe(observer);
+        return {
+            unsubscribe: () => {
+                if (subscription && typeof subscription.unsubscribe === 'function') {
+                    subscription.unsubscribe();
+                }
+            }
+        };
+    }
+}
+
+// Usage example
+const numbers = Observable.from([1, 2, 3, 4, 5]);
+
+const subscription = numbers
+    .filter(n => n % 2 === 0)
+    .map(n => n * 2)
+    .subscribe({
+        next: value => console.log('Even doubled:', value),
+        error: err => console.error('Error:', err),
+        complete: () => console.log('Done!')
+    });
+
+// Cleanup
+setTimeout(() => subscription.unsubscribe(), 1000);
+                    </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Benefit:</strong> Reactive programming enables declarative data flow, making complex async operations more manageable and composable.
+                    </div>
+                `,
+                'enterprise-typescript': `
+                    <div class="example">
+// Dependency injection container
+export class Container {
+    private services = new Map<string, any>();
+    private factories = new Map<string, () => any>();
+
+    register<T>(token: string, factory: () => T): void {
+        this.factories.set(token, factory);
+    }
+
+    resolve<T>(token: string): T {
+        if (this.services.has(token)) {
+            return this.services.get(token);
+        }
+
+        if (this.factories.has(token)) {
+            const instance = this.factories.get(token)!();
+            this.services.set(token, instance);
+            return instance;
+        }
+
+        throw new Error('Service not registered: ' + token);
+    }
+}
+
+// Service layer with dependency injection
+export class UserService {
+    constructor(
+        private userRepository: UserRepository,
+        private logger: ILogger,
+        private cache: ICache
+    ) {}
+
+    async getUserById(id: string): Promise<UserEntity | null> {
+        const cached = await this.cache.get<UserEntity>('user:' + id);
+        if (cached) {
+            this.logger.info('User ' + id + ' served from cache');
+            return cached;
+        }
+
+        const user = await this.userRepository.findById(id);
+        if (user) {
+            await this.cache.set('user:' + id, user, 300);
+            this.logger.info('User ' + id + ' retrieved from database');
+        }
+
+        return user;
+    }
+}
+                        </div>
+                    <div class="lead-tip">
+                        <strong>Enterprise Architecture Benefits:</strong> Type safety, dependency injection, repository pattern, proper error handling, and caching strategy make this architecture production-ready.
+                    </div>
+                `,
+                'advanced-typescript': `
+                    <div class="example">
+// Conditional Types - Type-level programming
+type IsArray<T> = T extends (infer U)[] ? U : T;
+
+// Mapped Types - Transform object types
+type Readonly<T> = {
+    readonly [P in keyof T]: T[P];
+};
+
+// Template Literal Types - String composition
+type ApiRoute = '/' + string + '/' + string;
+
+// Branded Types - Nominal typing for safety
+type Brand<T, B> = T & { __brand: B };
+type UserId = Brand<string, 'UserId'>;
+
+// Discriminated Unions - Type-safe exhaustiveness
+type ApiResponse<T> =
+    | { status: 'success'; data: T }
+    | { status: 'error'; error: string }
+    | { status: 'loading' };
+
+// Advanced Utility Types
+type DeepReadonly<T> = {
+    readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
+};
+                </div>
+                    <div class="lead-tip">
+                        <strong>TypeScript Meta Programming:</strong> Advanced types enable compile-time business rule enforcement, catching errors before runtime and providing superior developer experience.
+            </div>
+                `,
+                'micro-frontend-architecture': `
+                    <div class="example">
+// Module Federation Configuration
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
+module.exports = {
+  plugins: [
+    new ModuleFederationPlugin({
+      name: 'app_shell',
+      filename: 'remoteEntry.js',
+      remotes: {
+        auth: 'auth@http://localhost:3001/remoteEntry.js',
+        dashboard: 'dashboard@http://localhost:3002/remoteEntry.js',
+      },
+      shared: {
+        react: { singleton: true, eager: true },
+        'react-dom': { singleton: true, eager: true },
+        'react-router-dom': { singleton: true },
+        lodash: { singleton: true },
+      },
+    }),
+  ],
+};
+
+// Module Registry for Dynamic Loading
+class ModuleRegistry {
+    constructor() {
+        this.modules = new Map();
+    }
+
+    register(name, module) {
+        this.modules.set(name, module);
+    }
+
+    async loadModule(name) {
+        if (this.modules.has(name)) {
+            return this.modules.get(name);
+        }
+
+        try {
+            const module = await import('@mf/' + name + '/');
+            this.register(name, module);
+            return module;
+        } catch (error) {
+            console.error('Failed to load module: ' + name, error);
+            throw error;
+        }
+    }
+}
+
+// Shared Store Manager
+class SharedStoreManager {
+    constructor(eventBus) {
+        this.stores = new Map();
+        this.eventBus = eventBus;
+    }
+
+    registerStore(name, store) {
+        this.stores.set(name, store);
+        this.eventBus.emit('store:registered:' + name, store);
+    }
+
+    getStore(name) {
+        return this.stores.get(name);
+    }
+}
+                    </div>
+                    <div class="lead-tip">
+                        <strong>Architectural Scalability:</strong> Micro-frontends enable independent teams to work on different parts of the application, allowing for faster development cycles and easier maintenance at scale.
+                    </div>
+                `
+            };
+
+            return answers[answerId] || '<p>Answer content not found.</p>';
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing JavaScript Architect page...');
+
+            // Use a small delay to ensure all content is loaded
+            setTimeout(() => {
+                replaceCodeBlocks();
+                setupOtherFeatures();
+            }, 100);
+        });
+
+        function replaceCodeBlocks() {
+            // Replace code blocks with buttons
+            const codeBlocks = document.querySelectorAll('.code-block');
+            console.log('Found', codeBlocks.length, 'code blocks to replace');
+
+            codeBlocks.forEach((codeBlock, index) => {
+                const code = codeBlock.textContent || codeBlock.innerText;
+                const language = codeBlock.getAttribute('data-lang') || 'javascript';
+                const title = codeBlock.getAttribute('data-title') || `Code Example ${index + 1}`;
+
+                // Create button
+                const button = document.createElement('button');
+                button.className = 'code-toggle-btn';
+                button.innerHTML = '<i class="fas fa-code"></i> View Code Example';
+                button.onclick = () => openCodeModal(title, code.trim(), language);
+
+                // Replace code block with button
+                if (codeBlock.parentNode) {
+                codeBlock.parentNode.replaceChild(button, codeBlock);
+                    console.log('Replaced code block', index + 1, 'with button');
+                }
+            });
+        }
+
+        function setupOtherFeatures() {
+
+            // Copy functionality for modal
+            const copyBtn = document.getElementById('copyCodeBtn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const code = document.getElementById('modalCode').textContent;
+
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.style.background = '#06D6A0';
+
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.style.background = '#404040';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy code:', err);
+                        // Fallback for older browsers
+                        const textArea = document.createElement('textarea');
+                        textArea.value = code;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.style.background = '#06D6A0';
+
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.style.background = '#404040';
+                        }, 2000);
+                    });
+                });
+            }
+
+            // Smooth scrolling for navigation
+            document.querySelectorAll('.nav-link[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.question-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Add loading animation to code buttons
+            document.querySelectorAll('.code-toggle-btn').forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.innerHTML = '<i class="fas fa-eye"></i> Click to View Code';
+                });
+
+                button.addEventListener('mouseleave', function() {
+                    this.innerHTML = '<i class="fas fa-code"></i> View Code Example';
+                });
+            });
+        }
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav-container');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Performance optimization: Lazy load Prism.js
+        if (!window.Prism) {
+            const prismScript = document.createElement('script');
+            prismScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js';
+            document.head.appendChild(prismScript);
+        }
+    </script>
+</body>
+</html>
