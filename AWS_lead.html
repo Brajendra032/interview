@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Lead Guide - PHP Developer Interview Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        /* Navigation breadcrumb */
+        .nav-breadcrumb {
+            background: #f8f9fa;
+            padding: 15px 40px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .nav-breadcrumb a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-breadcrumb .current {
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        th, td {
+            padding: 16px 18px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+
+        th {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            position: relative;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .example {
+            background: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.95em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="footer-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23footer-pattern)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .footer p {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+        }
+
+        /* AWS Lead Guide Styles */
+        .section-title {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin: 50px 0 25px 0;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-left: 5px solid #007bff;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(to bottom, #007bff, #0056b3);
+            border-radius: 10px 0 0 10px;
+        }
+
+        .aws-intro {
+            margin-bottom: 40px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            border: 1px solid #b3d9ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #007bff, #00d4ff);
+        }
+
+        .highlight-box h3 {
+            color: #0056b3;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .aws-definition h4 {
+            color: #2c3e50;
+            margin: 25px 0 12px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+            padding: 8px 0;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .emoji-list {
+            list-style: none;
+            padding: 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .emoji-list li {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.2s ease;
+        }
+
+        .emoji-list li:hover {
+            background: #e3f2fd;
+        }
+
+        .emoji-list li:last-child {
+            border-bottom: none;
+        }
+
+        .code-example {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 18px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #fef7ed 100%);
+            border: 1px solid #fed7aa;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-left: 5px solid #f97316;
+            position: relative;
+        }
+
+        .tip-box::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-left: 5px solid #22c55e;
+            text-align: center;
+            font-weight: 600;
+            color: #166534;
+            position: relative;
+        }
+
+        .success-box::before {
+            content: '✅';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .architecture-table .step {
+            text-align: center;
+            font-weight: bold;
+            color: #1565c0;
+            background: #e3f2fd;
+        }
+
+        .interview-questions {
+            margin: 25px 0;
+        }
+
+        .interview-questions .question {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            position: relative;
+        }
+
+        .interview-questions .question::before {
+            content: '❓';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .interview-questions .answer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-left: 4px solid #28a745;
+            padding: 18px 20px;
+            color: #495057;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .interview-questions .answer::before {
+            content: '💬';
+            position: absolute;
+            left: 15px;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .study-plan .day {
+            text-align: center;
+            font-weight: bold;
+            color: #1565c0;
+            background: #e8f4fd;
+        }
+
+        .architecture-example {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-example::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #17a2b8, #20c997);
+        }
+
+        .architecture-example h4 {
+            color: #2c3e50;
+            margin-bottom: 18px;
+            font-size: 1.2em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .architecture-example h4::before {
+            content: '🏗️';
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #fff8dc 0%, #fef7ed 100%);
+            border: 2px solid #fed7aa;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #2c3e50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 40px;
+            color: #f97316;
+            font-family: 'Georgia', serif;
+        }
+
+        .quote-box strong {
+            color: #c2410c;
+            font-weight: 700;
+        }
+
+        /* Cheat Sheet Section Styles */
+        .cheat-sheet-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid #3498db;
+        }
+
+        .cheat-sheet-section .section-title {
+            color: #e74c3c;
+            border-bottom-color: #e74c3c;
+        }
+
+        .cheat-sheet-section .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-color: #e17055;
+        }
+
+        .cheat-sheet-section .highlight-box h3 {
+            color: #d63031;
+        }
+
+        .cheat-sheet-section .topic {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .cheat-sheet-section .lead-tip {
+            background: #ffeaa7;
+            border-left-color: #d63031;
+            color: #d63031;
+            font-weight: 600;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                max-width: 100%;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .nav-breadcrumb {
+                padding: 12px 25px;
+                font-size: 0.85em;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+                padding: 12px 16px;
+                margin: 40px 0 20px 0;
+            }
+
+            th, td {
+                padding: 12px;
+                font-size: 0.85em;
+            }
+
+            .highlight-box {
+                padding: 20px;
+            }
+
+            .tip-box, .success-box {
+                padding: 16px 20px;
+            }
+
+            .architecture-example {
+                padding: 20px;
+            }
+
+            .interview-questions .question {
+                font-size: 1em;
+                padding: 10px 14px;
+            }
+
+            .interview-questions .answer {
+                padding: 15px 18px;
+            }
+
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .footer {
+                padding: 25px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☁️ AWS LEAD GUIDE</h1>
+            <p>Complete AWS + PHP Interview Prep - 13 Detailed Steps + 2-Hour Rapid Revision</p>
+        </div>
+
+        <div class="nav-breadcrumb">
+            <a href="index.html">🏠 Interview Prep</a> › <span class="current">☁️ AWS Lead Guide</span>
+        </div>
+
+        <div class="content">
+            <div class="aws-intro">
+                <div class="highlight-box">
+                    <h3>🚀 Why AWS Matters for PHP Developers</h3>
+                    <p><strong>Real Talk:</strong> AWS is the #1 cloud platform. PHP developers who understand AWS get better jobs and higher salaries. This guide makes AWS simple and memorable for interviews.</p>
+                </div>
+
+                <div class="tip-box">
+                    📖 <strong>Guide Structure:</strong><br>
+                    • <strong>Steps 1-13:</strong> Detailed learning path (read when you have time)<br>
+                    • <strong>2-Hour Rapid Prep:</strong> Last-minute revision guide (use before interviews)<br>
+                    • <strong>Perfect for:</strong> MainTree, L&T, and Lead-level AWS interviews
+                </div>
+            </div>
+
+            <h3 class="section-title">🔗 Step 1 — Understand How PHP + AWS Fit Together</h3>
+            <div class="aws-definition">
+                <h4>Simple Architecture (Memorize This):</h4>
+                <div class="architecture-example">
+                    <h4>Browser → Load Balancer → EC2 (PHP app) → RDS (MySQL)</h4>
+                    <p>Think of this flow:</p>
+                    <ul class="emoji-list">
+                        <li>🌐 <strong>Browser</strong> (User request)</li>
+                        <li>⚖️ <strong>Load Balancer</strong> (Distribute traffic)</li>
+                        <li>🖥️ <strong>EC2</strong> (Your PHP/Laravel app)</li>
+                        <li>🗄️ <strong>RDS</strong> (MySQL database)</li>
+                        <li>📦 <strong>S3</strong> (File storage)</li>
+                        <li>🚀 <strong>CloudFront</strong> (CDN for speed)</li>
+                        <li>📊 <strong>CloudWatch</strong> (Monitor everything)</li>
+                        <li>📨 <strong>SQS/SNS</strong> (Background jobs & notifications)</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    💡 <strong>Pro Tip:</strong> If you can describe this architecture verbally, you'll sound like a cloud architect!
+                </div>
+            </div>
+
+            <h3 class="section-title">⚙️ Step 2 — Focus on Core AWS Services (Learn These 12 Names Only)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Category</th>
+                            <th style="width: 20%">Service</th>
+                            <th style="width: 30%">1-line Definition</th>
+                            <th style="width: 30%">PHP Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Compute</td>
+                            <td class="topic">EC2</td>
+                            <td class="definition">Virtual server to deploy PHP apps</td>
+                            <td><div class="example">Host Laravel/CodeIgniter project</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Storage</td>
+                            <td class="topic">S3</td>
+                            <td class="definition">Object storage for images, backups</td>
+                            <td><div class="example">Store user uploads or reports</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Database</td>
+                            <td class="topic">RDS</td>
+                            <td class="definition">Managed MySQL/PostgreSQL</td>
+                            <td><div class="example">Host MySQL DB for PHP</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Networking</td>
+                            <td class="topic">VPC</td>
+                            <td class="definition">Private cloud network</td>
+                            <td><div class="example">Securely connect EC2 & RDS</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Scaling</td>
+                            <td class="topic">Auto Scaling</td>
+                            <td class="definition">Add/remove EC2 automatically</td>
+                            <td><div class="example">Handle traffic spikes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load Balancing</td>
+                            <td class="topic">ELB (ALB)</td>
+                            <td class="definition">Distribute traffic between EC2s</td>
+                            <td><div class="example">Avoid single point of failure</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Caching</td>
+                            <td class="topic">ElastiCache</td>
+                            <td class="definition">In-memory cache (Redis/Memcached)</td>
+                            <td><div class="example">Speed up DB queries</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queues</td>
+                            <td class="topic">SQS</td>
+                            <td class="definition">Message queue</td>
+                            <td><div class="example">Run background jobs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Notifications</td>
+                            <td class="topic">SNS</td>
+                            <td class="definition">Push notifications / alerts</td>
+                            <td><div class="example">Trigger jobs or emails</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Monitoring</td>
+                            <td class="topic">CloudWatch</td>
+                            <td class="definition">Monitor logs, CPU, etc.</td>
+                            <td><div class="example">Debug errors & performance</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Security</td>
+                            <td class="topic">IAM</td>
+                            <td class="definition">Identity & Access Management</td>
+                            <td><div class="example">Limit who can access S3 or EC2</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">CDN</td>
+                            <td class="topic">CloudFront</td>
+                            <td class="definition">Content delivery network</td>
+                            <td><div class="example">Serve static assets globally</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                💡 If you just understand what each service does and when to use it, that's enough to sound confident!
+            </div>
+
+            <h3 class="section-title">🔧 Step 3 — How to Link AWS Concepts with PHP</h3>
+            <div class="interview-questions">
+                <h4>Be ready to answer questions like:</h4>
+
+                <div class="question">How will you deploy your PHP app on AWS?</div>
+                <div class="answer">"I'll host code on EC2, connect to RDS for MySQL, store media in S3, use CloudFront for CDN, and manage logs with CloudWatch."</div>
+
+                <div class="question">How will you handle scaling?</div>
+                <div class="answer">"I'll use an Auto Scaling group with Load Balancer, and use S3 for shared assets."</div>
+
+                <div class="question">How will you secure your app?</div>
+                <div class="answer">"By using IAM roles, Security Groups, and HTTPS via ACM certificates."</div>
+
+                <div class="question">How will you speed up performance?</div>
+                <div class="answer">"By caching with ElastiCache (Redis/Memcached) and using CloudFront."</div>
+            </div>
+
+            <h3 class="section-title">🧠 Step 4 — Key Interview Topics to Revise (Cloud Lead Level)</h3>
+
+            <h4>🧠 Conceptual</h4>
+            <ul class="emoji-list">
+                <li>☁️ <strong>What is cloud computing</strong> (IaaS, PaaS, SaaS)</li>
+                <li>🌍 <strong>What is region and availability zone</strong></li>
+                <li>📈 <strong>What is horizontal vs vertical scaling</strong></li>
+                <li>🛡️ <strong>What is high availability and fault tolerance</strong></li>
+                <li>⚖️ <strong>What is auto-scaling and load balancing</strong></li>
+            </ul>
+
+            <h4>💡 Real Case Example (PHP App)</h4>
+            <div class="quote-box">
+                <strong>Perfect Lead-Level Scenario Answer:</strong><br><br>
+                "Suppose your food delivery PHP app is slowing down during lunch hours — I'll add more EC2s under a load balancer using Auto Scaling. Static images will move to S3 + CloudFront. Caching will be handled by ElastiCache, and background tasks by SQS."
+            </div>
+
+            <h3 class="section-title">🔄 Step 5 — Learn by Comparison (Quick Memorization)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Topic</th>
+                            <th style="width: 37%">On-Premise</th>
+                            <th style="width: 38%">On AWS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Server</td>
+                            <td class="definition">Your own machine</td>
+                            <td><div class="example">EC2</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Database</td>
+                            <td class="definition">Installed manually</td>
+                            <td><div class="example">RDS</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">File storage</td>
+                            <td class="definition">Local disk</td>
+                            <td><div class="example">S3</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load balancing</td>
+                            <td class="definition">Manual setup</td>
+                            <td><div class="example">ALB</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cron jobs</td>
+                            <td class="definition">OS-level</td>
+                            <td><div class="example">Lambda / CloudWatch Events</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Backup</td>
+                            <td class="definition">Manual</td>
+                            <td><div class="example">Automated via RDS snapshot / S3</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🔥 Step 6 — Be Ready for These 5 AWS Interview Questions</h3>
+
+            <div class="interview-questions">
+                <div class="question">What's the difference between EC2 and Lambda?</div>
+                <div class="answer">→ EC2 is a server you manage; Lambda is serverless — runs code only when triggered.</div>
+
+                <div class="question">What is S3 and how do you use it in PHP?</div>
+                <div class="answer">→ Store files using AWS SDK or pre-signed URLs. Common for uploads and backups.</div>
+
+                <div class="question">What's the use of RDS?</div>
+                <div class="answer">→ Managed database service — no manual MySQL setup, automatic backup & scaling.</div>
+
+                <div class="question">How can you scale your PHP application on AWS?</div>
+                <div class="answer">→ Use Auto Scaling groups, Load Balancers, caching with ElastiCache, and CloudFront.</div>
+
+                <div class="question">What's IAM and why is it important?</div>
+                <div class="answer">→ IAM manages permissions. For example, your EC2 can access S3 using IAM roles, not by storing credentials.</div>
+            </div>
+
+            <h3 class="section-title">🧠 Step 7 — What is Cloud Computing (IaaS, PaaS, SaaS)</h3>
+            <div class="aws-definition">
+                <h4>🧩 Definition:</h4>
+                <p><strong>Cloud computing = renting computing resources</strong> (like servers, databases, storage) from a provider like AWS instead of owning hardware.</p>
+
+                <div class="quote-box">
+                    💬 <strong>"Instead of buying a computer, I rent it from AWS and pay only for what I use."</strong>
+                </div>
+
+                <h4>☁️ 3 Types of Cloud Models</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">Model</th>
+                                <th style="width: 20%">Full Form</th>
+                                <th style="width: 20%">You Manage</th>
+                                <th style="width: 25%">Example</th>
+                                <th style="width: 20%">PHP Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">IaaS</td>
+                                <td class="definition">Infrastructure as a Service</td>
+                                <td class="definition">OS, App, Data</td>
+                                <td><div class="example">AWS EC2, S3</div></td>
+                                <td><div class="example">You host Laravel app on EC2</div></td>
+                            </tr>
+                            <tr>
+                                <td class="topic">PaaS</td>
+                                <td class="definition">Platform as a Service</td>
+                                <td class="definition">Only your code</td>
+                                <td><div class="example">AWS Elastic Beanstalk</div></td>
+                                <td><div class="example">Deploy PHP app — AWS handles server setup</div></td>
+                            </tr>
+                            <tr>
+                                <td class="topic">SaaS</td>
+                                <td class="definition">Software as a Service</td>
+                                <td class="definition">Nothing</td>
+                                <td><div class="example">Gmail, Zoom</div></td>
+                                <td><div class="example">You just use it via browser</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    🔑 <strong>Easy to remember:</strong><br>
+                    IaaS → Infrastructure<br>
+                    PaaS → Platform<br>
+                    SaaS → Software
+                </div>
+
+                <div class="success-box">
+                    ✅ <strong>Interview tip:</strong> "AWS EC2 is IaaS, Elastic Beanstalk is PaaS, and Google Workspace is SaaS."
+                </div>
+            </div>
+
+            <h3 class="section-title">🌍 Step 8 — What is Region and Availability Zone (AZ)</h3>
+            <div class="aws-definition">
+                <h4>🌎 Region</h4>
+                <p>A <strong>Region</strong> is a geographical location (like Mumbai, Singapore, Ohio) where AWS has data centers.</p>
+
+                <h4>🏢 Availability Zone (AZ)</h4>
+                <p>Each region has multiple data centers — called <strong>Availability Zones (AZs)</strong>.<br>
+                They are physically separate, but connected with high-speed links.</p>
+
+                <div class="code-example">
+                    <strong>Term</strong> → <strong>Example</strong><br>
+                    Region → Asia South (Mumbai)<br>
+                    AZs → ap-south-1a, ap-south-1b, ap-south-1c
+                </div>
+
+                <div class="tip-box">
+                    ✅ <strong>Why AWS does this:</strong> If one AZ fails (due to power or network issues), your app can still run from another AZ → <strong>high availability</strong>.
+                </div>
+
+                <div class="quote-box">
+                    💬 <strong>"Region = City, AZ = Data Centers in that City"</strong>
+                </div>
+            </div>
+
+            <h3 class="section-title">⚖️ Step 9 — Horizontal vs Vertical Scaling</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Type</th>
+                            <th style="width: 25%">Meaning</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 25%">Real-life Analogy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Vertical Scaling</td>
+                            <td class="definition">Increase size of one server (CPU, RAM)</td>
+                            <td><div class="example">Upgrading EC2 instance from t2.micro → t2.large</div></td>
+                            <td><div class="example">Upgrading your laptop</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Horizontal Scaling</td>
+                            <td class="definition">Add more servers</td>
+                            <td><div class="example">Add 5 EC2 instances behind load balancer</div></td>
+                            <td><div class="example">Hiring more employees</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                ✅ <strong>Key Point:</strong><br>
+                Vertical = Scale Up<br>
+                Horizontal = Scale Out
+            </div>
+
+            <div class="quote-box">
+                💬 <strong>"In AWS, Auto Scaling uses horizontal scaling — it adds/removes EC2s automatically."</strong>
+            </quote-box>
+
+            <h3 class="section-title">🛡️ Step 10 — High Availability (HA) vs Fault Tolerance (FT)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Concept</th>
+                            <th style="width: 40%">Meaning</th>
+                            <th style="width: 40%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">High Availability</td>
+                            <td class="definition">System stays available even if one component fails</td>
+                            <td><div class="example">Deploy EC2 in 2 AZs — if one fails, other runs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Fault Tolerance</td>
+                            <td class="definition">System continues without interruption (no downtime at all)</td>
+                            <td><div class="example">Active-active setup — 2 EC2s running in sync</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                ✅ <strong>Easy trick to remember:</strong><br>
+                HA = quick recovery<br>
+                FT = no effect at all
+            </div>
+
+            <div class="quote-box">
+                💬 <strong>"If one EC2 fails and traffic moves to another, that's High Availability.<br>
+                If users never even notice failure, that's Fault Tolerance."</strong>
+            </quote-box>
+
+            <h3 class="section-title">⚙️ Step 11 — Auto Scaling and Load Balancing (Deep Dive)</h3>
+            <div class="aws-definition">
+                <h4>Auto Scaling</h4>
+                <p>Automatically increases or decreases EC2 instances based on traffic or load.</p>
+
+                <div class="quote-box">
+                    💬 <strong>"If my app gets heavy traffic, Auto Scaling adds new EC2s; if load drops, it removes extra ones."</strong>
+                </quote-box>
+
+                <h4>Load Balancer (ELB/ALB)</h4>
+                <p>Distributes incoming traffic evenly across multiple EC2 instances.</p>
+
+                <div class="quote-box">
+                    💬 <strong>"Load Balancer = traffic manager that sends users to the least busy server."</strong>
+                </quote-box>
+
+                <div class="success-box">
+                    ✅ <strong>Together:</strong><br>
+                    Load Balancer spreads requests.<br>
+                    Auto Scaling ensures enough servers exist to handle load.
+                </div>
+            </div>
+
+            <h3 class="section-title">🔧 Step 12 — Real Project Use Case (Explain Like a Lead)</h3>
+            <div class="architecture-example">
+                <h4>PHP Application Scaling Scenario:</h4>
+                <p><strong>"In our PHP app, we hosted EC2 instances in two Availability Zones.</strong><br>
+                A Load Balancer distributes requests, and Auto Scaling adds EC2s during peak traffic (like lunch hours) and removes them at night.<br>
+                This ensures high availability, fault tolerance, and cost optimization."</p>
+            </div>
+
+            <h3 class="section-title">🎯 Step 13 — AWS Concepts Summary Table (Quick Revision)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Concept</th>
+                            <th style="width: 30%">Simple Meaning</th>
+                            <th style="width: 50%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Cloud Computing</td>
+                            <td class="definition">Rent IT resources instead of buying</td>
+                            <td><div class="example">AWS EC2</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">IaaS</td>
+                            <td class="definition">Infrastructure</td>
+                            <td><div class="example">EC2, S3</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">PaaS</td>
+                            <td class="definition">Platform</td>
+                            <td><div class="example">Elastic Beanstalk</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">SaaS</td>
+                            <td class="definition">Software</td>
+                            <td><div class="example">Gmail</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Region</td>
+                            <td class="definition">Geographic area</td>
+                            <td><div class="example">Mumbai</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">AZ</td>
+                            <td class="definition">Data center in that region</td>
+                            <td><div class="example">ap-south-1a</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Horizontal Scaling</td>
+                            <td class="definition">Add more servers</td>
+                            <td><div class="example">3 EC2s instead of 1</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Vertical Scaling</td>
+                            <td class="definition">Bigger server</td>
+                            <td><div class="example">t2.micro → t2.large</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">High Availability</td>
+                            <td class="definition">System recovers quickly</td>
+                            <td><div class="example">Multi-AZ setup</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Fault Tolerance</td>
+                            <td class="definition">No downtime at all</td>
+                            <td><div class="example">Active-active setup</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Auto Scaling</td>
+                            <td class="definition">Add/remove EC2s automatically</td>
+                            <td><div class="example">Scale by load</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Load Balancer</td>
+                            <td class="definition">Distribute traffic</td>
+                            <td><div class="example">ELB/ALB</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cheat-sheet-section">
+                <h3 class="section-title">📋 AWS Cheat Sheet for Interviews</h3>
+
+                <div class="highlight-box">
+                    <h3>🎯 Quick Reference</h3>
+                    <div class="lead-tip">
+                        <strong>Architecture Flow:</strong> Browser → ALB → EC2 → RDS<br>
+                        <strong>Storage:</strong> S3 + CloudFront<br>
+                        <strong>Scaling:</strong> Auto Scaling + ElastiCache<br>
+                        <strong>Background:</strong> SQS + SNS<br>
+                        <strong>Security:</strong> IAM + VPC
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-title">⏱️ 2-Hour Rapid AWS Revision Guide for PHP + Cloud Lead Interview</h3>
+            <div class="highlight-box">
+                <h3>🎯 Why This Guide?</h3>
+                <p><strong>Perfect for:</strong> Last-minute prep, MainTree/L&T interviews, or when you need to refresh everything quickly.</p>
+                <p><strong>Structure:</strong> 3 layers designed for maximum recall and confidence in 2 hours.</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Time</th>
+                            <th style="width: 50%">Task</th>
+                            <th style="width: 30%">Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">0:00 – 0:45</td>
+                            <td class="definition">Read the 15 Q&A below</td>
+                            <td><div class="example">45 minutes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">0:45 – 1:15</td>
+                            <td class="definition">Study 3 System Design diagrams</td>
+                            <td><div class="example">30 minutes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">1:15 – 1:45</td>
+                            <td class="definition">Revise PHP + AWS Integration table</td>
+                            <td><div class="example">30 minutes</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">1:45 – 2:00</td>
+                            <td class="definition">Practice speaking 3 interview scenarios aloud</td>
+                            <td><div class="example">15 minutes</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">📋 LAYER 1 — 15 Must-Know AWS Interview Questions</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Read each question, understand the answer, then practice explaining it in simple terms.
+            </div>
+
+            <div class="interview-questions">
+                <div class="question">1️⃣ What is AWS and why do we use it?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Amazon Web Services (AWS) provides cloud-based computing, storage, and networking resources on-demand.<br>
+                    <strong>Example:</strong> Instead of hosting PHP apps on local servers, you can deploy them on EC2 with managed MySQL (RDS).<br>
+                    <strong>Lead Note:</strong> Cost-effective, scalable, reliable — key reasons to move from on-premise to AWS.
+                </div>
+
+                <div class="question">2️⃣ What are EC2 instances?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Elastic Compute Cloud (EC2) = Virtual servers where you deploy apps.<br>
+                    <strong>Example:</strong> Deploy Laravel or CodeIgniter app on an EC2 running Ubuntu + Apache + PHP + Git.<br>
+                    <strong>Lead Tip:</strong> Know instance types (t2.micro, t3.medium) and security groups.
+                </div>
+
+                <div class="question">3️⃣ What is S3?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Simple Storage Service (S3) = Object storage for files, backups, or logs.<br>
+                    <strong>Example:</strong> Upload user profile images or reports from PHP using AWS SDK.<br>
+                    <strong>Lead Tip:</strong> Mention versioning, lifecycle policies, and pre-signed URLs.
+                </div>
+
+                <div class="question">4️⃣ What is RDS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Relational Database Service — managed MySQL, PostgreSQL, etc.<br>
+                    <strong>Example:</strong> Host your PHP app's MySQL DB without manual maintenance.<br>
+                    <strong>Lead Tip:</strong> Explain backup, Multi-AZ setup, and read replicas.
+                </div>
+
+                <div class="question">5️⃣ What is IAM?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Identity and Access Management — control permissions for users and services.<br>
+                    <strong>Example:</strong> Allow EC2 instance to access S3 bucket without exposing credentials.<br>
+                    <strong>Lead Tip:</strong> Use "principle of least privilege".
+                </div>
+
+                <div class="question">6️⃣ What is VPC?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Virtual Private Cloud — private network inside AWS.<br>
+                    <strong>Example:</strong> Place EC2 and RDS in same VPC but different subnets for security.<br>
+                    <strong>Lead Tip:</strong> Know terms: subnets, route tables, internet gateway, NAT gateway.
+                </div>
+
+                <div class="question">7️⃣ What is CloudFront?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Content Delivery Network (CDN) that caches content closer to users.<br>
+                    <strong>Example:</strong> Use for images, CSS, JS in PHP site → faster load globally.<br>
+                    <strong>Lead Tip:</strong> Combine with S3 for global delivery.
+                </div>
+
+                <div class="question">8️⃣ What is CloudWatch?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Monitoring and logging service.<br>
+                    <strong>Example:</strong> Track EC2 CPU usage, error logs, or RDS connections.<br>
+                    <strong>Lead Tip:</strong> Use alarms to auto-scale or alert devops.
+                </div>
+
+                <div class="question">9️⃣ What is Auto Scaling?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Automatically adds/removes EC2 instances based on load.<br>
+                    <strong>Example:</strong> When API traffic increases, more EC2s spin up.<br>
+                    <strong>Lead Tip:</strong> Combine with Load Balancer for high availability.
+                </div>
+
+                <div class="question">🔟 What is Load Balancer (ELB/ALB)?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Distributes traffic across multiple servers.<br>
+                    <strong>Example:</strong> Spread requests between EC2s hosting same PHP app.<br>
+                    <strong>Lead Tip:</strong> Know difference between Classic LB and Application LB.
+                </div>
+
+                <div class="question">11️⃣ What is Lambda?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Serverless compute — runs code only when triggered.<br>
+                    <strong>Example:</strong> Trigger image resize or email send after file upload (from S3 event).<br>
+                    <strong>Lead Tip:</strong> Compare Lambda (serverless) vs EC2 (server-based).
+                </div>
+
+                <div class="question">12️⃣ What is Elastic Beanstalk?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Platform as a Service — AWS manages EC2, scaling, and deployment.<br>
+                    <strong>Example:</strong> Upload PHP zip file — Beanstalk handles environment setup.<br>
+                    <strong>Lead Tip:</strong> Best for small to medium PHP projects.
+                </div>
+
+                <div class="question">13️⃣ What is Route 53?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> AWS DNS service — manages domain names and routing.<br>
+                    <strong>Example:</strong> Map www.myapp.com → Load Balancer IP.<br>
+                    <strong>Lead Tip:</strong> Supports latency-based routing, health checks.
+                </div>
+
+                <div class="question">14️⃣ What is ElastiCache?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> In-memory caching (Redis or Memcached).<br>
+                    <strong>Example:</strong> Cache DB queries, sessions, or API responses for PHP app.<br>
+                    <strong>Lead Tip:</strong> Say "I use Redis for caching frequently accessed data."
+                </div>
+
+                <div class="question">15️⃣ What are SQS and SNS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong><br>
+                    SQS = Message Queue (store messages for async processing)<br>
+                    SNS = Notification Service (push messages to subscribers)<br>
+                    <strong>Example:</strong> When order placed → PHP app sends SQS message → worker processes it.<br>
+                    <strong>Lead Tip:</strong> Show you know async design and decoupled architecture.
+                </div>
+            </div>
+
+            <h3 class="section-title">🏗️ LAYER 2 — 3 Real System Design Diagrams</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Draw these diagrams on paper and explain each one aloud to yourself.
+            </div>
+
+            <div class="architecture-example">
+                <h4>🧱 Diagram 1: Basic Web App (Single Instance)</h4>
+                <div class="code-example">
+                    User → EC2 (PHP + Apache + MySQL)
+                </div>
+                <p><strong>🧠 Analysis:</strong> Simple but not scalable (single point of failure).</p>
+            </div>
+
+            <div class="architecture-example">
+                <h4>☁️ Diagram 2: Scalable PHP App</h4>
+                <div class="code-example">
+                    User → Load Balancer → EC2 x 3 (PHP app) → RDS (MySQL)<br>
+                                      ↓<br>
+                                    S3 (uploads)<br>
+                                      ↓<br>
+                                  CloudFront (CDN)
+                </div>
+                <p><strong>✅ Analysis:</strong> Scalable, reliable, and cost-optimized. Use Auto Scaling to handle high traffic.</p>
+            </div>
+
+            <div class="architecture-example">
+                <h4>⚙️ Diagram 3: Event-Driven Architecture</h4>
+                <div class="code-example">
+                    User Uploads File → S3 → Triggers Lambda → Stores data in RDS → Notifies via SNS
+                </div>
+                <p><strong>✅ Analysis:</strong> Modern serverless design — no EC2 needed.</p>
+            </div>
+
+            <h3 class="section-title">🔧 LAYER 3 — PHP + AWS Integration Cheat Sheet</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Focus on the PHP Integration column — show you know how to implement these in code.
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Task</th>
+                            <th style="width: 25%">AWS Service</th>
+                            <th style="width: 50%">PHP Integration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Deploy PHP app</td>
+                            <td class="definition">EC2 / Elastic Beanstalk</td>
+                            <td><div class="example">SSH + Git or AWS EB CLI</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Store files</td>
+                            <td class="definition">S3</td>
+                            <td><div class="example">aws/aws-sdk-php → putObject()</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Connect DB</td>
+                            <td class="definition">RDS</td>
+                            <td><div class="example">Normal PDO/MySQLi connection</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cache data</td>
+                            <td class="definition">ElastiCache (Redis/Memcached)</td>
+                            <td><div class="example">PHP Redis/Memcached extension</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queue jobs</td>
+                            <td class="definition">SQS</td>
+                            <td><div class="example">aws/aws-sdk-php</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Monitor app</td>
+                            <td class="definition">CloudWatch</td>
+                            <td><div class="example">View logs in AWS console</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Trigger background job</td>
+                            <td class="definition">Lambda + S3</td>
+                            <td><div class="example">Use AWS SDK to call Lambda</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Secure credentials</td>
+                            <td class="definition">IAM Roles</td>
+                            <td><div class="example">Attach role to EC2 instead of .env</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🎭 BONUS: 3 Real Interview Scenarios to Practice</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Practice these aloud 3-4 times each. Time yourself and focus on confidence.
+            </div>
+
+            <div class="interview-questions">
+                <div class="question">Scenario 1: "Your PHP app is slow at peak traffic. How will you handle it?"</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use Load Balancer + Auto Scaling + Redis cache. The Load Balancer will distribute traffic across multiple EC2 instances, Auto Scaling will automatically add more EC2s when CPU usage exceeds 70%, and Redis will cache frequently accessed database queries to reduce load on RDS."
+                </div>
+
+                <div class="question">Scenario 2: "You need to store millions of images — what's your plan?"</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use S3 for storage with CloudFront as CDN for global delivery. Store image metadata in RDS. Use S3 versioning for backup and lifecycle policies to move old images to cheaper storage. In PHP, I'll use pre-signed URLs for secure access."
+                </div>
+
+                <div class="question">Scenario 3: "Your app must send 10,000 emails after order placement."</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use SQS for queueing emails. When order is placed, PHP app sends message to SQS queue. A background worker (either EC2 or Lambda) will process the queue asynchronously. This prevents the main application from being blocked and ensures reliable delivery even during high traffic."
+                </div>
+            </div>
+
+            <div class="success-box">
+                🎯 <strong>Final Tips for 2-Hour Prep:</strong><br>
+                • Read questions first, then practice explaining each service<br>
+                • Draw the 3 diagrams on paper and label each component<br>
+                • Memorize the PHP integration methods<br>
+                • Practice scenarios with a timer — aim for confident delivery<br>
+                • Focus on "why" questions — explain benefits, not just features
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🚀 Master AWS for PHP interviews • Created for Lead-level positions • Keep practicing the architecture flow!</p>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" onclick="scrollToTop()" title="Back to Top">↑</button>
+
+    <script>
+        // Scroll to Top functionality
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollButton.style.display = 'block';
+            } else {
+                scrollButton.style.display = 'none';
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight current section in navigation (if needed in future)
+            const sections = document.querySelectorAll('.section-title');
+            const navLinks = document.querySelectorAll('.nav-breadcrumb a');
+
+            // Add fade-in animation for content blocks
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Apply fade-in to major content blocks
+            document.querySelectorAll('.highlight-box, .architecture-example, .table-container').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
