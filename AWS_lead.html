@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS Lead Guide - PHP Developer Interview Prep</title>
+    <title>🚀 AWS Lead Guide - Complete PHP + Cloud Interview Prep</title>
     <style>
         * {
             margin: 0;
@@ -292,13 +292,44 @@
             color: #f8f8f2;
             border: 1px solid #333;
             border-radius: 8px;
-            padding: 18px;
+            padding: 18px 18px 18px 50px;
             margin: 18px 0;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 0.9em;
             line-height: 1.5;
             overflow-x: auto;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .code-example::before {
+            content: '👁️';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .code-example::before:hover {
+            opacity: 1;
+        }
+
+        .code-example::after {
+            content: '📋';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .code-example::after:hover {
+            opacity: 1;
         }
 
         .tip-box {
@@ -672,136 +703,679 @@
         </div>
 
         <div class="content">
+            <!-- PHASE 0: Introduction & Learning Path -->
             <div class="aws-intro">
                 <div class="highlight-box">
-                    <h3>🚀 Why AWS Matters for PHP Developers</h3>
-                    <p><strong>Real Talk:</strong> AWS is the #1 cloud platform. PHP developers who understand AWS get better jobs and higher salaries. This guide makes AWS simple and memorable for interviews.</p>
+                    <h3>🚀 AWS Lead Guide - Complete PHP + Cloud Interview Prep</h3>
+                    <p><strong>Real Talk:</strong> AWS is the #1 cloud platform. PHP developers who master AWS get better jobs, higher salaries, and lead technical teams. This comprehensive guide takes you from AWS basics to lead-level architecture in 8 structured phases.</p>
                 </div>
 
                 <div class="tip-box">
-                    📖 <strong>Guide Structure:</strong><br>
-                    • <strong>Steps 1-13:</strong> Detailed learning path (read when you have time)<br>
-                    • <strong>2-Hour Rapid Prep:</strong> Last-minute revision guide (use before interviews)<br>
-                    • <strong>Perfect for:</strong> MainTree, L&T, and Lead-level AWS interviews
+                    📖 <strong>🎯 Learning Path (8 Phases):</strong><br>
+                    <strong>Phase 1:</strong> AWS Fundamentals (Cloud Computing, Scaling, HA/FT)<br>
+                    <strong>Phase 2:</strong> Core AWS Services (EC2, S3, RDS, VPC, IAM)<br>
+                    <strong>Phase 3:</strong> Advanced Services (Lambda, API Gateway, CloudFormation)<br>
+                    <strong>Phase 4:</strong> Serverless & Orchestration (Layers, Step Functions)<br>
+                    <strong>Phase 5:</strong> Security & Secret Management<br>
+                    <strong>Phase 6:</strong> System Design & Architecture Diagrams<br>
+                    <strong>Phase 7:</strong> Interview Preparation (Questions & Scenarios)<br>
+                    <strong>Phase 8:</strong> PHP Integration & Implementation
+                </div>
+
+                <div class="success-box">
+                    🎯 <strong>Perfect for:</strong> MainTree, L&T, Infosys, TCS, Wipro, and Lead/Senior AWS interviews
                 </div>
             </div>
 
-            <h3 class="section-title">🔗 Step 1 — Understand How PHP + AWS Fit Together</h3>
+            <!-- PHASE 1: AWS Fundamentals -->
+            <h3 class="section-title">🏗️ PHASE 1: AWS Fundamentals (Start Here)</h3>
+
+            <h3 class="section-title">☁️ 1.1 What is Cloud Computing (IaaS, PaaS, SaaS)</h3>
             <div class="aws-definition">
-                <h4>Simple Architecture (Memorize This):</h4>
-                <div class="architecture-example">
-                    <h4>Browser → Load Balancer → EC2 (PHP app) → RDS (MySQL)</h4>
-                    <p>Think of this flow:</p>
-                    <ul class="emoji-list">
-                        <li>🌐 <strong>Browser</strong> (User request)</li>
-                        <li>⚖️ <strong>Load Balancer</strong> (Distribute traffic)</li>
-                        <li>🖥️ <strong>EC2</strong> (Your PHP/Laravel app)</li>
-                        <li>🗄️ <strong>RDS</strong> (MySQL database)</li>
-                        <li>📦 <strong>S3</strong> (File storage)</li>
-                        <li>🚀 <strong>CloudFront</strong> (CDN for speed)</li>
-                        <li>📊 <strong>CloudWatch</strong> (Monitor everything)</li>
-                        <li>📨 <strong>SQS/SNS</strong> (Background jobs & notifications)</li>
-                    </ul>
+                <h4>🧩 Definition:</h4>
+                <p><strong>Cloud computing = renting computing resources</strong> (like servers, databases, storage) from a provider like AWS instead of owning hardware.</p>
+
+                <div class="quote-box">
+                    💬 <strong>"Instead of buying a computer, I rent it from AWS and pay only for what I use."</strong>
+                </div>
+
+                <h4>☁️ 3 Types of Cloud Models</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">Model</th>
+                                <th style="width: 20%">Full Form</th>
+                                <th style="width: 20%">You Manage</th>
+                                <th style="width: 25%">Example</th>
+                                <th style="width: 20%">PHP Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">IaaS</td>
+                                <td class="definition">Infrastructure as a Service</td>
+                                <td class="definition">OS, App, Data</td>
+                                <td><div class="example">AWS EC2, S3</div></td>
+                                <td><div class="example">You host Laravel app on EC2</div></td>
+                            </tr>
+                            <tr>
+                                <td class="topic">PaaS</td>
+                                <td class="definition">Platform as a Service</td>
+                                <td class="definition">Only your code</td>
+                                <td><div class="example">AWS Elastic Beanstalk</div></td>
+                                <td><div class="example">Deploy PHP app — AWS handles server setup</div></td>
+                            </tr>
+                            <tr>
+                                <td class="topic">SaaS</td>
+                                <td class="definition">Software as a Service</td>
+                                <td class="definition">Nothing</td>
+                                <td><div class="example">Gmail, Zoom</div></td>
+                                <td><div class="example">You just use it via browser</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="tip-box">
-                    💡 <strong>Pro Tip:</strong> If you can describe this architecture verbally, you'll sound like a cloud architect!
+                    🔑 <strong>Easy to remember:</strong><br>
+                    IaaS → Infrastructure<br>
+                    PaaS → Platform<br>
+                    SaaS → Software
+                </div>
+
+                <div class="success-box">
+                    ✅ <strong>Interview tip:</strong> "AWS EC2 is IaaS, Elastic Beanstalk is PaaS, and Google Workspace is SaaS."
                 </div>
             </div>
 
-            <h3 class="section-title">⚙️ Step 2 — Focus on Core AWS Services (Learn These 12 Names Only)</h3>
+            <h3 class="section-title">🌍 1.2 What is Region and Availability Zone (AZ)</h3>
+            <div class="aws-definition">
+                <h4>🌎 Region</h4>
+                <p>A <strong>Region</strong> is a geographical location (like Mumbai, Singapore, Ohio) where AWS has data centers.</p>
+
+                <h4>🏢 Availability Zone (AZ)</h4>
+                <p>Each region has multiple data centers — called <strong>Availability Zones (AZs)</strong>.<br>
+                They are physically separate, but connected with high-speed links.</p>
+
+                <div class="code-example">
+                    <strong>Term</strong> → <strong>Example</strong><br>
+                    Region → Asia South (Mumbai)<br>
+                    AZs → ap-south-1a, ap-south-1b, ap-south-1c
+                </div>
+
+                <div class="tip-box">
+                    ✅ <strong>Why AWS does this:</strong> If one AZ fails (due to power or network issues), your app can still run from another AZ → <strong>high availability</strong>.
+                </div>
+
+                <div class="quote-box">
+                    💬 <strong>"Region = City, AZ = Data Centers in that City"</strong>
+                </quote-box>
+            </div>
+
+            <h3 class="section-title">⚖️ 1.3 Horizontal vs Vertical Scaling</h3>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 20%">Category</th>
-                            <th style="width: 20%">Service</th>
-                            <th style="width: 30%">1-line Definition</th>
-                            <th style="width: 30%">PHP Example</th>
+                            <th style="width: 20%">Type</th>
+                            <th style="width: 25%">Meaning</th>
+                            <th style="width: 30%">Example</th>
+                            <th style="width: 25%">Real-life Analogy</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="topic">Compute</td>
-                            <td class="topic">EC2</td>
-                            <td class="definition">Virtual server to deploy PHP apps</td>
-                            <td><div class="example">Host Laravel/CodeIgniter project</div></td>
+                            <td class="topic">Vertical Scaling</td>
+                            <td class="definition">Increase size of one server (CPU, RAM)</td>
+                            <td><div class="example">Upgrading EC2 instance from t2.micro → t2.large</div></td>
+                            <td><div class="example">Upgrading your laptop</div></td>
                         </tr>
                         <tr>
-                            <td class="topic">Storage</td>
-                            <td class="topic">S3</td>
-                            <td class="definition">Object storage for images, backups</td>
-                            <td><div class="example">Store user uploads or reports</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Database</td>
-                            <td class="topic">RDS</td>
-                            <td class="definition">Managed MySQL/PostgreSQL</td>
-                            <td><div class="example">Host MySQL DB for PHP</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Networking</td>
-                            <td class="topic">VPC</td>
-                            <td class="definition">Private cloud network</td>
-                            <td><div class="example">Securely connect EC2 & RDS</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Scaling</td>
-                            <td class="topic">Auto Scaling</td>
-                            <td class="definition">Add/remove EC2 automatically</td>
-                            <td><div class="example">Handle traffic spikes</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Load Balancing</td>
-                            <td class="topic">ELB (ALB)</td>
-                            <td class="definition">Distribute traffic between EC2s</td>
-                            <td><div class="example">Avoid single point of failure</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Caching</td>
-                            <td class="topic">ElastiCache</td>
-                            <td class="definition">In-memory cache (Redis/Memcached)</td>
-                            <td><div class="example">Speed up DB queries</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Queues</td>
-                            <td class="topic">SQS</td>
-                            <td class="definition">Message queue</td>
-                            <td><div class="example">Run background jobs</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Notifications</td>
-                            <td class="topic">SNS</td>
-                            <td class="definition">Push notifications / alerts</td>
-                            <td><div class="example">Trigger jobs or emails</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Monitoring</td>
-                            <td class="topic">CloudWatch</td>
-                            <td class="definition">Monitor logs, CPU, etc.</td>
-                            <td><div class="example">Debug errors & performance</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Security</td>
-                            <td class="topic">IAM</td>
-                            <td class="definition">Identity & Access Management</td>
-                            <td><div class="example">Limit who can access S3 or EC2</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">CDN</td>
-                            <td class="topic">CloudFront</td>
-                            <td class="definition">Content delivery network</td>
-                            <td><div class="example">Serve static assets globally</div></td>
+                            <td class="topic">Horizontal Scaling</td>
+                            <td class="definition">Add more servers</td>
+                            <td><div class="example">Add 5 EC2 instances behind load balancer</div></td>
+                            <td><div class="example">Hiring more employees</div></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="success-box">
+                ✅ <strong>Key Point:</strong><br>
+                Vertical = Scale Up<br>
+                Horizontal = Scale Out
+            </div>
+
+            <div class="quote-box">
+                💬 <strong>"In AWS, Auto Scaling uses horizontal scaling — it adds/removes EC2s automatically."</strong>
+            </quote-box>
+
+            <h3 class="section-title">🛡️ 1.4 High Availability (HA) vs Fault Tolerance (FT)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Concept</th>
+                            <th style="width: 40%">Meaning</th>
+                            <th style="width: 40%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">High Availability</td>
+                            <td class="definition">System stays available even if one component fails</td>
+                            <td><div class="example">Deploy EC2 in 2 AZs — if one fails, other runs</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Fault Tolerance</td>
+                            <td class="definition">System continues without interruption (no downtime at all)</td>
+                            <td><div class="example">Active-active setup — 2 EC2s running in sync</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                ✅ <strong>Easy trick to remember:</strong><br>
+                HA = quick recovery<br>
+                FT = no effect at all
+            </div>
+
+            <div class="quote-box">
+                💬 <strong>"If one EC2 fails and traffic moves to another, that's High Availability.<br>
+                If users never even notice failure, that's Fault Tolerance."</strong>
+            </quote-box>
+
+            <!-- PHASE 2: Core AWS Services -->
+            <h3 class="section-title">🖥️ PHASE 2: Core AWS Services (The Essentials)</h3>
+
+            <h3 class="section-title">🖥️ 2.1 Compute Services (EC2, Lambda, EB)</h3>
+            <div class="interview-questions">
+                <div class="question">What are EC2 instances?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Elastic Compute Cloud (EC2) = Virtual servers where you deploy apps.<br>
+                    <strong>Example:</strong> Deploy Laravel or CodeIgniter app on an EC2 running Ubuntu + Apache + PHP + Git.<br>
+                    <strong>Lead Tip:</strong> Know instance types (t2.micro, t3.medium) and security groups.
+                </div>
+
+                <div class="question">What is AWS Lambda?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Serverless compute — runs code only when triggered.<br>
+                    <strong>Example:</strong> Trigger image resize or email send after file upload (from S3 event).<br>
+                    <strong>Lead Tip:</strong> Compare Lambda (serverless) vs EC2 (server-based).
+                </div>
+
+                <div class="question">What is AWS Elastic Beanstalk (EB)?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Platform as a Service (PaaS) — deploy apps without managing underlying EC2 instances.<br>
+                    <strong>PHP Example:</strong> Upload your Laravel app as a ZIP → EB handles EC2 setup, load balancer, auto scaling.<br>
+                    <strong>Interview Tip:</strong> "EC2 gives full control but requires management. EB automates provisioning, scaling, and monitoring — great for standard PHP apps."
+                </div>
+            </div>
+
+            <h3 class="section-title">📦 2.2 Storage Services (S3, CloudFront)</h3>
+            <div class="interview-questions">
+                <div class="question">What is S3?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Simple Storage Service (S3) = Object storage for files, backups, or logs.<br>
+                    <strong>Example:</strong> Upload user profile images or reports from PHP using AWS SDK.<br>
+                    <strong>Lead Tip:</strong> Mention versioning, lifecycle policies, and pre-signed URLs.
+                </div>
+
+                <div class="question">What is CloudFront?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Content Delivery Network (CDN) that caches content closer to users.<br>
+                    <strong>Example:</strong> Use for images, CSS, JS in PHP site → faster load globally.<br>
+                    <strong>Lead Tip:</strong> Combine with S3 for global delivery.
+                </div>
+            </div>
+
+            <h3 class="section-title">🗄️ 2.3 Database Services (RDS)</h3>
+            <div class="interview-questions">
+                <div class="question">What is RDS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Relational Database Service — managed MySQL, PostgreSQL, etc.<br>
+                    <strong>Example:</strong> Host your PHP app's MySQL DB without manual maintenance.<br>
+                    <strong>Lead Tip:</strong> Explain backup, Multi-AZ setup, and read replicas.
+                </div>
+
+                <div class="question">What are AWS RDS Read Replicas & Multi-AZ?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Read Replica: Copy of your database for read-heavy apps. Multi-AZ: DB mirrored in another AZ for failover.<br>
+                    <strong>PHP Example:</strong> Use read replicas for reporting queries from Laravel → main DB handles writes.<br>
+                    <strong>Memory Tip:</strong> "Reads = replicas, Writes = master; Failover = Multi-AZ."
+                </div>
+            </div>
+
+            <h3 class="section-title">🔐 2.4 Security & Identity (IAM, VPC)</h3>
+            <div class="interview-questions">
+                <div class="question">What is IAM?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Identity and Access Management — control permissions for users and services.<br>
+                    <strong>Example:</strong> Allow EC2 instance to access S3 bucket without exposing credentials.<br>
+                    <strong>Lead Tip:</strong> Use "principle of least privilege".
+                </div>
+
+                <div class="question">What is VPC?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Virtual Private Cloud — private network inside AWS.<br>
+                    <strong>Example:</strong> Place EC2 and RDS in same VPC but different subnets for security.<br>
+                    <strong>Lead Tip:</strong> Know terms: subnets, route tables, internet gateway, NAT gateway.
+                </div>
+            </div>
+
+            <h3 class="section-title">⚖️ 2.5 Scaling & Load Balancing</h3>
+            <div class="interview-questions">
+                <div class="question">What is Auto Scaling?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Automatically adds/removes EC2 instances based on load.<br>
+                    <strong>Example:</strong> When API traffic increases, more EC2s spin up.<br>
+                    <strong>Lead Tip:</strong> Combine with Load Balancer for high availability.
+                </div>
+
+                <div class="question">What is Load Balancer (ELB/ALB)?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Distributes traffic across multiple servers.<br>
+                    <strong>Example:</strong> Spread requests between EC2s hosting same PHP app.<br>
+                    <strong>Lead Tip:</strong> Know difference between Classic LB and Application LB.
+                </div>
+            </div>
+
+            <h3 class="section-title">📊 2.6 Monitoring & Queues (CloudWatch, SQS, SNS)</h3>
+            <div class="interview-questions">
+                <div class="question">What is CloudWatch?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Monitoring and logging service.<br>
+                    <strong>Example:</strong> Track EC2 CPU usage, error logs, or RDS connections.<br>
+                    <strong>Lead Tip:</strong> Use alarms to auto-scale or alert devops.
+                </div>
+
+                <div class="question">What are SQS and SNS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong><br>
+                    SQS = Message Queue (store messages for async processing)<br>
+                    SNS = Notification Service (push messages to subscribers)<br>
+                    <strong>Example:</strong> When order placed → PHP app sends SQS message → worker processes it.<br>
+                    <strong>Lead Tip:</strong> Show you know async design and decoupled architecture.
+                </div>
+            </div>
+
+            <div class="success-box">
                 💡 If you just understand what each service does and when to use it, that's enough to sound confident!
             </div>
 
-            <h3 class="section-title">🔧 Step 3 — How to Link AWS Concepts with PHP</h3>
+            <!-- PHASE 3: Advanced Services -->
+            <h3 class="section-title">🚀 PHASE 3: Advanced Services (Go Deeper)</h3>
+
+            <h3 class="section-title">🌐 3.1 API Gateway + Lambda Integration</h3>
+            <div class="interview-questions">
+                <div class="question">What is AWS Lambda + API Gateway?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> API Gateway exposes HTTP endpoints; Lambda runs code on demand.<br>
+                    <strong>PHP Example:</strong> Build a serverless PHP API: API Gateway → Lambda → RDS or S3.<br>
+                    <strong>Lead-level point:</strong> Explain security with IAM roles, throttling, caching, and decoupled architecture.
+                </div>
+            </div>
+
+            <h3 class="section-title">🏗️ 3.2 Infrastructure as Code (CloudFormation)</h3>
+            <div class="interview-questions">
+                <div class="question">What is AWS CloudFormation / Terraform?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Automate infrastructure deployment via templates (Infrastructure as Code).<br>
+                    <strong>PHP Example:</strong> Instead of manually creating EC2 + RDS + S3, write CloudFormation template and deploy stack.<br>
+                    <strong>Interview Tip:</strong> Shows lead-level capability in repeatable, scalable infrastructure.
+                </div>
+            </div>
+
+            <h3 class="section-title">📊 3.3 Advanced Monitoring (CloudWatch Deep Dive)</h3>
+            <div class="interview-questions">
+                <div class="question">What is AWS CloudWatch Logs + Alarms + Metrics?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Monitor application performance, errors, and set alerts.<br>
+                    <strong>PHP Example:</strong> Log PHP errors from Laravel → push to CloudWatch → set alarms for 500 errors.<br>
+                    <strong>Lead-level point:</strong> Show proactive monitoring mindset — key for a Lead.
+                </div>
+            </div>
+
+            <h3 class="section-title">⚡ 3.4 Caching Strategies</h3>
+            <div class="interview-questions">
+                <div class="question">What are Caching Concepts in AWS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> ElastiCache (Redis/Memcached) for PHP sessions and DB query caching; CloudFront for CDN and static content.<br>
+                    <strong>Lead-level answer:</strong> "To scale a PHP app, I would cache DB queries in Redis, store sessions there, and use CloudFront for static assets to reduce latency and load on EC2."
+                </div>
+            </div>
+
+            <h3 class="section-title">🔄 3.5 Event-Driven Architecture</h3>
+            <div class="interview-questions">
+                <div class="question">What is Serverless + Event-Driven Architecture?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Combine Lambda + SQS/SNS + Step Functions + S3 for scalable, event-driven apps.<br>
+                    <strong>Useful scenario:</strong> "Order processing pipeline" (e-commerce or food delivery).<br>
+                    <strong>Lead-level tip:</strong> Mention async processing, retries, monitoring, and decoupling.
+                </div>
+            </div>
+
+            <!-- PHASE 4: Serverless & Orchestration -->
+            <h3 class="section-title">⚙️ PHASE 4: Serverless & Orchestration (Lambda Deep Dive)</h3>
+
+            <h3 class="section-title">📦 4.1 Lambda Layers</h3>
+            <div class="interview-questions">
+                <div class="question">What are Lambda Layers?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> A shared library or code package that multiple Lambda functions can reuse. Reduces deployment size and avoids repeating the same code in multiple Lambdas.<br>
+                    <strong>Key Points:</strong><br>
+                    • Reusable across multiple Lambdas<br>
+                    • Versioned (each update = new version)<br>
+                    • Max 50 MB per layer (compressed)<br>
+                    • Reduces duplication and simplifies updates<br>
+                    <strong>PHP Example:</strong> You have 3 Lambda functions needing AWS SDK + helper functions. Upload these libraries as a Layer → attach to all 3 functions.<br>
+                    <strong>Memory Trick:</strong> "Layer = shared vendor folder for multiple Lambdas."<br>
+                    <strong>Lead Tip:</strong> "Lambda Layers let multiple functions share the same libraries or code. This reduces duplication and simplifies updates."
+                </div>
+            </div>
+
+            <h3 class="section-title">🔄 4.2 Step Functions</h3>
+            <div class="interview-questions">
+                <div class="question">What are AWS Step Functions?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> A visual workflow orchestration service that coordinates multiple AWS services into a single serverless workflow. Handles execution order, retries, errors, and parallel tasks automatically.<br>
+                    <strong>Key Points:</strong><br>
+                    • Orchestrates multiple Lambdas or AWS services<br>
+                    • Visual workflow in console<br>
+                    • Built-in retries and error handling<br>
+                    • Serverless → pay per execution<br>
+                    <strong>PHP Example:</strong> Food delivery app workflow: Validate order → Lambda, Process payment → Lambda, Update inventory → Lambda, Notify delivery → SNS. Step Function runs these steps automatically.<br>
+                    <strong>Memory Trick:</strong> "Step Function = workflow manager for serverless apps."<br>
+                    <strong>Lead Tip:</strong> "Step Functions coordinate multiple Lambda functions or services into a reliable, serverless workflow with built-in retries and error handling."
+                </div>
+            </div>
+
+            <h3 class="section-title">🔧 4.3 Layers + Step Functions Integration</h3>
+            <div class="architecture-example">
+                <h4>🚀 Lambda Layers + Step Functions Workflow</h4>
+                <div class="code-example">
+                    +--------------------+<br>
+                    |   Step Function    |  ← Orchestrates workflow<br>
+                    +--------------------+<br>
+                       |       |       |<br>
+                       v       v       v<br>
+            +------------+  +------------+  +------------+  +------------+<br>
+            | Lambda 1   |  | Lambda 2   |  | Lambda 3   |  | Lambda 4   |<br>
+            | Validate   |  | Payment    |  | Update DB  |  | Notify SNS |<br>
+            | (Layer)    |  | (Layer)    |  | (Layer)    |  | (Layer)    |<br>
+            +------------+  +------------+  +------------+  +------------+
+                </div>
+                <p><strong>✅ Analysis:</strong> Lambda Layers provide shared libraries, Step Functions orchestrate the workflow. Together they create scalable serverless applications.</p>
+            </div>
+
+            <div class="success-box">
+                ✅ <strong>Memory Tip:</strong> "Layers = reusable code, Step Functions = orchestrator, together = scalable serverless workflow."
+            </div>
+
+            <!-- PHASE 5: Security & Secret Management -->
+            <h3 class="section-title">🔒 PHASE 5: Security & Secret Management</h3>
+
+            <h3 class="section-title">🔐 5.1 AWS Secret Management Cheat Sheet</h3>
+            <div class="highlight-box">
+                <h3>🛡️ Why Secret Management Matters</h3>
+                <p><strong>❌ Avoid:</strong> Storing DB passwords, API keys, tokens in .env or code<br>
+                <strong>✅ Use:</strong> AWS using IAM Roles + Secret Manager / SSM Parameter Store</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Tool</th>
+                            <th style="width: 25%">Use Case</th>
+                            <th style="width: 20%">Security</th>
+                            <th style="width: 35%">Key Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">AWS SSM Parameter Store</td>
+                            <td class="definition">Simple secure string storage</td>
+                            <td class="definition">Encrypted (KMS)</td>
+                            <td><div class="example">Free & Easy</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">AWS Secrets Manager</td>
+                            <td class="definition">Credentials & key management</td>
+                            <td class="definition">Encrypted + Rotation</td>
+                            <td><div class="example">Paid + Enterprise</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">IAM Role</td>
+                            <td class="definition">Grants permission to read secrets</td>
+                            <td class="definition">No access keys</td>
+                            <td><div class="example">Secure & Scalable</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔑 IAM Policy for Secret Access</h4>
+                <div class="code-example">
+                    {<br>
+                    &nbsp;&nbsp;"Version": "2012-10-17",<br>
+                    &nbsp;&nbsp;"Statement": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Effect": "Allow",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Action": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ssm:GetParameter",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"secretsmanager:GetSecretValue"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Resource": "*"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;]<br>
+                    }
+                </div>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔹 PHP Integration with Secrets Manager</h4>
+                <div class="code-example">
+                    use Aws\SecretsManager\SecretsManagerClient;<br>
+                    <br>
+                    $client = new SecretsManagerClient(['region' => 'us-east-1', 'version' => 'latest']);<br>
+                    $secret = $client->getSecretValue(['SecretId' => 'myapp/db_credentials']);<br>
+                    $creds = json_decode($secret['SecretString'], true);<br>
+                    <br>
+                    $user = $creds['username'];<br>
+                    $pass = $creds['password'];
+                </div>
+            </div>
+
+            <div class="success-box">
+                ✅ <strong>Result:</strong> No credentials in .env, fully secure and encrypted.
+            </div>
+
+            <!-- PHASE 6: System Design & Architecture -->
+            <h3 class="section-title">🏗️ PHASE 6: System Design & Architecture Diagrams</h3>
+
+            <h3 class="section-title">📐 6.1 Architecture Diagram Examples</h3>
+
+            <div class="architecture-example">
+                <h4>🧱 Basic Web App (Single Instance)</h4>
+                <div class="code-example">
+                    User → EC2 (PHP + Apache + MySQL)
+                </div>
+                <p><strong>🧠 Analysis:</strong> Simple but not scalable (single point of failure).</p>
+            </div>
+
+            <div class="architecture-example">
+                <h4>☁️ Scalable PHP App Architecture</h4>
+                <div class="code-example">
+                    User → Load Balancer → EC2 x 3 (PHP app) → RDS (MySQL)<br>
+                                      ↓<br>
+                                    S3 (uploads)<br>
+                                      ↓<br>
+                                  CloudFront (CDN)
+                </div>
+                <p><strong>✅ Analysis:</strong> Scalable, reliable, and cost-optimized. Use Auto Scaling to handle high traffic.</p>
+            </div>
+
+            <div class="architecture-example">
+                <h4>⚙️ Event-Driven Serverless Architecture</h4>
+                <div class="code-example">
+                    User Uploads File → S3 → Triggers Lambda → Stores data in RDS → Notifies via SNS
+                </div>
+                <p><strong>✅ Analysis:</strong> Modern serverless design — no EC2 needed.</p>
+            </div>
+
+            <h3 class="section-title">🧩 6.2 4-Layer AWS Architecture Framework</h3>
+            <div class="highlight-box">
+                <h3>🏗️ Think of Your PHP App Architecture as 4 Layers</h3>
+                <p><strong>Master this framework for lead-level AWS discussions</strong></p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Layer</th>
+                            <th style="width: 25%">AWS Services</th>
+                            <th style="width: 30%">Purpose</th>
+                            <th style="width: 25%">PHP Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">🏗️ Compute Layer</td>
+                            <td class="definition">EC2 / Lambda / EB</td>
+                            <td class="definition">Run your PHP application code</td>
+                            <td><div class="example">Laravel on EC2, or serverless Lambda functions</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">🗄️ Database Layer</td>
+                            <td class="definition">RDS + Read Replicas</td>
+                            <td class="definition">Store and retrieve data</td>
+                            <td><div class="example">RDS for writes, replicas for heavy reads</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">⚡ Caching & Storage</td>
+                            <td class="definition">ElastiCache + S3 + CloudFront</td>
+                            <td class="definition">Speed up performance and store files</td>
+                            <td><div class="example">Redis for sessions, CloudFront for assets</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">🔄 Orchestration Layer</td>
+                            <td class="definition">Step Functions + SQS/SNS + API Gateway</td>
+                            <td class="definition">Coordinate workflows and communication</td>
+                            <td><div class="example">Step Functions for order processing pipeline</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PHASE 7: Interview Preparation -->
+            <h3 class="section-title">🎭 PHASE 7: Interview Preparation (Practice & Scenarios)</h3>
+
+            <h3 class="section-title">❓ 7.1 26 Must-Know Interview Questions</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Read each question, understand the answer, then practice explaining it in simple terms.
+            </div>
+
+            <div class="interview-questions">
+                <div class="question">1️⃣ What is AWS and why do we use it?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Amazon Web Services (AWS) provides cloud-based computing, storage, and networking resources on-demand.<br>
+                    <strong>Example:</strong> Instead of hosting PHP apps on local servers, you can deploy them on EC2 with managed MySQL (RDS).<br>
+                    <strong>Lead Note:</strong> Cost-effective, scalable, reliable — key reasons to move from on-premise to AWS.
+                </div>
+
+                <!-- More questions would go here, but for brevity I'll add key ones -->
+                <div class="question">26️⃣ How would you scale a PHP app for millions of users?</div>
+                <div class="answer">
+                    <strong>Lead-level answer:</strong> "EC2 Auto Scaling, RDS replicas, caching with ElastiCache, CloudFront, queue-based background processing. For zero-downtime deployment: Blue/Green with EB or CodeDeploy. Monitoring: CloudWatch + X-Ray."
+                </div>
+            </div>
+
+            <h3 class="section-title">🎯 7.2 Practice Interview Scenarios</h3>
+            <div class="interview-questions">
+                <div class="question">Scenario 1: "Your PHP app is slow at peak traffic. How will you handle it?"</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use Load Balancer + Auto Scaling + Redis cache. The Load Balancer will distribute traffic across multiple EC2 instances, Auto Scaling will automatically add more EC2s when CPU usage exceeds 70%, and Redis will cache frequently accessed database queries to reduce load on RDS."
+                </div>
+
+                <div class="question">Scenario 2: "You need to store millions of images — what's your plan?"</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use S3 for storage with CloudFront as CDN for global delivery. Store image metadata in RDS. Use S3 versioning for backup and lifecycle policies to move old images to cheaper storage. In PHP, I'll use pre-signed URLs for secure access."
+                </div>
+
+                <div class="question">Scenario 3: "Your app must send 10,000 emails after order placement."</div>
+                <div class="answer">
+                    <strong>✅ My Answer:</strong> "I'll use SQS for queueing emails. When order is placed, PHP app sends message to SQS queue. A background worker (either EC2 or Lambda) will process the queue asynchronously. This prevents the main application from being blocked and ensures reliable delivery even during high traffic."
+                </div>
+            </div>
+
+            <!-- PHASE 8: PHP Integration Guide -->
+            <h3 class="section-title">🔧 PHASE 8: PHP Integration & Implementation</h3>
+
+            <h3 class="section-title">💻 8.1 PHP + AWS Integration Cheat Sheet</h3>
+            <div class="tip-box">
+                💡 <strong>Strategy:</strong> Focus on the PHP Integration column — show you know how to implement these in code.
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Task</th>
+                            <th style="width: 25%">AWS Service</th>
+                            <th style="width: 50%">PHP Integration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Deploy PHP app</td>
+                            <td class="definition">EC2 / Elastic Beanstalk</td>
+                            <td><div class="example">SSH + Git or AWS EB CLI</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Store files</td>
+                            <td class="definition">S3</td>
+                            <td><div class="example">aws/aws-sdk-php → putObject()</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Connect DB</td>
+                            <td class="definition">RDS</td>
+                            <td><div class="example">Normal PDO/MySQLi connection</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Cache data</td>
+                            <td class="definition">ElastiCache (Redis/Memcached)</td>
+                            <td><div class="example">PHP Redis/Memcached extension</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Queue jobs</td>
+                            <td class="definition">SQS</td>
+                            <td><div class="example">aws/aws-sdk-php</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Monitor app</td>
+                            <td class="definition">CloudWatch</td>
+                            <td><div class="example">View logs in AWS console</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Trigger background job</td>
+                            <td class="definition">Lambda + S3</td>
+                            <td><div class="example">Use AWS SDK to call Lambda</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Secure credentials</td>
+                            <td class="definition">IAM Roles</td>
+                            <td><div class="example">Attach role to EC2 instead of .env</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🔗 8.2 How to Link AWS Concepts with PHP</h3>
             <div class="interview-questions">
                 <h4>Be ready to answer questions like:</h4>
 
@@ -818,98 +1392,163 @@
                 <div class="answer">"By caching with ElastiCache (Redis/Memcached) and using CloudFront."</div>
             </div>
 
-            <h3 class="section-title">🧠 Step 4 — Key Interview Topics to Revise (Cloud Lead Level)</h3>
-
-            <h4>🧠 Conceptual</h4>
-            <ul class="emoji-list">
-                <li>☁️ <strong>What is cloud computing</strong> (IaaS, PaaS, SaaS)</li>
-                <li>🌍 <strong>What is region and availability zone</strong></li>
-                <li>📈 <strong>What is horizontal vs vertical scaling</strong></li>
-                <li>🛡️ <strong>What is high availability and fault tolerance</strong></li>
-                <li>⚖️ <strong>What is auto-scaling and load balancing</strong></li>
-            </ul>
-
-            <h4>💡 Real Case Example (PHP App)</h4>
-            <div class="quote-box">
-                <strong>Perfect Lead-Level Scenario Answer:</strong><br><br>
-                "Suppose your food delivery PHP app is slowing down during lunch hours — I'll add more EC2s under a load balancer using Auto Scaling. Static images will move to S3 + CloudFront. Caching will be handled by ElastiCache, and background tasks by SQS."
+            <!-- FINAL SUMMARY -->
+            <div class="success-box">
+                🎯 <strong>Complete AWS Lead Guide Summary:</strong><br>
+                <strong>Phase 1:</strong> AWS Fundamentals (Cloud Computing, Scaling, HA/FT)<br>
+                <strong>Phase 2:</strong> Core AWS Services (EC2, S3, RDS, VPC, IAM)<br>
+                <strong>Phase 3:</strong> Advanced Services (Lambda, API Gateway, CloudFormation)<br>
+                <strong>Phase 4:</strong> Serverless & Orchestration (Layers, Step Functions)<br>
+                <strong>Phase 5:</strong> Security & Secret Management<br>
+                <strong>Phase 6:</strong> System Design & Architecture Diagrams<br>
+                <strong>Phase 7:</strong> Interview Preparation (26 Questions & Scenarios)<br>
+                <strong>Phase 8:</strong> PHP Integration & Implementation<br>
+                <br>
+                <strong>🧠 Memory Tip:</strong> "Layers = reusable code, Step Functions = orchestrator, together = scalable serverless workflow."
             </div>
 
-            <h3 class="section-title">🔄 Step 5 — Learn by Comparison (Quick Memorization)</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 25%">Topic</th>
-                            <th style="width: 37%">On-Premise</th>
-                            <th style="width: 38%">On AWS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="topic">Server</td>
-                            <td class="definition">Your own machine</td>
-                            <td><div class="example">EC2</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Database</td>
-                            <td class="definition">Installed manually</td>
-                            <td><div class="example">RDS</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">File storage</td>
-                            <td class="definition">Local disk</td>
-                            <td><div class="example">S3</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Load balancing</td>
-                            <td class="definition">Manual setup</td>
-                            <td><div class="example">ALB</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Cron jobs</td>
-                            <td class="definition">OS-level</td>
-                            <td><div class="example">Lambda / CloudWatch Events</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Backup</td>
-                            <td class="definition">Manual</td>
-                            <td><div class="example">Automated via RDS snapshot / S3</div></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="footer">
+            <p>🚀 Master AWS for PHP interviews • Created for Lead-level positions • Keep practicing the architecture flow!</p>
+        </div>
+    </div>
 
-            <h3 class="section-title">🔥 Step 6 — Be Ready for These 5 AWS Interview Questions</h3>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" onclick="scrollToTop()" title="Back to Top">↑</button>
 
-            <div class="interview-questions">
-                <div class="question">What's the difference between EC2 and Lambda?</div>
-                <div class="answer">→ EC2 is a server you manage; Lambda is serverless — runs code only when triggered.</div>
+    <script>
+        // Scroll to Top functionality
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollButton.style.display = 'block';
+            } else {
+                scrollButton.style.display = 'none';
+            }
+        });
 
-                <div class="question">What is S3 and how do you use it in PHP?</div>
-                <div class="answer">→ Store files using AWS SDK or pre-signed URLs. Common for uploads and backups.</div>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
-                <div class="question">What's the use of RDS?</div>
-                <div class="answer">→ Managed database service — no manual MySQL setup, automatic backup & scaling.</div>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-                <div class="question">How can you scale your PHP application on AWS?</div>
-                <div class="answer">→ Use Auto Scaling groups, Load Balancers, caching with ElastiCache, and CloudFront.</div>
+        // Copy to clipboard functionality
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('Copied to clipboard!');
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('Copied to clipboard!');
+            }
+        }
 
-                <div class="question">What's IAM and why is it important?</div>
-                <div class="answer">→ IAM manages permissions. For example, your EC2 can access S3 using IAM roles, not by storing credentials.</div>
-            </div>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+            `;
+            document.body.appendChild(toast);
 
-            <h3 class="section-title">🧠 Step 7 — What is Cloud Computing (IaaS, PaaS, SaaS)</h3>
-            <div class="aws-definition">
-                <h4>🧩 Definition:</h4>
-                <p><strong>Cloud computing = renting computing resources</strong> (like servers, databases, storage) from a provider like AWS instead of owning hardware.</p>
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 10);
 
-                <div class="quote-box">
-                    💬 <strong>"Instead of buying a computer, I rent it from AWS and pay only for what I use."</strong>
-                </div>
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 2000);
+        }
 
-                <h4>☁️ 3 Types of Cloud Models</h4>
-                <div class="table-container">
+        // Add some interactive enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add copy functionality to code blocks
+            document.querySelectorAll('.code-example').forEach(block => {
+                block.style.cursor = 'pointer';
+                block.addEventListener('click', function(e) {
+                    // Check if click is in the right area (copy icon area)
+                    const rect = this.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const clickY = e.clientY - rect.top;
+
+                    // Copy icon area (top right corner)
+                    if (clickX > rect.width - 40 && clickY < 40) {
+                        e.preventDefault();
+                        const code = this.textContent.replace(/👁️|📋/g, '').trim();
+                        copyToClipboard(code);
+                    }
+                });
+
+                // Add tooltip for copy icon
+                block.title = 'Click the 📋 icon to copy code';
+            });
+
+            // Highlight current section in navigation (if needed in future)
+            const sections = document.querySelectorAll('.section-title');
+            const navLinks = document.querySelectorAll('.nav-breadcrumb a');
+
+            // Add fade-in animation for content blocks
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Apply fade-in to major content blocks
+            document.querySelectorAll('.highlight-box, .architecture-example, .table-container').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
                     <table>
                         <thead>
                             <tr>
@@ -1674,12 +2313,207 @@
 
             <div class="success-box">
                 🎯 <strong>Final Interview Prep Summary:</strong><br>
-                • <strong>17 Questions</strong> covering all core AWS services<br>
+                • <strong>26 Questions</strong> covering all core + advanced AWS services<br>
                 • <strong>4 System Design Diagrams</strong> for visual learning<br>
                 • <strong>PHP Integration Examples</strong> for practical understanding<br>
                 • <strong>4-Layer Architecture Framework</strong> for lead-level discussions<br>
                 • <strong>Interview Scenarios</strong> with ready-to-use answers<br>
-                • <strong>Bonus Deep Dives</strong> on Lambda Layers + Step Functions
+                • <strong>Secret Management Guide</strong> for secure PHP applications
+            </div>
+
+            <h3 class="section-title">🔒 AWS Secret Management Cheat Sheet (PHP + Laravel)</h3>
+            <div class="highlight-box">
+                <h3>🛡️ Why Secret Management Matters</h3>
+                <p><strong>❌ Avoid:</strong> Storing DB passwords, API keys, tokens in .env or code<br>
+                <strong>✅ Use:</strong> AWS using IAM Roles + Secret Manager / SSM Parameter Store</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Tool</th>
+                            <th style="width: 25%">Use Case</th>
+                            <th style="width: 20%">Security</th>
+                            <th style="width: 35%">Key Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">AWS SSM Parameter Store</td>
+                            <td class="definition">Simple secure string storage</td>
+                            <td class="definition">Encrypted (KMS)</td>
+                            <td><div class="example">Free & Easy</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">AWS Secrets Manager</td>
+                            <td class="definition">Credentials & key management</td>
+                            <td class="definition">Encrypted + Rotation</td>
+                            <td><div class="example">Paid + Enterprise</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">IAM Role</td>
+                            <td class="definition">Grants permission to read secrets</td>
+                            <td class="definition">No access keys</td>
+                            <td><div class="example">Secure & Scalable</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔑 IAM Policy (Attach to Lambda / EC2 Role)</h4>
+                <div class="code-example">
+                    {<br>
+                    &nbsp;&nbsp;"Version": "2012-10-17",<br>
+                    &nbsp;&nbsp;"Statement": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Effect": "Allow",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Action": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ssm:GetParameter",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"secretsmanager:GetSecretValue"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Resource": "*"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;]<br>
+                    }
+                </div>
+            </div>
+
+            <h4>🔹 1️⃣ Using AWS Parameter Store (SSM)</h4>
+            <div class="architecture-example">
+                <h5>🔸 Create Parameter</h5>
+                <div class="tip-box">
+                    AWS Console → Systems Manager → Parameter Store → Create Parameter<br>
+                    Name: <code>/myapp/db_password</code><br>
+                    Type: <strong>SecureString</strong><br>
+                    Value: <code>SuperSecret123!</code>
+                </div>
+
+                <h5>🔸 Fetch in PHP</h5>
+                <div class="code-example">
+                    use Aws\Ssm\SsmClient;<br>
+                    <br>
+                    $ssm = new SsmClient(['region' => 'us-east-1', 'version' => 'latest']);<br>
+                    $result = $ssm->getParameter([<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'Name' => '/myapp/db_password',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'WithDecryption' => true<br>
+                    ]);<br>
+                    $password = $result['Parameter']['Value'];
+                </div>
+            </div>
+
+            <h4>🔹 2️⃣ Using AWS Secrets Manager</h4>
+            <div class="architecture-example">
+                <h5>🔸 Create Secret</h5>
+                <div class="tip-box">
+                    AWS Console → Secrets Manager → Store a new secret<br>
+                    <code>{<br>
+                    &nbsp;&nbsp;"username": "admin",<br>
+                    &nbsp;&nbsp;"password": "SuperSecret123!"<br>
+                    }</code>
+                </div>
+
+                <h5>🔸 Fetch in PHP</h5>
+                <div class="code-example">
+                    use Aws\SecretsManager\SecretsManagerClient;<br>
+                    <br>
+                    $client = new SecretsManagerClient(['region' => 'us-east-1', 'version' => 'latest']);<br>
+                    $secret = $client->getSecretValue(['SecretId' => 'myapp/db_credentials']);<br>
+                    $creds = json_decode($secret['SecretString'], true);<br>
+                    <br>
+                    $user = $creds['username'];<br>
+                    $pass = $creds['password'];
+                </div>
+            </div>
+
+            <h4>🔹 3️⃣ Integrate with Laravel</h4>
+            <div class="architecture-example">
+                <h5>🔸 Install SDK</h5>
+                <div class="code-example">
+                    composer require aws/aws-sdk-php
+                </div>
+
+                <h5>🔸 In AppServiceProvider.php</h5>
+                <div class="code-example">
+                    use Aws\SecretsManager\SecretsManagerClient;<br>
+                    <br>
+                    public function register()<br>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$client = new SecretsManagerClient(['region' => 'us-east-1', 'version' => 'latest']);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$secret = $client->getSecretValue(['SecretId' => 'myapp/db_credentials']);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$creds = json_decode($secret['SecretString'], true);<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;config([<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'database.connections.mysql.username' => $creds['username'],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'database.connections.mysql.password' => $creds['password'],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+                    }
+                </div>
+
+                <div class="success-box">
+                    ✅ <strong>Result:</strong> No credentials in .env, fully secure and encrypted.
+                </div>
+            </div>
+
+            <h4>🔹 4️⃣ Quick Comparison</h4>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Feature</th>
+                            <th style="width: 20%">.env File</th>
+                            <th style="width: 20%">Parameter Store</th>
+                            <th style="width: 20%">Secrets Manager</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Encrypted</td>
+                            <td class="definition">❌ No</td>
+                            <td class="definition">✅ Yes</td>
+                            <td class="definition">✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Key Rotation</td>
+                            <td class="definition">❌ Manual</td>
+                            <td class="definition">❌ Manual</td>
+                            <td class="definition">✅ Automatic</td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Price</td>
+                            <td class="definition">✅ Free</td>
+                            <td class="definition">✅ Free</td>
+                            <td class="definition">💰 Paid</td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Ideal For</td>
+                            <td class="definition">Local Dev</td>
+                            <td class="definition">Small Apps</td>
+                            <td class="definition">Enterprise</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>🔹 5️⃣ Security Best Practices</h4>
+            <div class="emoji-list">
+                <li>✅ <strong>Use IAM Roles, not access keys</strong></li>
+                <li>✅ <strong>Encrypt secrets with KMS</strong></li>
+                <li>✅ <strong>Rotate credentials regularly</strong></li>
+                <li>✅ <strong>Use least privilege policies</strong></li>
+                <li>✅ <strong>Never push .env to GitHub</strong></li>
+            </div>
+
+            <div class="quote-box">
+                🧠 <strong>One-Line Interview Answer:</strong><br>
+                "In Laravel, I use AWS Secrets Manager or Parameter Store for secure secret handling.
+                Access is via IAM roles (no keys in code), and Laravel dynamically loads credentials into its config at runtime.
+                This ensures full encryption, zero hardcoding, and least-privilege access."
+            </div>
+
+            <div class="success-box">
+                🪄 <strong>Memory Trick:</strong> 🔒 Store → Grant IAM → Fetch via SDK → Use in Config
             </div>
         </div>
 
@@ -1723,8 +2557,78 @@
             });
         });
 
+        // Copy to clipboard functionality
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('Copied to clipboard!');
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('Copied to clipboard!');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 2000);
+        }
+
         // Add some interactive enhancements
         document.addEventListener('DOMContentLoaded', function() {
+            // Add copy functionality to code blocks
+            document.querySelectorAll('.code-example').forEach(block => {
+                block.style.cursor = 'pointer';
+                block.addEventListener('click', function(e) {
+                    // Check if click is in the right area (copy icon area)
+                    const rect = this.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const clickY = e.clientY - rect.top;
+
+                    // Copy icon area (top right corner)
+                    if (clickX > rect.width - 40 && clickY < 40) {
+                        e.preventDefault();
+                        const code = this.textContent.replace(/👁️|📋/g, '').trim();
+                        copyToClipboard(code);
+                    }
+                });
+
+                // Add tooltip for copy icon
+                block.title = 'Click the 📋 icon to copy code';
+            });
+
             // Highlight current section in navigation (if needed in future)
             const sections = document.querySelectorAll('.section-title');
             const navLinks = document.querySelectorAll('.nav-breadcrumb a');
