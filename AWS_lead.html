@@ -1167,7 +1167,7 @@
                 </table>
             </div>
 
-            <h3 class="section-title">📋 LAYER 1 — 15 Must-Know AWS Interview Questions</h3>
+            <h3 class="section-title">📋 LAYER 1 — 26 Must-Know AWS Interview Questions</h3>
             <div class="tip-box">
                 💡 <strong>Strategy:</strong> Read each question, understand the answer, then practice explaining it in simple terms.
             </div>
@@ -1279,9 +1279,94 @@
                     <strong>Example:</strong> When order placed → PHP app sends SQS message → worker processes it.<br>
                     <strong>Lead Tip:</strong> Show you know async design and decoupled architecture.
                 </div>
+
+                <div class="question">16️⃣ What are Lambda Layers?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> A shared library or code package that multiple Lambda functions can reuse. Reduces deployment size and avoids repeating the same code in multiple Lambdas.<br>
+                    <strong>Key Points:</strong><br>
+                    • Reusable across multiple Lambdas<br>
+                    • Versioned (each update = new version)<br>
+                    • Max 50 MB per layer (compressed)<br>
+                    • Reduces duplication and simplifies updates<br>
+                    <strong>PHP Example:</strong> You have 3 Lambda functions needing AWS SDK + helper functions. Upload these libraries as a Layer → attach to all 3 functions.<br>
+                    <strong>Memory Trick:</strong> "Layer = shared vendor folder for multiple Lambdas."<br>
+                    <strong>Lead Tip:</strong> "Lambda Layers let multiple functions share the same libraries or code. This reduces duplication and simplifies updates."
+                </div>
+
+                <div class="question">17️⃣ What are AWS Step Functions?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> A visual workflow orchestration service that coordinates multiple AWS services into a single serverless workflow. Handles execution order, retries, errors, and parallel tasks automatically.<br>
+                    <strong>Key Points:</strong><br>
+                    • Orchestrates multiple Lambdas or AWS services<br>
+                    • Visual workflow in console<br>
+                    • Built-in retries and error handling<br>
+                    • Serverless → pay per execution<br>
+                    <strong>PHP Example:</strong> Food delivery app workflow: Validate order → Lambda, Process payment → Lambda, Update inventory → Lambda, Notify delivery → SNS. Step Function runs these steps automatically.<br>
+                    <strong>Memory Trick:</strong> "Step Function = workflow manager for serverless apps."<br>
+                    <strong>Lead Tip:</strong> "Step Functions coordinate multiple Lambda functions or services into a reliable, serverless workflow with built-in retries and error handling."
+                </div>
+
+                <div class="question">18️⃣ What is AWS Elastic Beanstalk (EB)?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Platform as a Service (PaaS) — deploy apps without managing underlying EC2 instances.<br>
+                    <strong>PHP Example:</strong> Upload your Laravel app as a ZIP → EB handles EC2 setup, load balancer, auto scaling.<br>
+                    <strong>Interview Tip:</strong> "EC2 gives full control but requires management. EB automates provisioning, scaling, and monitoring — great for standard PHP apps."
+                </div>
+
+                <div class="question">19️⃣ What is AWS Lambda + API Gateway?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> API Gateway exposes HTTP endpoints; Lambda runs code on demand.<br>
+                    <strong>PHP Example:</strong> Build a serverless PHP API: API Gateway → Lambda → RDS or S3.<br>
+                    <strong>Lead-level point:</strong> Explain security with IAM roles, throttling, caching, and decoupled architecture.
+                </div>
+
+                <div class="question">20️⃣ What is AWS CloudFormation / Terraform?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Automate infrastructure deployment via templates (Infrastructure as Code).<br>
+                    <strong>PHP Example:</strong> Instead of manually creating EC2 + RDS + S3, write CloudFormation template and deploy stack.<br>
+                    <strong>Interview Tip:</strong> Shows lead-level capability in repeatable, scalable infrastructure.
+                </div>
+
+                <div class="question">21️⃣ What is AWS CloudWatch Logs + Alarms + Metrics?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Monitor application performance, errors, and set alerts.<br>
+                    <strong>PHP Example:</strong> Log PHP errors from Laravel → push to CloudWatch → set alarms for 500 errors.<br>
+                    <strong>Lead-level point:</strong> Show proactive monitoring mindset — key for a Lead.
+                </div>
+
+                <div class="question">22️⃣ What are AWS RDS Read Replicas & Multi-AZ?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Read Replica: Copy of your database for read-heavy apps. Multi-AZ: DB mirrored in another AZ for failover.<br>
+                    <strong>PHP Example:</strong> Use read replicas for reporting queries from Laravel → main DB handles writes.<br>
+                    <strong>Memory Tip:</strong> "Reads = replicas, Writes = master; Failover = Multi-AZ."
+                </div>
+
+                <div class="question">23️⃣ What are Caching Concepts in AWS?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> ElastiCache (Redis/Memcached) for PHP sessions and DB query caching; CloudFront for CDN and static content.<br>
+                    <strong>Lead-level answer:</strong> "To scale a PHP app, I would cache DB queries in Redis, store sessions there, and use CloudFront for static assets to reduce latency and load on EC2."
+                </div>
+
+                <div class="question">24️⃣ What is Serverless + Event-Driven Architecture?</div>
+                <div class="answer">
+                    <strong>Definition:</strong> Combine Lambda + SQS/SNS + Step Functions + S3 for scalable, event-driven apps.<br>
+                    <strong>Useful scenario:</strong> "Order processing pipeline" (e-commerce or food delivery).<br>
+                    <strong>Lead-level tip:</strong> Mention async processing, retries, monitoring, and decoupling.
+                </div>
+
+                <div class="question">25️⃣ What are AWS Security Best Practices?</div>
+                <div class="answer">
+                    <strong>Must-know for Lead-level:</strong> IAM roles vs users, Security groups vs NACL, HTTPS/SSL (ACM), never hardcode PHP credentials.<br>
+                    <strong>Interview Tip:</strong> Always explain "least privilege principle".
+                </div>
+
+                <div class="question">26️⃣ How would you scale a PHP app for millions of users?</div>
+                <div class="answer">
+                    <strong>Lead-level answer:</strong> "EC2 Auto Scaling, RDS replicas, caching with ElastiCache, CloudFront, queue-based background processing. For zero-downtime deployment: Blue/Green with EB or CodeDeploy. Monitoring: CloudWatch + X-Ray."
+                </div>
             </div>
 
-            <h3 class="section-title">🏗️ LAYER 2 — 3 Real System Design Diagrams</h3>
+            <h3 class="section-title">🏗️ LAYER 2 — 4 Real System Design Diagrams</h3>
             <div class="tip-box">
                 💡 <strong>Strategy:</strong> Draw these diagrams on paper and explain each one aloud to yourself.
             </div>
@@ -1312,6 +1397,23 @@
                     User Uploads File → S3 → Triggers Lambda → Stores data in RDS → Notifies via SNS
                 </div>
                 <p><strong>✅ Analysis:</strong> Modern serverless design — no EC2 needed.</p>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔄 Diagram 4: Lambda Layers + Step Functions Workflow</h4>
+                <div class="code-example">
+                    +--------------------+<br>
+                    |   Step Function    |  ← Orchestrates workflow<br>
+                    +--------------------+<br>
+                       |       |       |<br>
+                       v       v       v<br>
+            +------------+  +------------+  +------------+  +------------+<br>
+            | Lambda 1   |  | Lambda 2   |  | Lambda 3   |  | Lambda 4   |<br>
+            | Validate   |  | Payment    |  | Update DB  |  | Notify SNS |<br>
+            | (Layer)    |  | (Layer)    |  | (Layer)    |  | (Layer)    |<br>
+            +------------+  +------------+  +------------+  +------------+
+                </div>
+                <p><strong>✅ Analysis:</strong> Lambda Layers provide shared libraries, Step Functions orchestrate the workflow. Together they create scalable serverless applications.</p>
             </div>
 
             <h3 class="section-title">🔧 LAYER 3 — PHP + AWS Integration Cheat Sheet</h3>
@@ -1402,6 +1504,131 @@
                 • Memorize the PHP integration methods<br>
                 • Practice scenarios with a timer — aim for confident delivery<br>
                 • Focus on "why" questions — explain benefits, not just features
+            </div>
+
+            <h3 class="section-title">🎯 BONUS: Lambda Layers + Step Functions Deep Dive</h3>
+            <div class="highlight-box">
+                <h3>🔄 How Layers + Step Functions Work Together</h3>
+                <p><strong>Lambda + Layer + Step Function = Microservices Architecture</strong></p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Concept</th>
+                            <th style="width: 75%">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">Lambda Layers</td>
+                            <td class="definition">Provide shared libraries / helper code to each Lambda function</td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Step Functions</td>
+                            <td class="definition">Orchestrate multiple Lambda functions into a workflow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🚀 Example Workflow (PHP + AWS Serverless)</h4>
+                <div class="code-example">
+                    Lambda Function 1 → Validate input (uses Layer)<br>
+                    Lambda Function 2 → Process payment (Layer)<br>
+                    Lambda Function 3 → Update DB (Layer)<br>
+                    Lambda Function 4 → Send notification (Layer)<br>
+                    <br>
+                    Step Function manages execution order, retries, and error handling<br>
+                    Layer ensures all Lambdas share common code
+                </div>
+                <p><strong>✅ Real PHP Scenarios:</strong> Background job processing, file uploads + S3 + notifications, multi-step API requests</p>
+            </div>
+
+            <div class="tip-box">
+                💡 <strong>Lead-Level Insight:</strong><br>
+                Each Lambda = microservice<br>
+                Layer = shared utility library<br>
+                Step Function = orchestrator managing communication/order
+            </div>
+
+            <div class="success-box">
+                ✅ <strong>Memory Tip:</strong> "Layers = reusable code, Step Functions = orchestrator, together = scalable serverless workflow."
+            </div>
+
+            <h3 class="section-title">🧩 Final Interview Prep Block: 4-Layer AWS Architecture</h3>
+            <div class="highlight-box">
+                <h3>🏗️ Think of Your PHP App Architecture as 4 Layers</h3>
+                <p><strong>Master this framework for lead-level AWS discussions</strong></p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Layer</th>
+                            <th style="width: 25%">AWS Services</th>
+                            <th style="width: 30%">Purpose</th>
+                            <th style="width: 25%">PHP Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">🏗️ Compute Layer</td>
+                            <td class="definition">EC2 / Lambda / EB</td>
+                            <td class="definition">Run your PHP application code</td>
+                            <td><div class="example">Laravel on EC2, or serverless Lambda functions</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">🗄️ Database Layer</td>
+                            <td class="definition">RDS + Read Replicas</td>
+                            <td class="definition">Store and retrieve data</td>
+                            <td><div class="example">RDS for writes, replicas for heavy reads</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">⚡ Caching & Storage</td>
+                            <td class="definition">ElastiCache + S3 + CloudFront</td>
+                            <td class="definition">Speed up performance and store files</td>
+                            <td><div class="example">Redis for sessions, CloudFront for assets</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">🔄 Orchestration Layer</td>
+                            <td class="definition">Step Functions + SQS/SNS + API Gateway</td>
+                            <td class="definition">Coordinate workflows and communication</td>
+                            <td><div class="example">Step Functions for order processing pipeline</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🚀 Complete PHP + AWS Lead-Level Architecture</h4>
+                <div class="code-example">
+                    [API Gateway] → [Lambda + Layers]<br>
+                        ↓<br>
+                    [Step Functions]<br>
+                    ↙        ↘<br>
+                [RDS Master]    [RDS Replicas]<br>
+                    ↓<br>
+                [ElastiCache Redis]<br>
+                    ↓<br>
+                [S3 + CloudFront]<br>
+                    ↓<br>
+                [CloudWatch Monitoring]
+                </div>
+                <p><strong>✅ Lead-Level Explanation:</strong> "This 4-layer architecture provides scalability, reliability, and performance. Compute layer handles business logic, database layer manages data with read replicas, caching/storage layer optimizes performance, and orchestration layer manages complex workflows."</p>
+            </div>
+
+            <div class="success-box">
+                🎯 <strong>Final Interview Prep Summary:</strong><br>
+                • <strong>17 Questions</strong> covering all core AWS services<br>
+                • <strong>4 System Design Diagrams</strong> for visual learning<br>
+                • <strong>PHP Integration Examples</strong> for practical understanding<br>
+                • <strong>4-Layer Architecture Framework</strong> for lead-level discussions<br>
+                • <strong>Interview Scenarios</strong> with ready-to-use answers<br>
+                • <strong>Bonus Deep Dives</strong> on Lambda Layers + Step Functions
             </div>
         </div>
 
