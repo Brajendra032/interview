@@ -1035,6 +1035,12 @@
                             <td><div class="example">CREATE VIEW active_users AS SELECT ...</div></td>
                             <td><div class="lead-tip">Simplify complex queries</div></td>
                         </tr>
+                        <tr>
+                            <td class="topic">UNION vs UNION ALL</td>
+                            <td class="definition"><strong>Main Difference:</strong> UNION removes duplicates (slower), UNION ALL keeps all rows (faster)</td>
+                            <td><div class="example"><strong>UNION (removes duplicates):</strong><br>SELECT name FROM customers WHERE city='NY'<br>UNION<br>SELECT name FROM suppliers WHERE city='NY'<br><br><strong>UNION ALL (keeps duplicates):</strong><br>SELECT name FROM customers WHERE city='NY'<br>UNION ALL<br>SELECT name FROM suppliers WHERE city='NY'</div></td>
+                            <td><div class="lead-tip">Use UNION ALL 99% of time (faster). UNION only when you need DISTINCT results. UNION ALL = set addition, UNION = set union</div></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
