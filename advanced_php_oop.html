@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧬 Advanced PHP OOP Concepts - Complete Guide</title>
+    <title>🔧 Advanced PHP OOP Concepts - Complete Guide</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -276,6 +277,19 @@
             }
         }
 
+        /* Ensure emoji rendering */
+        .section-title, .concept-title, h1, h2, h3, h4, h5, h6 {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-variant-emoji: emoji;
+        }
+
+        /* Force emoji font for better rendering */
+        .section-title:before, .concept-title:before, h1:before, h2:before, h3:before {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", emoji;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -307,7 +321,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧬 Advanced PHP OOP Concepts</h1>
+            <h1>🔧 Advanced PHP OOP Concepts</h1>
             <p>Complete Guide to Object-Oriented Programming in PHP</p>
         </div>
 
@@ -327,7 +341,7 @@
 
             <!-- Encapsulation -->
             <div class="fade-in">
-                <h2 class="section-title">1. 🔒 Encapsulation (Data Protection)</h2>
+                <h2 class="section-title">1. 🔐 Encapsulation (Data Protection)</h2>
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
                     <p>Wrap (bind) data and functions together in one unit (class), and hide the internal details from outside. You only allow controlled access using getters/setters.</p>
@@ -359,7 +373,7 @@ echo $acc->getBalance(); // ✅ You can get balance but not directly change it
 
             <!-- Inheritance -->
             <div class="fade-in">
-                <h2 class="section-title">2. 🧬 Inheritance (Code Reuse)</h2>
+                <h2 class="section-title">2. 📈 Inheritance (Code Reuse)</h2>
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
                     <p>Child class can use properties and methods of parent class. Helps in code reusability.</p>
@@ -430,7 +444,7 @@ foreach ($vehicles as $v) {
 
             <!-- Abstraction -->
             <div class="fade-in">
-                <h2 class="section-title">4. 🧠 Abstraction (Show Only What's Needed)</h2>
+                <h2 class="section-title">4. 🎯 Abstraction (Show Only What's Needed)</h2>
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
                     <p>Show only essential details; hide unnecessary background code.</p>
@@ -649,7 +663,7 @@ try {
 
                 <div class="feature-list">
                     <div class="feature-card">
-                        <h4>🔐 Session Example</h4>
+                        <h4>🔒 Session Example</h4>
                         <div class="code-example" style="margin: 10px 0; padding-left: 40px;">
 // Session Example
 session_start();
@@ -751,7 +765,7 @@ class BankAccount {
 }
                 </div>
 
-                <div class="concept-title">🧬 Traits</div>
+                <div class="concept-title">🔗 Traits</div>
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Simple Definition:</h4>
                     <p>LEGO power-ups - add extra abilities to any class without inheritance</p>
@@ -1448,7 +1462,7 @@ function secureFileUpload($file) {
         </div>
 
         <div class="footer">
-            <p>🧬 Advanced PHP OOP Concepts - Master Object-Oriented Programming in PHP! 🎯💪</p>
+            <p>🔧 Advanced PHP OOP Concepts - Master Object-Oriented Programming in PHP! 🎯💪</p>
         </div>
     </div>
 

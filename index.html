@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ðŸ§© LEAD PHP INTERVIEW CHEAT SHEET</title>
+    <title>📋 LEAD PHP INTERVIEW CHEAT SHEET</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -185,6 +186,19 @@
             font-size: 0.9em;
         }
 
+        /* Ensure emoji rendering */
+        .section-title, .concept-title, h1, h2, h3, h4, h5, h6 {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-variant-emoji: emoji;
+        }
+
+        /* Force emoji font for better rendering */
+        .section-title:before, .concept-title:before, h1:before, h2:before, h3:before {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", emoji;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -222,35 +236,45 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>ðŸ§© LEAD PHP INTERVIEW CHEAT SHEET</h1>
+            <h1>📋 LEAD PHP INTERVIEW CHEAT SHEET</h1>
             <p>PHP + Laravel + MySQLi - Complete Lead-Level Interview Preparation Guide</p>
         </div>
 
         <div class="tabs">
             <div class="tab-buttons">
+                <!-- Core PHP Learning Path -->
                 <button class="tab-button active" onclick="openTab('phase1')">Phase 1: PHP Basics</button>
-                <button class="tab-button" onclick="openTab('phase4')">Phase 4: PHP in Framework Context</button>
-                <button class="tab-button" onclick="openTab('phase5')">Phase 5: System Design & Scalability</button>
-                <button class="tab-button" onclick="openTab('phase6')">Phase 6: Lead / Architect Interview Prep</button>
-                <button class="tab-button" onclick="openTab('laravel')">Laravel Lead Cheat Sheet</button>
                 <button class="tab-button" onclick="openTab('mysqli')">MySQLi Lead Cheat Sheet</button>
-                <button class="tab-button" onclick="window.open('gcp-master-plan.html', '_blank')">GCP Cloud Master Plan</button>
-                <button class="tab-button" onclick="window.open('javascript-architect.html', '_blank')">ðŸš€ JavaScript Architect Guide</button>
-                <button class="tab-button" onclick="window.open('php-architect.html', '_blank')">ðŸ˜ PHP Architect Guide</button>
-                <button class="tab-button" onclick="window.open('advanced_php_oop.html', '_blank')">ðŸ§¬ Advanced PHP OOP Guide</button>
-                <button class="tab-button" onclick="window.open('laravel-architect.html', '_blank')">ðŸŽ¯ Laravel Architect Guide</button>
-                <button class="tab-button" onclick="window.open('sql-architect.html', '_blank')">ðŸ—„ï¸ SQL Architect Guide</button>
-                <button class="tab-button" onclick="window.open('microservices-architect.html', '_blank')">ðŸ”§ Microservices Architect Guide</button>
-                <button class="tab-button" onclick="window.open('healthcare-it-architect.html', '_blank')">ðŸ¥ Healthcare IT Architect Guide</button>
-                <button class="tab-button" onclick="window.open('devops-architect.html', '_blank')">ðŸš€ DevOps Architect Guide</button>
-                <button class="tab-button" onclick="window.open('leadership-architect.html', '_blank')">ðŸ‘¥ Leadership & Architecture Guide</button>
-                <button class="tab-button" onclick="window.open('generative-ai-architect.html', '_blank')">ðŸ¤– Generative AI Architect Guide</button>
-                <button class="tab-button" onclick="window.open('AWS_lead.html', '_blank')">â˜ï¸ AWS Lead Guide</button>
-                <button class="tab-button" onclick="openTab('critical-scenarios')">ðŸš¨ Critical Scenarios</button>
-                <button class="tab-button" onclick="openTab('coding-challenges')">ðŸ’» Coding Challenges</button>
-                <button class="tab-button" onclick="openTab('logical-reasoning')">ðŸ§  Logical Reasoning</button>
-                <button class="tab-button" onclick="openTab('interview')">Interview Mastery Guide</button>
+                <button class="tab-button" onclick="openTab('laravel')">Laravel Lead Cheat Sheet</button>
+                <button class="tab-button" onclick="openTab('phase4')">Phase 4: PHP in Framework Context</button>
+                
+                <!-- Deep Technical Growth -->
+                <button class="tab-button" onclick="window.open('advanced_php_oop.html', '_blank')">🧬 Advanced PHP OOP Guide</button>
+                <button class="tab-button" onclick="window.open('php-architect.html', '_blank')">🐘 PHP Architect Guide</button>
+                <button class="tab-button" onclick="window.open('laravel-architect.html', '_blank')">🎯 Laravel Architect Guide</button>
+                <button class="tab-button" onclick="window.open('sql-architect.html', '_blank')">🗄️ SQL Architect Guide</button>
+                <button class="tab-button" onclick="window.open('javascript-architect.html', '_blank')">🚀 JavaScript Architect Guide</button>
+            
+                <!-- System Design & Cloud -->
+                <button class="tab-button" onclick="openTab('phase5')">Phase 5: System Design & Scalability</button>
+                <button class="tab-button" onclick="window.open('microservices-architect.html', '_blank')">🔧 Microservices Architect Guide</button>
+                <button class="tab-button" onclick="window.open('AWS_lead.html', '_blank')">☁️ AWS Lead Guide</button>
+                <button class="tab-button" onclick="window.open('gcp-master-plan.html', '_blank')">🌩️ GCP Cloud Master Plan</button>
+                <button class="tab-button" onclick="window.open('devops-architect.html', '_blank')">🚀 DevOps Architect Guide</button>
+            
+                <!-- Domain & Leadership -->
+                <button class="tab-button" onclick="window.open('healthcare-it-architect.html', '_blank')">🏥 Healthcare IT Architect Guide</button>
+                <button class="tab-button" onclick="window.open('generative-ai-architect.html', '_blank')">🤖 Generative AI Architect Guide</button>
+                <button class="tab-button" onclick="openTab('phase6')">Phase 6: Lead / Architect Interview Prep</button>
+                <button class="tab-button" onclick="window.open('leadership-architect.html', '_blank')">👥 Leadership & Architecture Guide</button>
+            
+                <!-- Final Rounds & Thinking Skills -->
+                <button class="tab-button" onclick="openTab('critical-scenarios')">🚨 Critical Scenarios</button>
+                <button class="tab-button" onclick="openTab('coding-challenges')">💻 Coding Challenges</button>
+                <button class="tab-button" onclick="openTab('logical-reasoning')">🧠 Logical Reasoning</button>
+                <button class="tab-button" onclick="openTab('interview')">🎯 Interview Mastery Guide</button>
             </div>
+            
         </div>
 
         <!-- Phase 1 Content -->
@@ -563,7 +587,7 @@
             </div>
 
             <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 10px; border-left: 5px solid #2196f3;">
-                <h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.4em;">ðŸŽ¯ Final Lead-Level Tip</h3>
+                <h3 style="color: #1976d2; margin-bottom: 15px; font-size: 1.4em;">🎯 Final Lead-Level Tip</h3>
                 <p style="font-size: 1.1em; line-height: 1.6; color: #424242; margin: 0;">
                     <strong>Interviewers at lead level don't test only "what you know" â€” they test how you think.</strong><br>
                     Always explain why you choose a design, pattern, or solution, not just what it is.
@@ -902,20 +926,20 @@
             </div>
 
             <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%); border-radius: 15px; border-left: 5px solid #4caf50;">
-                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">ðŸ§  LARAVEL LEAD SUMMARY</h3>
+                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">🎯 LARAVEL LEAD SUMMARY</h3>
                 <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
-                    <li><strong>âœ… Master Eloquent + Service Container</strong></li>
-                    <li><strong>âœ… Know how queues, caching, and events improve scalability</strong></li>
-                    <li><strong>âœ… Understand Laravel lifecycle & middleware deeply</strong></li>
-                    <li><strong>âœ… Use design patterns for structure (Repository, Observer, Strategy)</strong></li>
-                    <li><strong>âœ… Always discuss performance, scaling, and clean architecture in interviews</strong></li>
+                    <li><strong>✅ Master Eloquent + Service Container</strong></li>
+                    <li><strong>✅ Know how queues, caching, and events improve scalability</strong></li>
+                    <li><strong>✅ Understand Laravel lifecycle & middleware deeply</strong></li>
+                    <li><strong>✅ Use design patterns for structure (Repository, Observer, Strategy)</strong></li>
+                    <li><strong>✅ Always discuss performance, scaling, and clean architecture in interviews</strong></li>
                 </ul>
             </div>
         </div>
 
         <!-- MySQLi Content -->
         <div id="mysqli" class="tab-content">
-            <h2 class="phase-title">ðŸ§© MYSQLi LEAD-LEVEL CHEAT SHEET</h2>
+            <h2 class="phase-title">🗄️ MYSQLi LEAD-LEVEL CHEAT SHEET</h2>
 
             <h3 style="color: #2c3e50; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">PHASE 1 â€” MYSQLi BASICS</h3>
             <div class="table-container">
@@ -1132,29 +1156,29 @@
             </div>
 
             <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%); border-radius: 15px; border-left: 5px solid #4caf50;">
-                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">ðŸ§  MYSQLi LEAD SUMMARY</h3>
+                <h3 style="color: #2e7d32; margin-bottom: 15px; font-size: 1.6em;">🎯 MYSQLi LEAD SUMMARY</h3>
                 <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
-                    <li><strong>âœ… Use Prepared Statements + Transactions always</strong></li>
-                    <li><strong>âœ… Know Joins, Indexing, and Optimization deeply</strong></li>
-                    <li><strong>âœ… Handle Replication, Partitioning, and Deadlocks for scaling</strong></li>
-                    <li><strong>âœ… Design DB with normalization first, denormalize later for speed</strong></li>
-                    <li><strong>âœ… Focus on performance, safety, and maintainability</strong></li>
+                    <li><strong>✅ Use Prepared Statements + Transactions always</strong></li>
+                    <li><strong>✅ Know Joins, Indexing, and Optimization deeply</strong></li>
+                    <li><strong>✅ Handle Replication, Partitioning, and Deadlocks for scaling</strong></li>
+                    <li><strong>✅ Design DB with normalization first, denormalize later for speed</strong></li>
+                    <li><strong>✅ Focus on performance, safety, and maintainability</strong></li>
                 </ul>
             </div>
 
             <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%); border-radius: 15px; border-left: 5px solid #ff9800;">
-                <h3 style="color: #e65100; margin-bottom: 15px; font-size: 1.6em;">ðŸš€ Final Summary â€” Youâ€™re Now Lead-Ready in:</h3>
+                <h3 style="color: #e65100; margin-bottom: 15px; font-size: 1.6em;">🎯 Final Summary — You're Now Lead-Ready in:</h3>
                 <ul style="font-size: 1.1em; line-height: 1.8; color: #424242; margin: 0; padding-left: 20px;">
-                    <li><strong>âœ… PHP Core + OOP + System Design</strong></li>
-                    <li><strong>âœ… Laravel Architecture + Scaling</strong></li>
-                    <li><strong>âœ… MySQLi Optimization + Performance</strong></li>
+                    <li><strong>✅ PHP Core + OOP + System Design</strong></li>
+                    <li><strong>✅ Laravel Architecture + Scaling</strong></li>
+                    <li><strong>✅ MySQLi Optimization + Performance</strong></li>
                 </ul>
             </div>
         </div>
 
         <!-- Critical Interview Scenarios -->
         <div id="critical-scenarios" class="tab-content">
-            <h2 class="phase-title">ðŸš¨ CRITICAL INTERVIEW SCENARIOS & LOGICAL REASONING</h2>
+            <h2 class="phase-title">🚨 CRITICAL INTERVIEW SCENARIOS & LOGICAL REASONING</h2>
 
             <h3 style="color: #e74c3c; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;">ðŸ”¥ MOST COMMON INTERVIEW TRAPS</h3>
             <div class="table-container">
@@ -1313,7 +1337,7 @@
 
         <!-- Practical Coding Challenges -->
         <div id="coding-challenges" class="tab-content">
-            <h2 class="phase-title">ðŸ’» PRACTICAL CODING CHALLENGES - Common Interview Questions</h2>
+            <h2 class="phase-title">💻 PRACTICAL CODING CHALLENGES - Common Interview Questions</h2>
 
             <h3 style="color: #e74c3c; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;">ðŸ”¥ LIVE CODING PROBLEMS</h3>
             
@@ -1492,7 +1516,7 @@
 
         <!-- Logical Reasoning & Decision Making -->
         <div id="logical-reasoning" class="tab-content">
-            <h2 class="phase-title">ðŸ§  LOGICAL REASONING & DECISION-MAKING FRAMEWORKS</h2>
+            <h2 class="phase-title">🧠 LOGICAL REASONING & DECISION-MAKING FRAMEWORKS</h2>
 
             <h3 style="color: #e74c3c; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;">ðŸŽ¯ TECHNICAL DECISION FRAMEWORKS</h3>
             
@@ -1673,7 +1697,7 @@
 
         <!-- Interview Mastery Guide Content -->
         <div id="interview" class="tab-content">
-            <h2 class="phase-title">ðŸŽ¯ INTERVIEW MASTERY GUIDE - Crack Lead-Level Interviews</h2>
+            <h2 class="phase-title">🎯 INTERVIEW MASTERY GUIDE - Crack Lead-Level Interviews</h2>
 
             <h3 style="color: #2c3e50; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">â“ COMMON INTERVIEW QUESTIONS & ANSWERS</h3>
 
@@ -1903,7 +1927,7 @@
             </div>
 
             <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px;">
-                <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em; text-align: center;">ðŸŽ¯ FINAL LEAD-LEVEL INTERVIEW TIPS</h3>
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em; text-align: center;">🎯 FINAL LEAD-LEVEL INTERVIEW TIPS</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     <div>
                         <h4 style="color: #ffd700; margin-bottom: 10px;">Technical Excellence</h4>
@@ -1939,37 +1963,37 @@
     </div>
 
     <div class="footer">
-        <p>ðŸ§© LEAD PHP INTERVIEW MASTERY GUIDE - Complete with Real-world Examples, Critical Scenarios, Coding Challenges & Logical Reasoning! ðŸŽ¯ðŸ’ª</p>
+        <p>📋 LEAD PHP INTERVIEW MASTERY GUIDE - Complete with Real-world Examples, Critical Scenarios, Coding Challenges & Logical Reasoning! 🎯💪</p>
         <div style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-            <h3 style="color: #ffd700; margin-bottom: 15px; text-align: center;">ðŸš€ WHAT YOU'VE MASTERED</h3>
+            <h3 style="color: #ffd700; margin-bottom: 15px; text-align: center;">🎯 WHAT YOU'VE MASTERED</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; text-align: center;">
                 <div>
-                    <h4 style="color: #4caf50; margin-bottom: 10px;">âœ… PHP Core</h4>
+                    <h4 style="color: #4caf50; margin-bottom: 10px;">✅ PHP Core</h4>
                     <p>Variables, functions, arrays, OOP, error handling, security</p>
                 </div>
                 <div>
-                    <h4 style="color: #2196f3; margin-bottom: 10px;">âœ… Laravel Mastery</h4>
+                    <h4 style="color: #2196f3; margin-bottom: 10px;">✅ Laravel Mastery</h4>
                     <p>MVC, Eloquent, middleware, queues, testing, scaling</p>
                 </div>
                 <div>
-                    <h4 style="color: #ff9800; margin-bottom: 10px;">âœ… MySQLi Expert</h4>
+                    <h4 style="color: #ff9800; margin-bottom: 10px;">✅ MySQLi Expert</h4>
                     <p>Queries, optimization, transactions, indexing, security</p>
                 </div>
                 <div>
-                    <h4 style="color: #e91e63; margin-bottom: 10px;">âœ… System Design</h4>
+                    <h4 style="color: #e91e63; margin-bottom: 10px;">✅ System Design</h4>
                     <p>Architecture patterns, scalability, performance, microservices</p>
                 </div>
                 <div>
-                    <h4 style="color: #9c27b0; margin-bottom: 10px;">âœ… Critical Thinking</h4>
+                    <h4 style="color: #9c27b0; margin-bottom: 10px;">✅ Critical Thinking</h4>
                     <p>Problem-solving frameworks, decision-making, trade-offs</p>
                 </div>
                 <div>
-                    <h4 style="color: #f44336; margin-bottom: 10px;">âœ… Interview Ready</h4>
+                    <h4 style="color: #f44336; margin-bottom: 10px;">✅ Interview Ready</h4>
                     <p>Coding challenges, behavioral questions, leadership scenarios</p>
                 </div>
             </div>
             <div style="margin-top: 20px; text-align: center; font-size: 1.1em;">
-                <strong>ðŸŽ¯ You're now equipped to ace any Lead PHP Developer interview!</strong>
+                <strong>🎯 You're now equipped to ace any Lead PHP Developer interview!</strong>
             </div>
         </div>
     </div>
