@@ -1426,6 +1426,31 @@
                 <p><strong>Interview Tips:</strong> Handle case sensitivity, punctuation. Discuss space vs time trade-offs. Two-pointer approach is O(1) space vs O(n) for strrev.</p>
             </div>
 
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Challenge 4: PHP Type Juggling Trick Question</strong></h4>
+                <p style="margin-bottom: 10px;"><strong>Problem:</strong> What will be the output of this PHP code? Explain the type juggling and function call behavior.</p>
+                <div style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                    <strong>// Tricky PHP Code</strong><br>
+                    $a="5";<br>
+                    $b="2days";<br>
+                    echo rm($a+$b);<br>
+                    function rm($a,$b){<br>
+                    &nbsp;&nbsp;return $a+$b;<br>
+                    }
+                </div>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #ffc107;">
+                    <strong>Expected Output: 7</strong>
+                    <p style="margin: 10px 0 0 0;"><strong>Explanation:</strong></p>
+                    <ul style="margin: 5px 0;">
+                        <li><code>$a+$b</code> performs type juggling: "5" → 5, "2days" → 2 (stops at first non-numeric)</li>
+                        <li>Result: <code>5 + 2 = 7</code></li>
+                        <li><code>rm(7)</code> called with one argument, so <code>$b = NULL</code> (default)</li>
+                        <li>Inside function: <code>return 7 + NULL = 7</code> (NULL + number = number)</li>
+                    </ul>
+                </div>
+                <p><strong>Interview Tips:</strong> Tests understanding of PHP's loose typing, type juggling with +, function parameter defaults, and NULL arithmetic behavior. Common gotcha in interviews!</p>
+            </div>
+
             <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🧠 ALGORITHM THINKING PATTERNS</h3>
             <div class="table-container">
                 <table>
