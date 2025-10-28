@@ -1194,6 +1194,306 @@
                 ✅ <strong>Result:</strong> No credentials in .env, fully secure and encrypted.
             </div>
 
+            <h3 class="section-title">🔐 5.2 Amazon Cognito - User Authentication & Management</h3>
+            <div class="highlight-box">
+                <h3>🧠 What is Amazon Cognito?</h3>
+                <p><strong>Simple Definition:</strong><br>
+                Amazon Cognito helps you add user login and signup to your web or mobile app — securely and without writing the full authentication system yourself.</p>
+
+                <div class="emoji-list">
+                    <li>✅ <strong>Handles:</strong> User registration & login, Password reset, Email/phone verification, Multi-Factor Authentication (MFA), Token generation (JWT), Social login (Google, Facebook, Apple)</li>
+                </div>
+            </div>
+
+            <h3 class="section-title">🟦 5.2.1 Why Use Cognito?</h3>
+            <div class="interview-questions">
+                <div class="question">Why should we use Amazon Cognito?</div>
+                <div class="answer">
+                    <strong>Without Cognito:</strong> You build users table, manage passwords, and token logic yourself.<br>
+                    <strong>With Cognito:</strong> AWS manages everything for you — secure, scalable, and compliant.<br>
+                    <br>
+                    <div class="emoji-list">
+                        <li>✅ No need to store passwords</li>
+                        <li>✅ No need to manually create tokens</li>
+                        <li>✅ Integrates easily with AWS services (S3, API Gateway, Lambda)</li>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-title">🟨 5.2.2 Components of Cognito</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Component</th>
+                            <th style="width: 30%">Purpose</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">User Pool</td>
+                            <td class="definition">Manages users — handles signup, login, password reset</td>
+                            <td><div class="example">"Who are you?" - Authentication service</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Identity Pool</td>
+                            <td class="definition">Gives temporary AWS access to users</td>
+                            <td><div class="example">"What can you do?" - Authorization service</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔹 User Pool Example (Authentication)</h4>
+                <div class="code-example">
+                    👉 Handles authentication<br>
+                    <br>
+                    Example:<br>
+                    A user signs in → Cognito verifies credentials → returns a JWT token.<br>
+                    That token is then used to call your Laravel APIs securely.
+                </div>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔹 Identity Pool Example (Authorization)</h4>
+                <div class="code-example">
+                    👉 Handles authorization<br>
+                    <br>
+                    Example:<br>
+                    After login, Cognito gives the user temporary AWS credentials —<br>
+                    so they can upload a profile picture to S3 without exposing AWS secret keys.
+                </div>
+            </div>
+
+            <h3 class="section-title">🟧 5.2.3 Real-World Example (BoxUpMeal App)</h3>
+            <div class="architecture-example">
+                <h4>🍱 Complete Cognito Workflow</h4>
+                <div class="code-example">
+                    User signs up → Cognito stores user data<br>
+                    User logs in → gets JWT token<br>
+                    App uses token to call Laravel API securely<br>
+                    User uploads image → Cognito gives temporary S3 access
+                </div>
+                <p><strong>✅ Result:</strong> Secure login + S3 upload without managing AWS keys yourself.</p>
+            </div>
+
+            <h3 class="section-title">🟩 5.2.4 Laravel + Cognito Integration</h3>
+            <div class="architecture-example">
+                <h4>📦 Install SDK</h4>
+                <div class="code-example">
+                    composer require aws/aws-sdk-php
+                </div>
+            </div>
+
+            <div class="architecture-example">
+                <h4>🔐 Authenticate User</h4>
+                <div class="code-example">
+                    use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;<br>
+                    <br>
+                    $client = new CognitoIdentityProviderClient([<br>
+                    &nbsp;&nbsp;'region' => 'us-east-1',<br>
+                    &nbsp;&nbsp;'version' => 'latest'<br>
+                    ]);<br>
+                    <br>
+                    $result = $client->initiateAuth([<br>
+                    &nbsp;&nbsp;'AuthFlow' => 'USER_PASSWORD_AUTH',<br>
+                    &nbsp;&nbsp;'ClientId' => 'your_client_id',<br>
+                    &nbsp;&nbsp;'AuthParameters' => [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'USERNAME' => $email,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'PASSWORD' => $password,<br>
+                    &nbsp;&nbsp;],<br>
+                    ]);<br>
+                    <br>
+                    $token = $result['AuthenticationResult']['IdToken'];
+                </div>
+                <p><strong>✅ $token → JWT token → use for secure API calls.</strong></p>
+            </div>
+
+            <h3 class="section-title">🟦 5.2.5 Cognito vs IAM</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Feature</th>
+                            <th style="width: 25%">Cognito</th>
+                            <th style="width: 25%">IAM</th>
+                            <th style="width: 30%">Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">For</td>
+                            <td class="definition">App users</td>
+                            <td class="definition">AWS administrators</td>
+                            <td><div class="example">End customers vs DevOps team</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Purpose</td>
+                            <td class="definition">App authentication</td>
+                            <td class="definition">AWS service permissions</td>
+                            <td><div class="example">Login/signup vs Console access</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">Integration</td>
+                            <td class="definition">Mobile/Web app</td>
+                            <td class="definition">AWS Console, CLI</td>
+                            <td><div class="example">User-facing vs Admin tools</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🟨 5.2.6 Cognito Extensions (3 Types)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">Type</th>
+                            <th style="width: 35%">Description</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">🧠 SDK Extension</td>
+                            <td class="definition">AWS SDK or Laravel package for Cognito</td>
+                            <td><div class="example">aws/aws-sdk-php, darkghosthunter/laravel-cognito-auth</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">🧰 Browser Extension</td>
+                            <td class="definition">Tools to debug Cognito tokens</td>
+                            <td><div class="example">JWT Viewer, AWS Toolkit</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">⚙️ Functional Extension</td>
+                            <td class="definition">Extend Cognito using Lambda Triggers</td>
+                            <td><div class="example">Auto-confirm users, add custom claims</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">🟧 5.2.7 Lambda Triggers (Functional Extensions)</h3>
+            <div class="tip-box">
+                💡 <strong>Cognito can call Lambda functions during user actions — to extend functionality.</strong>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Trigger</th>
+                            <th style="width: 30%">When it Runs</th>
+                            <th style="width: 45%">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="topic">PreSignUp</td>
+                            <td class="definition">Before user signs up</td>
+                            <td><div class="example">Validate email domain</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">PostConfirmation</td>
+                            <td class="definition">After user verifies email</td>
+                            <td><div class="example">Add user to DB / Send welcome email</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">PreAuthentication</td>
+                            <td class="definition">Before login</td>
+                            <td><div class="example">Check account status</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">PostAuthentication</td>
+                            <td class="definition">After login</td>
+                            <td><div class="example">Track login in CloudWatch</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">CustomMessage</td>
+                            <td class="definition">During signup/login</td>
+                            <td><div class="example">Send custom SMS/email</div></td>
+                        </tr>
+                        <tr>
+                            <td class="topic">TokenGeneration</td>
+                            <td class="definition">Before token issued</td>
+                            <td><div class="example">Add custom roles/claims</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="architecture-example">
+                <h4>💡 Example: Auto-confirm user + send email</h4>
+                <div class="code-example">
+                    User signs up<br>
+                    ↓<br>
+                    Cognito triggers PostConfirmation Lambda<br>
+                    ↓<br>
+                    Lambda adds user record in RDS and sends email<br>
+                    ↓<br>
+                    ✅ You just extended Cognito — without extra code in your PHP app.
+                </div>
+            </div>
+
+            <h3 class="section-title">🟦 5.2.8 Interview-Ready Short Answer</h3>
+            <div class="quote-box">
+                🧠 <strong>"Amazon Cognito is a fully managed authentication and user management service by AWS.
+                It lets apps handle signup, login, and access control securely without storing passwords manually.
+                Cognito has User Pools for authentication and Identity Pools for AWS access.
+                We can extend it using Lambda triggers to perform actions like validating users, sending emails, or adding custom token data."</strong>
+            </quote-box>
+
+            <h3 class="section-title">🟨 5.2.9 Analogy (For Long-Term Memory)</h3>
+            <div class="quote-box">
+                🧠 <strong>Think of Cognito as "Login with AWS" for your app.
+                Like Firebase Authentication, but integrated with AWS.
+                It handles both who you are (User Pool) and what you can do (Identity Pool).</strong>
+            </quote-box>
+
+            <h3 class="section-title">🧩 5.2.10 Common Use Cases</h3>
+            <div class="emoji-list">
+                <li>✅ Add login/signup in web or mobile apps</li>
+                <li>✅ Securely access AWS services (S3, DynamoDB)</li>
+                <li>✅ Enable Google/Facebook sign-in</li>
+                <li>✅ Manage tokens (JWT)</li>
+                <li>✅ Use MFA for better security</li>
+                <li>✅ Custom workflows via Lambda triggers</li>
+            </div>
+
+            <h3 class="section-title">🧠 5.2.11 Extra Tips for Interview</h3>
+            <div class="emoji-list">
+                <li>✅ <strong>Mention JWT tokens:</strong> Cognito returns 3 types — Access, ID, Refresh</li>
+                <li>✅ <strong>Mention MFA and social logins:</strong> Google, Facebook, Apple</li>
+                <li>✅ <strong>Mention Lambda triggers:</strong> As "Cognito extension points"</li>
+                <li>✅ <strong>Mention temporary AWS credentials:</strong> Via Identity Pool</li>
+                <li>✅ <strong>Mention scalability:</strong> Cognito can handle millions of users automatically</li>
+            </div>
+
+            <h3 class="section-title">⚙️ 5.2.12 Example Architecture Diagram</h3>
+            <div class="architecture-example">
+                <h4>🔄 Complete Cognito Architecture Flow</h4>
+                <div class="code-example">
+                    User → Cognito (User Pool)<br>
+                         ↓<br>
+                         JWT Token → API Gateway → Lambda → RDS<br>
+                         ↓<br>
+                    Cognito (Identity Pool) → Temporary AWS Credentials → S3 Upload
+                </div>
+                <p><strong>✅ Secure • Scalable • Serverless</strong></p>
+            </div>
+
+            <h3 class="section-title">💬 5.2.13 Short Version for Quick Recall</h3>
+            <div class="success-box">
+                <strong>Cognito = AWS Login System</strong><br>
+                <strong>User Pool = Authentication</strong><br>
+                <strong>Identity Pool = Authorization</strong><br>
+                <strong>Lambda Triggers = Extensions</strong><br>
+                <strong>JWT = Access Tokens</strong><br>
+                <strong>Works with PHP/Laravel via AWS SDK</strong>
+            </div>
+
             <!-- PHASE 6: System Design & Architecture -->
             <h3 class="section-title">🏗️ PHASE 6: System Design & Architecture Diagrams</h3>
 
