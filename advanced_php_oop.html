@@ -669,17 +669,724 @@ echo $_COOKIE['username'];
                 </div>
             </div>
 
+            <!-- Additional OOP Concepts from Phase 2 -->
+            <div class="fade-in">
+                <h2 class="section-title">10. 🔧 Advanced OOP Concepts (From Phase 2)</h2>
+
+                <div class="concept-title">🏗️ Class & Object</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Class = Cookie cutter (design), Object = Actual cookie (real thing). Blueprint vs the thing you use</p>
+                </div>
+                <div class="code-example">
+class User {
+    public $name;
+    public function getName() { return $this->name; }
+}
+
+$user1 = new User(); // Object 1
+$user2 = new User(); // Object 2
+$user1->name = 'John';
+$user2->name = 'Jane';
+// Each object has its own data
+
+// Static vs Instance (INTERVIEW FAVORITE!)
+class Counter {
+    public static $count = 0; // Shared across all objects
+    public $id; // Unique per object
+    public function __construct() {
+        self::$count++;
+        $this->id = self::$count;
+    }
+}
+                </div>
+
+                <div class="concept-title">🏗️ Constructor/Destructor</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Constructor = Hotel check-in (setup when created), Destructor = Check-out (cleanup when done)</p>
+                </div>
+                <div class="code-example">
+// Constructor with dependency injection
+class DatabaseConnection {
+    private $pdo;
+    public function __construct($host, $db, $user, $pass) {
+        try {
+            $this->pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+        } catch(PDOException $e) {
+            throw new Exception("DB connection failed: " . $e->getMessage());
+        }
+    }
+    public function __destruct() {
+        $this->pdo = null; // Clean up connection
+    }
+}
+
+// Constructor chaining (INTERVIEW TRICK!)
+class ParentClass {
+    public function __construct($param) {
+        echo "Parent: $param";
+    }
+}
+class ChildClass extends ParentClass {
+    public function __construct($param) {
+        parent::__construct($param); // Must call parent first!
+        echo "Child: $param";
+    }
+}
+                </div>
+
+                <div class="concept-title">🔐 Access Modifiers</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Public = Public park (anyone can use), Private = Your bedroom (only you), Protected = Family room (you + children)</p>
+                </div>
+                <div class="code-example">
+class BankAccount {
+    private $balance = 0; // Only this class can access
+    protected $accountType = 'savings'; // This class and child classes
+    public function getBalance() { // Anyone can call this
+        return $this->balance;
+    }
+}
+                </div>
+
+                <div class="concept-title">🧬 Traits</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>LEGO power-ups - add extra abilities to any class without inheritance</p>
+                </div>
+                <div class="code-example">
+trait Loggable {
+    public function log($message) {
+        echo "Log: $message";
+    }
+}
+
+class User {
+    use Loggable; // User now has logging ability
+}
+
+class Product {
+    use Loggable; // Product also has logging ability
+}
+
+$user = new User();
+$user->log("User created"); // Works!
+                </div>
+
+                <div class="concept-title">📦 Static Keyword</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Class-owned property - like company car (belongs to company, not individual employees)</p>
+                </div>
+                <div class="code-example">
+class User {
+    public static $totalUsers = 0; // Shared across all users
+    public $name; // Unique per user
+
+    public function __construct($name) {
+        $this->name = $name;
+        self::$totalUsers++; // Increment shared counter
+    }
+}
+
+$user1 = new User('John');
+$user2 = new User('Jane');
+echo User::$totalUsers; // 2 (shared across all instances)
+                </div>
+
+                <div class="concept-title">🔒 Final Keyword</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Locked box - once you declare something final, no one can change or override it</p>
+                </div>
+                <div class="code-example">
+final class DatabaseConnection {
+    // Cannot be extended
+}
+
+class User {
+    final public function getId() {
+        return $this->id;
+    }
+    // This method cannot be overridden in child classes
+}
+                </div>
+
+                <div class="concept-title">🎩 Magic Methods</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Auto-pilot features - automatically triggered when you do certain actions</p>
+                </div>
+                <div class="code-example">
+class User {
+    private $data = [];
+
+    public function __set($name, $value) {
+        $this->data[$name] = $value;
+    }
+
+    public function __get($name) {
+        return $this->data[$name] ?? null;
+    }
+
+    public function __toString() {
+        return "User: " . json_encode($this->data);
+    }
+}
+
+$user = new User();
+$user->name = 'John'; // Calls __set
+echo $user->name;     // Calls __get
+echo $user;           // Calls __toString
+                </div>
+
+                <div class="concept-title">🏢 Namespaces</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Apartment building addresses - avoid conflicts with same class names</p>
+                </div>
+                <div class="code-example">
+namespace App\Controllers;
+
+class UserController {
+    // Handle user-related web requests
+}
+
+namespace App\Models;
+
+class User {
+    // User database model
+}
+
+// Usage
+use App\Controllers\UserController as UserCtrl;
+use App\Models\User as UserModel;
+
+$userCtrl = new UserCtrl();
+$userModel = new UserModel();
+                </div>
+
+                <div class="concept-title">💉 Dependency Injection</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Restaurant kitchen - each chef gets tools they need passed to them</p>
+                </div>
+                <div class="code-example">
+// BAD: Creating dependencies inside class
+class OrderService {
+    private $logger;
+    public function __construct() {
+        $this->logger = new FileLogger(); // Tight coupling
+    }
+}
+
+// GOOD: Dependencies injected from outside
+class OrderService {
+    private $logger;
+    public function __construct(LoggerInterface $logger) {
+        $this->logger = $logger; // Loose coupling
+    }
+}
+
+// Usage
+$logger = new FileLogger();
+$orderService = new OrderService($logger);
+                </div>
+
+                <div class="concept-title">🎨 Design Patterns</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Cooking recipes - proven solutions to common problems</p>
+                </div>
+                <div class="code-example">
+// Strategy Pattern Example
+interface PaymentMethod {
+    public function pay($amount);
+}
+
+class CreditCardPayment implements PaymentMethod {
+    public function pay($amount) {
+        echo "Paid $$amount with Credit Card";
+    }
+}
+
+class PayPalPayment implements PaymentMethod {
+    public function pay($amount) {
+        echo "Paid $$amount with PayPal";
+    }
+}
+
+class PaymentProcessor {
+    private $paymentMethod;
+
+    public function __construct(PaymentMethod $method) {
+        $this->paymentMethod = $method;
+    }
+
+    public function process($amount) {
+        $this->paymentMethod->pay($amount);
+    }
+}
+                </div>
+            </div>
+
+            <!-- Phase 3 Advanced PHP Content -->
+            <div class="fade-in">
+                <h2 class="section-title">11. 🚀 Advanced PHP Concepts (From Phase 3)</h2>
+
+                <div class="concept-title">⚠️ Error Handling</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Car's airbag and warning lights - catches problems before they cause crashes</p>
+                </div>
+                <div class="code-example">
+// Custom exception hierarchy
+class ValidationException extends Exception { }
+class DatabaseException extends Exception { }
+
+function validateUser($data) {
+    if(empty($data['email'])) {
+        throw new ValidationException("Email is required");
+    }
+    if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        throw new ValidationException("Invalid email format");
+    }
+}
+
+// Multiple catch blocks (INTERVIEW FAVORITE!)
+try {
+    validateUser($userData);
+    $user = User::create($userData);
+} catch(ValidationException $e) {
+    return response()->json(['error' => $e->getMessage()], 400);
+} catch(DatabaseException $e) {
+    Log::error("DB Error: " . $e->getMessage());
+    return response()->json(['error' => 'Database error'], 500);
+} catch(Exception $e) {
+    Log::error("Unexpected error: " . $e->getMessage());
+    return response()->json(['error' => 'Something went wrong'], 500);
+}
+
+// Finally block always executes
+try {
+    $file = fopen('data.txt', 'r');
+    // process file
+} catch(Exception $e) {
+    echo "Error: " . $e->getMessage();
+} finally {
+    if(isset($file)) fclose($file); // Always close file
+}
+                </div>
+
+                <div class="concept-title">📁 File Handling</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Office filing cabinet - organize, store, retrieve, and manage documents safely</p>
+                </div>
+                <div class="code-example">
+// Secure file upload (INTERVIEW CRITICAL!)
+function handleFileUpload($file) {
+    // 1. Validate file size
+    if($file['size'] > 5 * 1024 * 1024) { // 5MB
+        throw new Exception("File too large");
+    }
+
+    // 2. Validate file type (check MIME type, not extension!)
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $file['tmp_name']);
+    if(!in_array($mimeType, $allowedTypes)) {
+        throw new Exception("Invalid file type");
+    }
+
+    // 3. Generate secure filename
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $filename = uniqid() . '_' . bin2hex(random_bytes(16)) . '.' . $extension;
+
+    // 4. Move to secure directory (outside web root)
+    $uploadPath = '/var/uploads/' . $filename;
+    if(!move_uploaded_file($file['tmp_name'], $uploadPath)) {
+        throw new Exception("Upload failed");
+    }
+
+    return $filename;
+}
+
+// File reading with proper error handling
+function readFileSafely($filepath) {
+    if(!file_exists($filepath)) {
+        throw new Exception("File not found");
+    }
+    if(!is_readable($filepath)) {
+        throw new Exception("File not readable");
+    }
+
+    $content = file_get_contents($filepath);
+    if($content === false) {
+        throw new Exception("Failed to read file");
+    }
+
+    return $content;
+}
+                </div>
+
+                <div class="concept-title">📊 JSON & XML</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Universal translator - converts data into formats any system can understand</p>
+                </div>
+                <div class="code-example">
+// JSON encoding/decoding
+$user = ['name' => 'John', 'email' => 'john@example.com'];
+$jsonString = json_encode($user);
+echo $jsonString; // {"name":"John","email":"john@example.com"}
+
+$decodedUser = json_decode($jsonString, true);
+echo $decodedUser['name']; // John
+
+// XML handling
+$xml = new SimpleXMLElement('<user><name>John</name><email>john@example.com</email></user>');
+echo $xml->name; // John
+echo $xml->email; // john@example.com
+                </div>
+
+                <div class="concept-title">🌐 REST API</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Restaurant menu system - GET (read menu), POST (place order), PUT (modify order), DELETE (cancel order)</p>
+                </div>
+                <div class="code-example">
+// REST API Example
+class UserAPI {
+    public function handleRequest($method, $path, $data) {
+        switch($method) {
+            case 'GET':
+                if($path == '/users') {
+                    return $this->getUsers();
+                } elseif(preg_match('/\/users\/(\d+)/', $path, $matches)) {
+                    return $this->getUser($matches[1]);
+                }
+                break;
+
+            case 'POST':
+                if($path == '/users') {
+                    return $this->createUser($data);
+                }
+                break;
+
+            case 'PUT':
+                if(preg_match('/\/users\/(\d+)/', $path, $matches)) {
+                    return $this->updateUser($matches[1], $data);
+                }
+                break;
+
+            case 'DELETE':
+                if(preg_match('/\/users\/(\d+)/', $path, $matches)) {
+                    return $this->deleteUser($matches[1]);
+                }
+                break;
+        }
+
+        return ['error' => 'Invalid request', 'status' => 404];
+    }
+}
+                </div>
+
+                <div class="concept-title">🎫 Auth Tokens (JWT)</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>VIP backstage pass - digitally signed ticket proving "you are who you say you are"</p>
+                </div>
+                <div class="code-example">
+// JWT Token Structure (simplified)
+class JWT {
+    public static function createToken($payload, $secret) {
+        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
+        $payload = json_encode($payload);
+
+        $headerEncoded = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
+        $payloadEncoded = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
+
+        $signature = hash_hmac('sha256', $headerEncoded . "." . $payloadEncoded, $secret, true);
+        $signatureEncoded = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
+
+        return $headerEncoded . "." . $payloadEncoded . "." . $signatureEncoded;
+    }
+
+    public static function verifyToken($token, $secret) {
+        $parts = explode('.', $token);
+        if(count($parts) !== 3) return false;
+
+        $signature = hash_hmac('sha256', $parts[0] . "." . $parts[1], $secret, true);
+        $expectedSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
+
+        return hash_equals($expectedSignature, $parts[2]);
+    }
+}
+
+// Usage
+$userData = ['user_id' => 123, 'exp' => time() + 3600];
+$token = JWT::createToken($userData, 'secret_key');
+
+// Verify token on subsequent requests
+if(JWT::verifyToken($token, 'secret_key')) {
+    // Token is valid
+}
+                </div>
+
+                <div class="concept-title">📞 cURL / API Integration</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Phone operator connecting calls - your app calls external services</p>
+                </div>
+                <div class="code-example">
+// cURL GET request
+function makeAPIRequest($url, $method = 'GET', $data = null) {
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 30 second timeout
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+    if($method === 'POST') {
+        curl_setopt($ch, CURLOPT_POST, true);
+        if($data) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        }
+    }
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+
+    curl_close($ch);
+
+    if($error) {
+        throw new Exception("cURL Error: $error");
+    }
+
+    return ['response' => $response, 'http_code' => $httpCode];
+}
+
+// Usage
+try {
+    $result = makeAPIRequest('https://api.example.com/users/123');
+    if($result['http_code'] === 200) {
+        $userData = json_decode($result['response'], true);
+        // Process user data
+    }
+} catch(Exception $e) {
+    // Handle error
+    Log::error("API request failed: " . $e->getMessage());
+}
+                </div>
+
+                <div class="concept-title">📦 Composer</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>App store for developers - manages PHP dependencies automatically</p>
+                </div>
+                <div class="code-example">
+// composer.json
+{
+    "name": "my/project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "monolog/monolog": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
+
+// Usage in PHP
+require 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use Monolog\Logger;
+
+$client = new Client();
+$logger = new Logger('app');
+
+// Composer commands:
+// composer install - Install dependencies
+// composer update - Update to latest versions
+// composer require package/name - Add new dependency
+// composer dump-autoload - Regenerate autoloader
+                </div>
+
+                <div class="concept-title">🔍 Reflection API</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>X-ray machine for code - inspect classes, methods, properties at runtime</p>
+                </div>
+                <div class="code-example">
+// Reflection Example
+class User {
+    public $name;
+    private $password;
+
+    public function getName() {
+        return $this->name;
+    }
+
+    private function setPassword($pass) {
+        $this->password = password_hash($pass, PASSWORD_DEFAULT);
+    }
+}
+
+// Inspect class
+$reflection = new ReflectionClass('User');
+echo "Class: " . $reflection->getName() . "\n";
+
+// Get all properties
+$properties = $reflection->getProperties();
+foreach($properties as $property) {
+    echo "Property: " . $property->getName();
+    echo " - Visibility: " . ($property->isPrivate() ? 'private' : 'public') . "\n";
+}
+
+// Get all methods
+$methods = $reflection->getMethods();
+foreach($methods as $method) {
+    echo "Method: " . $method->getName();
+    echo " - Visibility: " . ($method->isPrivate() ? 'private' : 'public') . "\n";
+}
+
+// Dynamic instantiation
+$user = $reflection->newInstance();
+$user->name = 'John';
+                </div>
+
+                <div class="concept-title">⚡ Performance Optimization</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Race car tuning - eliminate bottlenecks for maximum speed</p>
+                </div>
+                <div class="code-example">
+// 1. Use OPcache (in php.ini)
+// opcache.enable=1
+// opcache.memory_consumption=256
+// opcache.max_accelerated_files=7963
+
+// 2. Database query optimization
+// BAD: N+1 Query Problem
+$users = User::all(); // 1 query
+foreach($users as $user) {
+    $posts = $user->posts; // N queries!
+}
+
+// GOOD: Eager loading
+$users = User::with('posts')->get(); // 1 query + 1 query
+
+// 3. Memory optimization
+function processLargeFile($filepath) {
+    // BAD: Load entire file into memory
+    $content = file_get_contents($filepath); // Uses lots of memory
+
+    // GOOD: Process line by line
+    $handle = fopen($filepath, 'r');
+    while(($line = fgets($handle)) !== false) {
+        // Process one line at a time
+        processLine($line);
+    }
+    fclose($handle);
+}
+
+// 4. Caching strategies
+$cacheKey = 'user_' . $userId;
+$user = Cache::remember($cacheKey, 3600, function() {
+    return User::find($userId); // Expensive DB query
+});
+                </div>
+
+                <div class="concept-title">🔒 Security Best Practices</div>
+                <div class="success-box">
+                    <h4 style="color: #ffd700;">Simple Definition:</h4>
+                    <p>Bank vault + security cameras + armed guards - multiple layers of protection</p>
+                </div>
+                <div class="code-example">
+// 1. SQL Injection Prevention
+// WRONG
+$sql = "SELECT * FROM users WHERE email = '$email'";
+$result = mysqli_query($conn, $sql);
+
+// RIGHT - Prepared statements
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+// 2. XSS Prevention
+// WRONG
+echo "<div>Welcome " . $_GET['name'] . "</div>";
+
+// RIGHT
+echo "<div>Welcome " . htmlspecialchars($_GET['name'], ENT_QUOTES, 'UTF-8') . "</div>";
+
+// 3. CSRF Protection
+session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('CSRF attack detected');
+    }
+}
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+// 4. Password Security
+// WRONG
+$password = md5($_POST['password']);
+
+// RIGHT
+$hashedPassword = password_hash($_POST['password'], PASSWORD_ARGON2ID);
+if (password_verify($_POST['password'], $hashedPassword)) {
+    // Password is correct
+}
+
+// 5. File Upload Security
+function secureFileUpload($file) {
+    // Check file size
+    if ($file['size'] > 2 * 1024 * 1024) { // 2MB limit
+        return false;
+    }
+
+    // Check MIME type, not extension
+    $allowedTypes = ['image/jpeg', 'image/png'];
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $file['tmp_name']);
+
+    if (!in_array($mimeType, $allowedTypes)) {
+        return false;
+    }
+
+    // Generate secure filename
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $newFilename = bin2hex(random_bytes(16)) . '.' . $extension;
+
+    // Move to secure directory outside web root
+    move_uploaded_file($file['tmp_name'], '/secure/uploads/' . $newFilename);
+
+    return $newFilename;
+}
+                </div>
+            </div>
+
             <!-- Quick Summary -->
             <div class="fade-in">
-                <h2 class="section-title">9. ✅ Quick Summary to Remember</h2>
+                <h2 class="section-title">12. ✅ Quick Summary to Remember</h2>
                 <div class="summary-table">
                     <h3>🎯 OOP Concepts at a Glance</h3>
                     <div class="table-container">
-                        <table style="margin: 0;">
+                        <table style="margin: 0; color: #333;">
                             <thead>
                                 <tr>
-                                    <th style="width: 30%;">Concept</th>
-                                    <th style="width: 70%;">One Line Summary</th>
+                                    <th style="width: 30%; background: #667eea; color: white;">Concept</th>
+                                    <th style="width: 70%; background: #667eea; color: white;">One Line Summary</th>
                                 </tr>
                             </thead>
                             <tbody>
