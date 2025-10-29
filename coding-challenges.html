@@ -128,6 +128,97 @@
             font-size: 0.9em;
         }
 
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            border: 1px solid #e0e0e0;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .logic-block {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logic-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logic-header h4 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .scenario-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .scenario-title {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .why-section {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .why-section h5 {
+            color: #2e7d32;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .approach-good {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .approach-bad {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f44336;
+        }
+
         .footer {
             background: #2c3e50;
             color: white;
@@ -173,118 +264,801 @@
         </div>
 
         <div class="content">
+            <!-- LOGICAL CODING QUESTIONS ORGANIZED BY DIFFICULTY -->
+            <h2 class="phase-title">🧠 LOGICAL CODING QUESTIONS - Organized by Difficulty & Scenarios</h2>
+
+            <!-- LEVEL 1: BASIC LOGIC -->
+            <div class="logic-block">
+                <div class="logic-header">
+                    <h4>🎯 LEVEL 1: BASIC LOGIC WARM-UP</h4>
+                    <p style="margin: 10px 0 0; font-size: 0.9em; opacity: 0.9;">Perfect for interviews requiring fundamental programming logic</p>
+                </div>
+
+                <!-- Scenario 1: String Reversal -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 1: Reverse String Without Built-in Functions</div>
+                    <p><strong>Real Interview Context:</strong> "We need to reverse user input for a security algorithm. Can't use strrev() due to custom requirements."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why This Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Manual Loop:</strong> Demonstrates understanding of string indexing and iteration</li>
+                            <li><strong>Zero-based Indexing:</strong> Shows awareness of PHP's array-like string access</li>
+                            <li><strong>No Built-ins:</strong> Tests fundamental programming knowledge</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$str = "hello"; // Original string
+$rev = ""; // Empty container for reversed result
+
+// Loop from last character to first
+// Why start from length-1? Strings are zero-indexed
+for ($i = strlen($str)-1; $i >= 0; $i--) {
+    // Build reversed string character by character
+    // Each iteration adds one character from end to start
+    $rev .= $str[$i];
+}
+
+echo $rev; // Output: "olleh"</pre>
+                </div>
+
+                <!-- Scenario 2: Palindrome Check -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 2: Palindrome Detection</div>
+                    <p><strong>Real Interview Context:</strong> "Check if a user-entered password reads the same forwards and backwards for our palindrome-based security system."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why This Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Built-in Function:</strong> strrev() is efficient and readable</li>
+                            <li><strong>Direct Comparison:</strong> Simple equality check after reversal</li>
+                            <li><strong>Case-sensitive:</strong> Maintains exact character matching</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">function isPalindrome($str){
+    // Compare string with its reverse
+    // strrev() reverses the string completely
+    // === ensures exact character match (no type juggling)
+    return $str === strrev($str);
+}
+
+// Test cases:
+// "madam" vs strrev("madam") = "madam" → true
+// "hello" vs strrev("hello") = "olleh" → false</pre>
+                </div>
+
+                <!-- Scenario 3: Swap Without Third Variable -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 3: Variable Swap Without Temporary Storage</div>
+                    <p><strong>Real Interview Context:</strong> "We need to swap two configuration values in memory-constrained embedded systems where we can't allocate extra variables."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why This Mathematical Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>No Extra Memory:</strong> Perfect for memory-constrained environments</li>
+                            <li><strong>Arithmetic Logic:</strong> Uses basic math to preserve both values</li>
+                            <li><strong>Integer Safety:</strong> Works reliably with integer values</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$a = 5; $b = 10; // Initial values
+
+// Step 1: Store sum in first variable
+// Now 'a' contains both original values combined
+$a = $a + $b; // a = 15, b = 10
+
+// Step 2: Extract original 'a' using subtraction
+// b becomes (15 - 10) = 5 (original a)
+$b = $a - $b; // a = 15, b = 5
+
+// Step 3: Extract original 'b' using subtraction
+// a becomes (15 - 5) = 10 (original b)
+$a = $a - $b; // Final: a = 10, b = 5
+
+// Result: Variables are swapped without third variable!</pre>
+                </div>
+
+                <!-- Scenario 4: Vowel Counter -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 4: Count Vowels in Text</div>
+                    <p><strong>Real Interview Context:</strong> "We're building a text analysis tool that needs to count vowels for readability scoring."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why This Character-by-Character Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Individual Character Check:</strong> Each character needs individual evaluation</li>
+                            <li><strong>Array Membership:</strong> in_array() provides clean vowel checking</li>
+                            <li><strong>Case Handling:</strong> Could be extended for case-insensitive counting</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$str = "hello world"; // Input text
+$count = 0; // Vowel counter starts at zero
+
+// Convert string to array for individual character access
+// str_split() gives us: ['h','e','l','l','o',' ','w','o','r','l','d']
+foreach(str_split($str) as $char){
+    // Check if current character is a vowel
+    // in_array() returns true/false for membership
+    // Array contains all lowercase vowels
+    if(in_array($char, ['a','e','i','o','u'])){
+        $count++; // Increment counter for each vowel found
+    }
+}
+
+// Result: 3 vowels found (e,o,o) in "hello world"</pre>
+                </div>
+
+                <!-- Scenario 5: Word Frequency Counter -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 5: Word Frequency Analysis</div>
+                    <p><strong>Real Interview Context:</strong> "We need to analyze text documents and find the most common words for our content analysis system."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why explode() + array_count_values()?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Text Tokenization:</strong> explode() splits text into words naturally</li>
+                            <li><strong>Built-in Counting:</strong> array_count_values() handles frequency counting automatically</li>
+                            <li><strong>Efficient:</strong> No manual loops needed for counting</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$text = "apple mango apple orange apple"; // Sample text
+
+// Split text into words using space as delimiter
+// explode(" ", $text) gives: ['apple','mango','apple','orange','apple']
+$words = explode(" ", $text);
+
+// Count frequency of each word
+// array_count_values() returns associative array:
+// ['apple' => 3, 'mango' => 1, 'orange' => 1]
+$wordCounts = array_count_values($words);
+
+// Display results
+print_r($wordCounts);
+// Output: Array ( [apple] => 3 [mango] => 1 [orange] => 1 )</pre>
+                </div>
+            </div>
+
+            <!-- LEVEL 2: INTERMEDIATE LOGIC -->
+            <div class="logic-block">
+                <div class="logic-header">
+                    <h4>🚀 LEVEL 2: INTERMEDIATE LOGIC CHALLENGES</h4>
+                    <p style="margin: 10px 0 0; font-size: 0.9em; opacity: 0.9;">Common interview questions requiring algorithmic thinking</p>
+                </div>
+
+                <!-- Scenario 6: Find Duplicates -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 6: Find Duplicate Elements in Array</div>
+                    <p><strong>Real Interview Context:</strong> "Our system has duplicate user IDs in the database. Find all duplicates to clean up the data."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why array_diff_assoc() Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Comparison Logic:</strong> Compares original array with unique version</li>
+                        <li><strong>Preserves Keys:</strong> Shows which positions had duplicates</li>
+                        <li><strong>Efficient:</strong> Uses built-in array functions for speed</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$arr = [1,2,3,2,4,4,5]; // Array with duplicates
+
+// Step 1: Create unique version of array
+// array_unique() removes duplicates: [1,2,3,4,5]
+$unique = array_unique($arr);
+
+// Step 2: Find elements that exist in original but not in unique
+// array_diff_assoc() preserves keys and shows duplicates
+$duplicates = array_diff_assoc($arr, $unique);
+
+// Result: [1=>2, 3=>4] - shows duplicate values at their positions</pre>
+                </div>
+
+                <!-- Scenario 7: Missing Number -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 7: Find Missing Number in Sequence</div>
+                    <p><strong>Real Interview Context:</strong> "We have invoice numbers 1-100 but one is missing. Find which one without checking each number manually."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Mathematical Sum Formula?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Expected Sum:</strong> Formula n(n+1)/2 gives perfect sum for 1 to n</li>
+                            <li><strong>Actual Sum:</strong> array_sum() gives current total</li>
+                            <li><strong>Difference:</strong> Missing number = expected - actual</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$arr = [1,2,3,5]; // Sequence with missing number 4
+$n = 5; // We know the range is 1 to 5
+
+// Calculate expected sum of numbers 1 to n
+// Formula: n(n+1)/2 = 5*6/2 = 15
+$expectedSum = $n * ($n + 1) / 2;
+
+// Calculate actual sum of array elements
+// array_sum([1,2,3,5]) = 11
+$actualSum = array_sum($arr);
+
+// Missing number = expected sum - actual sum
+// 15 - 11 = 4
+$missingNumber = $expectedSum - $actualSum;
+
+echo "Missing number: " . $missingNumber;</pre>
+                </div>
+
+                <!-- Scenario 8: FizzBuzz Logic -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 8: FizzBuzz with Multiple Conditions</div>
+                    <p><strong>Real Interview Context:</strong> "Create a reporting system that tags numbers with special labels based on divisibility rules."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Check Multiple Conditions First?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Order Matters:</strong> Check most specific condition (divisible by both) first</li>
+                            <li><strong>Modulus Operator:</strong> % gives remainder, 0 means evenly divisible</li>
+                            <li><strong>Logical AND:</strong> && ensures both conditions are true</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">// Loop through numbers 1 to 15
+for($i = 1; $i <= 15; $i++){
+    // Check BOTH conditions first (most restrictive)
+    // Why? If divisible by both 3 AND 5, should show "FizzBuzz"
+    if($i % 3 === 0 && $i % 5 === 0){
+        echo "FizzBuzz ";
+    }
+    // Check single conditions
+    elseif($i % 3 === 0){
+        echo "Fizz ";
+    }
+    elseif($i % 5 === 0){
+        echo "Buzz ";
+    }
+    // Default case
+    else{
+        echo $i . " ";
+    }
+}</pre>
+                </div>
+
+                <!-- Scenario 9: Fibonacci Series -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 9: Generate Fibonacci Sequence</div>
+                    <p><strong>Real Interview Context:</strong> "We need to generate Fibonacci numbers for our algorithm that predicts user behavior patterns."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Iterative Approach with Two Variables?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Memory Efficient:</strong> Only stores last two numbers</li>
+                            <li><strong>Mathematical Pattern:</strong> Each number is sum of previous two</li>
+                            <li><strong>Variable Shifting:</strong> Moves values forward in each iteration</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$a = 0; $b = 1; // First two Fibonacci numbers
+
+// Generate 10 Fibonacci numbers
+for($i = 0; $i < 10; $i++){
+    // Print current number
+    echo $a . " ";
+
+    // Calculate next number (sum of current two)
+    $next = $a + $b;
+
+    // Shift values: move b to a, next becomes new b
+    $a = $b;     // a takes b's value
+    $b = $next;  // b takes the new sum
+}
+
+// Output: 0 1 1 2 3 5 8 13 21 34</pre>
+                </div>
+
+                <!-- Scenario 10: Remove Duplicates -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 10: Remove Duplicate Values</div>
+                    <p><strong>Real Interview Context:</strong> "Clean up our user list by removing duplicate email addresses while preserving the first occurrence."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why array_unique() Function?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Built-in Efficiency:</strong> Optimized for duplicate removal</li>
+                            <li><strong>Preserves Keys:</strong> Keeps first occurrence's position</li>
+                            <li><strong>Simple API:</strong> One function call solves the problem</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$arr = [1,2,2,3,4,4]; // Array with duplicates
+
+// array_unique() removes duplicate values
+// Keeps first occurrence of each value
+$result = array_unique($arr);
+
+// Input:  [1,2,2,3,4,4]
+// Output: [0=>1, 1=>2, 3=>3, 4=>4]
+// Keys preserved, duplicates removed</pre>
+                </div>
+            </div>
+
+            <!-- LEVEL 3: ADVANCED LOGIC -->
+            <div class="logic-block">
+                <div class="logic-header">
+                    <h4>🔥 LEVEL 3: ADVANCED LOGIC CHALLENGES</h4>
+                    <p style="margin: 10px 0 0; font-size: 0.9em; opacity: 0.9;">Complex problems requiring deep algorithmic understanding</p>
+                </div>
+
+                <!-- Scenario 11: Reverse Words -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 11: Reverse Words in Sentence</div>
+                    <p><strong>Real Interview Context:</strong> "Reverse the word order in user comments for our text processing pipeline."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why explode() + array_reverse() + implode()?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Tokenization:</strong> explode() splits into words</li>
+                            <li><strong>Array Reversal:</strong> array_reverse() flips word order</li>
+                            <li><strong>Reconstruction:</strong> implode() joins back with spaces</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$sentence = "Hello World PHP Interview";
+
+// Step 1: Split into words
+$words = explode(" ", $sentence);
+// Result: ['Hello', 'World', 'PHP', 'Interview']
+
+// Step 2: Reverse word array
+$reversedWords = array_reverse($words);
+// Result: ['Interview', 'PHP', 'World', 'Hello']
+
+// Step 3: Join back with spaces
+$result = implode(" ", $reversedWords);
+// Result: "Interview PHP World Hello"</pre>
+                </div>
+
+                <!-- Scenario 12: Second Highest Number -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 12: Find Second Largest Element</div>
+                    <p><strong>Real Interview Context:</strong> "Find the second highest scorer in our leaderboard system."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Sorting Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>rsort():</strong> Sorts in descending order (highest first)</li>
+                            <li><strong>Index Access:</strong> After sorting, second element is index 1</li>
+                            <li><strong>Simple Logic:</strong> No complex algorithms needed</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$numbers = [10, 20, 50, 30, 40];
+
+ // Sort in descending order (highest to lowest)
+rsort($numbers);
+// After sorting: [50, 40, 30, 20, 10]
+
+// Second highest is at index 1
+$secondHighest = $numbers[1];
+echo $secondHighest; // Output: 40</pre>
+                </div>
+
+                <!-- Scenario 13: Anagram Detection -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 13: Check if Strings are Anagrams</div>
+                    <p><strong>Real Interview Context:</strong> "Verify if two user names are anagrams for our word game validation."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why count_chars() Approach?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Character Frequency:</strong> count_chars() creates frequency arrays</li>
+                            <li><strong>Perfect Comparison:</strong> Same characters = same frequency counts</li>
+                            <li><strong>Case Sensitive:</strong> Maintains exact character matching</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">function areAnagrams($str1, $str2){
+    // count_chars(mode=1) returns character frequency array
+    // "listen": ['l' => 1, 'i' => 1, 's' => 1, 't' => 1, 'e' => 1, 'n' => 1]
+    // "silent": ['s' => 1, 'i' => 1, 'l' => 1, 'e' => 1, 'n' => 1, 't' => 1]
+
+    // Compare frequency arrays - identical means anagram
+    return count_chars($str1, 1) === count_chars($str2, 1);
+}
+
+// Test: "listen" and "silent" are anagrams
+echo areAnagrams("listen", "silent"); // true</pre>
+                </div>
+
+                <!-- Scenario 14: Pattern Printing -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 14: Print Star Patterns</div>
+                    <p><strong>Real Interview Context:</strong> "Generate visual patterns for our ASCII art display system."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Nested Loops for Patterns?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Row Control:</strong> Outer loop controls number of rows</li>
+                            <li><strong>Column Control:</strong> Inner loop controls stars per row</li>
+                            <li><strong>str_repeat():</strong> Efficiently repeats characters</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">// Print right triangle pattern
+for($i = 1; $i <= 4; $i++){
+    // Print $i number of stars for row $i
+    echo str_repeat("*", $i) . "\n";
+}
+
+// Output:
+// *
+// **
+// ***
+// ****</pre>
+                </div>
+
+                <!-- Scenario 15: Sum of Digits -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ SCENARIO 15: Calculate Sum of Digits</div>
+                    <p><strong>Real Interview Context:</strong> "Calculate checksums for our data validation system by summing individual digits."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why str_split() + array_sum()?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>String Conversion:</strong> str_split() treats number as string</li>
+                            <li><strong>Individual Digits:</strong> Each digit becomes array element</li>
+                            <li><strong>Automatic Summation:</strong> array_sum() adds all digits</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">$number = 12345;
+
+// Convert to string and split into array
+// str_split() gives: ['1','2','3','4','5']
+$digits = str_split($number);
+
+// Sum all digits
+// array_sum() adds: 1+2+3+4+5 = 15
+$sum = array_sum($digits);
+
+echo "Sum of digits: " . $sum; // Output: 15</pre>
+                </div>
+            </div>
+
             <h2 class="phase-title">💻 PRACTICAL CODING CHALLENGES - Common Interview Questions</h2>
 
-            <h3 style="color: #e74c3c; margin: 30px 0 20px; font-size: 1.5em; border-bottom: 2px solid #e74c3c; padding-bottom: 10px;">🔥 LIVE CODING PROBLEMS</h3>
-
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Challenge 1: FizzBuzz (Classic Interview Question)</strong></h4>
-                <p style="margin-bottom: 10px;"><strong>Problem:</strong> Print numbers 1-100, but for multiples of 3 print "Fizz", multiples of 5 print "Buzz", and multiples of both print "FizzBuzz"</p>
-                <div style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                    <strong>// Basic Solution</strong><br>
-                    for($i = 1; $i <= 100; $i++) {<br>
-                    &nbsp;&nbsp;if($i % 15 === 0) echo "FizzBuzz";<br>
-                    &nbsp;&nbsp;elseif($i % 3 === 0) echo "Fizz";<br>
-                    &nbsp;&nbsp;elseif($i % 5 === 0) echo "Buzz";<br>
-                    &nbsp;&nbsp;else echo $i;<br>
-                    &nbsp;&nbsp;echo "\n";<br>
-                    }<br><br>
-
-                    <strong>// Optimized Solution (Interview Favorite!)</strong><br>
-                    for($i = 1; $i <= 100; $i++) {<br>
-                    &nbsp;&nbsp;$output = '';<br>
-                    &nbsp;&nbsp;if($i % 3 === 0) $output .= 'Fizz';<br>
-                    &nbsp;&nbsp;if($i % 5 === 0) $output .= 'Buzz';<br>
-                    &nbsp;&nbsp;echo $output ?: $i;<br>
-                    &nbsp;&nbsp;echo "\n";<br>
-                    }
+            <!-- PRACTICAL CODING CHALLENGES WITH DETAILED EXPLANATIONS -->
+            <div class="logic-block">
+                <div class="logic-header">
+                    <h4>🔥 LIVE CODING CHALLENGES - Interview-Style Problems</h4>
+                    <p style="margin: 10px 0 0; font-size: 0.9em; opacity: 0.9;">Real coding problems you'll face in technical interviews with detailed solutions</p>
                 </div>
-                <p><strong>Interview Tips:</strong> Start with basic solution, then optimize. Discuss time complexity O(n) and space complexity O(1).</p>
-            </div>
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Challenge 2: Array Manipulation</strong></h4>
-                <p style="margin-bottom: 10px;"><strong>Problem:</strong> Find the second largest number in an array without using sorting</p>
-                <div style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                    <strong>// Solution with single pass O(n)</strong><br>
-                    function findSecondLargest($arr) {<br>
-                    &nbsp;&nbsp;if(count($arr) < 2) return null;<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;$largest = $secondLargest = PHP_INT_MIN;<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;foreach($arr as $num) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if($num > $largest) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$secondLargest = $largest;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$largest = $num;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} elseif($num > $secondLargest && $num !== $largest) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$secondLargest = $num;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;return $secondLargest === PHP_INT_MIN ? null : $secondLargest;<br>
-                    }<br><br>
+                <!-- Challenge 1: FizzBuzz -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ CHALLENGE 1: FizzBuzz Algorithm</div>
+                    <p><strong>Real Interview Context:</strong> "Create a program that prints numbers 1-100, but replaces multiples of 3 with 'Fizz', multiples of 5 with 'Buzz', and multiples of both with 'FizzBuzz'."</p>
 
-                    <strong>// Test cases</strong><br>
-                    echo findSecondLargest([3, 1, 4, 1, 5, 9, 2, 6]); // 6<br>
-                    echo findSecondLargest([1, 1, 1]); // null (no second largest)
+                    <div class="why-section">
+                        <h5>🎯 Why Two Different Approaches?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Basic Solution:</strong> Clear and readable, shows understanding of conditional logic</li>
+                            <li><strong>Optimized Solution:</strong> Demonstrates advanced PHP features and efficiency</li>
+                            <li><strong>Interview Strategy:</strong> Start simple, then show optimization skills</li>
+                        </ul>
+                    </div>
+
+                    <div class="approach-grid">
+                        <div class="approach-good">
+                            <h5>✅ BASIC APPROACH (Recommended First)</h5>
+                            <pre class="code-block">// Loop through each number from 1 to 100
+for($i = 1; $i <= 100; $i++) {
+    // Check most restrictive condition first (both 3 AND 5)
+    // Why 15? Because 3*5=15, so any multiple of 15 is multiple of both
+    if($i % 15 === 0) {
+        echo "FizzBuzz";
+    }
+    // Check if only divisible by 3
+    elseif($i % 3 === 0) {
+        echo "Fizz";
+    }
+    // Check if only divisible by 5
+    elseif($i % 5 === 0) {
+        echo "Buzz";
+    }
+    // If none of the above, just print the number
+    else {
+        echo $i;
+    }
+    echo "\n"; // New line after each output
+}</pre>
+                        </div>
+
+                        <div class="approach-bad">
+                            <h5>🚀 OPTIMIZED APPROACH (Show This Second)</h5>
+                            <pre class="code-block">// More efficient solution that interviewers love
+for($i = 1; $i <= 100; $i++) {
+    $output = ''; // Start with empty string
+
+    // Build output by concatenation (not mutually exclusive)
+    // If divisible by 3, add "Fizz"
+    if($i % 3 === 0) $output .= 'Fizz';
+
+    // If divisible by 5, add "Buzz" (can be both!)
+    if($i % 5 === 0) $output .= 'Buzz';
+
+    // Elvis operator: if $output is truthy, use it; else use $i
+    // This handles the case where neither condition is met
+    echo $output ?: $i;
+    echo "\n";
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Interviewers Love This Problem?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Tests Logic:</strong> Conditional statements and modulus operator</li>
+                            <li><strong>Shows Optimization:</strong> From basic to advanced solutions</li>
+                            <li><strong>Edge Cases:</strong> Multiples of both 3 and 5</li>
+                            <li><strong>Communication:</strong> Explain your thought process clearly</li>
+                        </ul>
+                    </div>
                 </div>
-                <p><strong>Interview Tips:</strong> Handle edge cases (duplicates, single element). Discuss time/space complexity. Consider what if array has duplicates.</p>
-            </div>
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Challenge 3: String Processing</strong></h4>
-                <p style="margin-bottom: 10px;"><strong>Problem:</strong> Check if a string is a palindrome (reads same forwards and backwards)</p>
-                <div style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                    <strong>// Basic solution</strong><br>
-                    function isPalindrome($str) {<br>
-                    &nbsp;&nbsp;$str = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $str));<br>
-                    &nbsp;&nbsp;return $str === strrev($str);<br>
-                    }<br><br>
+                <!-- Challenge 2: Array Manipulation -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ CHALLENGE 2: Find Second Largest Element</div>
+                    <p><strong>Real Interview Context:</strong> "We need to find the second highest scorer in our gaming leaderboard system. We can't use sorting because of performance constraints with millions of users."</p>
 
-                    <strong>// Two-pointer approach (more efficient)</strong><br>
-                    function isPalindromeTwoPointer($str) {<br>
-                    &nbsp;&nbsp;$str = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $str));<br>
-                    &nbsp;&nbsp;$left = 0;<br>
-                    &nbsp;&nbsp;$right = strlen($str) - 1;<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;while($left < $right) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if($str[$left] !== $str[$right]) return false;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$left++;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$right--;<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return true;<br>
-                    }<br><br>
+                    <div class="why-section">
+                        <h5>🎯 Why Single-Pass Algorithm (O(n) time)?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Efficiency:</strong> Only one pass through the array (O(n) vs O(n log n) for sorting)</li>
+                            <li><strong>Memory Optimal:</strong> Uses only two variables instead of sorting the entire array</li>
+                            <li><strong>Handles Duplicates:</strong> Properly manages cases where largest appears multiple times</li>
+                            <li><strong>Edge Cases:</strong> Returns null for arrays with fewer than 2 unique elements</li>
+                        </ul>
+                    </div>
 
-                    <strong>// Test cases</strong><br>
-                    echo isPalindrome("A man, a plan, a canal: Panama"); // true<br>
-                    echo isPalindrome("race a car"); // false
+                    <pre class="code-block">function findSecondLargest($arr) {
+    // Handle edge case: need at least 2 elements
+    if(count($arr) < 2) return null;
+
+    // Initialize both variables to minimum possible integer
+    // This ensures any array element will be larger
+    $largest = $secondLargest = PHP_INT_MIN;
+
+    // Single pass through the array
+    foreach($arr as $num) {
+        // If current number is larger than current largest
+        if($num > $largest) {
+            // Move current largest to second largest
+            $secondLargest = $largest;
+            // Update largest to current number
+            $largest = $num;
+        }
+        // If number is between second largest and largest (exclusive)
+        elseif($num > $secondLargest && $num !== $largest) {
+            // Update second largest
+            $secondLargest = $num;
+        }
+    }
+
+    // If second largest was never updated, return null
+    return $secondLargest === PHP_INT_MIN ? null : $secondLargest;
+}
+
+// Test cases to demonstrate the logic
+echo findSecondLargest([3, 1, 4, 1, 5, 9, 2, 6]); // 6
+echo findSecondLargest([1, 1, 1]); // null (no second largest)
+echo findSecondLargest([5, 3]); // 3</pre>
+
+                    <div class="why-section">
+                        <h5>🎯 Algorithm Walkthrough: [3, 1, 4, 1, 5, 9, 2, 6]</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Start:</strong> largest = MIN, secondLargest = MIN</li>
+                            <li><strong>3:</strong> 3 > MIN, so secondLargest = MIN, largest = 3</li>
+                            <li><strong>1:</strong> 1 < 3, not > secondLargest (MIN), skip</li>
+                            <li><strong>4:</strong> 4 > 3, so secondLargest = 3, largest = 4</li>
+                            <li><strong>1:</strong> 1 < 4, not > secondLargest (3), skip</li>
+                            <li><strong>5:</strong> 5 > 4, so secondLargest = 4, largest = 5</li>
+                            <li><strong>9:</strong> 9 > 5, so secondLargest = 5, largest = 9</li>
+                            <li><strong>2:</strong> 2 < 9, not > secondLargest (5), skip</li>
+                            <li><strong>6:</strong> 6 < 9, but 6 > 5, so secondLargest = 6</li>
+                            <li><strong>Result:</strong> secondLargest = 6 ✅</li>
+                        </ul>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Interview Discussion Points</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Time Complexity:</strong> O(n) - single pass vs O(n log n) for sorting</li>
+                            <li><strong>Space Complexity:</strong> O(1) - only two variables</li>
+                            <li><strong>Edge Cases:</strong> Empty array, single element, all duplicates</li>
+                            <li><strong>PHP_INT_MIN:</strong> Guarantees any integer will be larger</li>
+                        </ul>
+                    </div>
                 </div>
-                <p><strong>Interview Tips:</strong> Handle case sensitivity, punctuation. Discuss space vs time trade-offs. Two-pointer approach is O(1) space vs O(n) for strrev.</p>
-            </div>
 
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                <h4 style="color: #e74c3c; margin-bottom: 15px;"><strong>Challenge 4: PHP Type Juggling Trick Question</strong></h4>
-                <p style="margin-bottom: 10px;"><strong>Problem:</strong> What will be the output of this PHP code? Explain the type juggling and function call behavior.</p>
-                <div style="font-family: 'Courier New', monospace; background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                    <strong>// Tricky PHP Code</strong><br>
-                    $a="5";<br>
-                    $b="2days";<br>
-                    echo rm($a+$b);<br>
-                    function rm($a,$b){<br>
-                    &nbsp;&nbsp;return $a+$b;<br>
-                    }
+                <!-- Challenge 3: String Processing -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ CHALLENGE 3: Palindrome Detection</div>
+                    <p><strong>Real Interview Context:</strong> "We need to validate user passwords that must read the same forwards and backwards for our security system. Handle punctuation, case sensitivity, and spaces properly."</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Two Different Approaches?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Built-in Solution:</strong> Simple and readable using strrev()</li>
+                            <li><strong>Two-Pointer Solution:</strong> More efficient, demonstrates algorithmic thinking</li>
+                            <li><strong>Preprocessing:</strong> Both handle case, punctuation, and spaces</li>
+                            <li><strong>Interview Strategy:</strong> Show both approaches, discuss trade-offs</li>
+                        </ul>
+                    </div>
+
+                    <div class="approach-grid">
+                        <div class="approach-good">
+                            <h5>✅ BUILT-IN APPROACH (Simple & Clear)</h5>
+                            <pre class="code-block">function isPalindrome($str) {
+    // Step 1: Clean the string - remove non-alphanumeric, convert to lowercase
+    // preg_replace uses regex to keep only letters and numbers
+    $str = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $str));
+
+    // Step 2: Compare string with its reverse
+    // strrev() reverses the string completely
+    // === ensures exact character match
+    return $str === strrev($str);
+}
+
+// Test cases:
+echo isPalindrome("A man, a plan, a canal: Panama"); // true
+echo isPalindrome("race a car"); // false</pre>
+                        </div>
+
+                        <div class="approach-bad">
+                            <h5>🚀 TWO-POINTER APPROACH (More Efficient)</h5>
+                            <pre class="code-block">function isPalindromeTwoPointer($str) {
+    // Step 1: Same preprocessing as before
+    $str = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $str));
+
+    // Step 2: Initialize two pointers
+    $left = 0; // Start from beginning
+    $right = strlen($str) - 1; // Start from end
+
+    // Step 3: Move pointers towards center
+    while($left < $right) {
+        // If characters don't match, not a palindrome
+        if($str[$left] !== $str[$right]) {
+            return false;
+        }
+        // Move pointers closer to center
+        $left++;
+        $right--;
+    }
+
+    // If we made it through the loop, it's a palindrome
+    return true;
+}
+
+// Same test cases work:
+echo isPalindromeTwoPointer("A man, a plan, a canal: Panama"); // true</pre>
+                        </div>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Preprocessing Matters?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Case Insensitive:</strong> "A" should equal "a"</li>
+                            <li><strong>Ignore Punctuation:</strong> Spaces, commas don't count</li>
+                            <li><strong>Regex Pattern:</strong> [^a-zA-Z0-9] matches anything NOT alphanumeric</li>
+                            <li><strong>Real-world:</strong> "A man, a plan, a canal: Panama" becomes "amanaplanacanalpanama"</li>
+                        </ul>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Algorithm Comparison</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
+                            <div style="background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                                <strong>Built-in Approach:</strong>
+                                <ul style="margin: 5px 0 0;">
+                                    <li>Time: O(n)</li>
+                                    <li>Space: O(n) for reversed string</li>
+                                    <li>Simple to understand</li>
+                                </ul>
+                            </div>
+                            <div style="background: #fff3cd; padding: 10px; border-radius: 5px;">
+                                <strong>Two-Pointer Approach:</strong>
+                                <ul style="margin: 5px 0 0;">
+                                    <li>Time: O(n)</li>
+                                    <li>Space: O(1) extra space</li>
+                                    <li>Stops early on mismatch</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #ffc107;">
-                    <strong>Expected Output: 7</strong>
-                    <p style="margin: 10px 0 0 0;"><strong>Explanation:</strong></p>
-                    <ul style="margin: 5px 0;">
-                        <li><code>$a+$b</code> performs type juggling: "5" → 5, "2days" → 2 (stops at first non-numeric)</li>
-                        <li>Result: <code>5 + 2 = 7</code></li>
-                        <li><code>rm(7)</code> called with one argument, so <code>$b = NULL</code> (default)</li>
-                        <li>Inside function: <code>return 7 + NULL = 7</code> (NULL + number = number)</li>
-                    </ul>
+
+                <!-- Challenge 4: PHP Type Juggling -->
+                <div class="scenario-card">
+                    <div class="scenario-title">❓ CHALLENGE 4: PHP Type Juggling Trick</div>
+                    <p><strong>Real Interview Context:</strong> "This code snippet appeared in our system and we're getting unexpected results. Can you explain what's happening and predict the output?"</p>
+
+                    <div class="why-section">
+                        <h5>🎯 Why This Tests PHP Mastery?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>Type Juggling:</strong> PHP's automatic type conversion during operations</li>
+                            <li><strong>String to Number:</strong> How PHP extracts numeric values from strings</li>
+                            <li><strong>Function Parameters:</strong> Default NULL values for missing arguments</li>
+                            <li><strong>NULL Arithmetic:</strong> How NULL behaves in mathematical operations</li>
+                        </ul>
+                    </div>
+
+                    <pre class="code-block">// The tricky code snippet:
+$a = "5";           // String containing a number
+$b = "2days";       // String starting with number, then letters
+
+// What happens here?
+echo rm($a + $b);   // Type juggling occurs!
+
+function rm($a, $b) {  // Function expects 2 parameters
+    return $a + $b;    // But what if $b is NULL?
+}</pre>
+
+                    <div class="why-section">
+                        <h5>🎯 Step-by-Step Execution Analysis</h5>
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                            <strong>Step 1: Type Juggling in Addition</strong>
+                            <ul style="margin: 10px 0;">
+                                <li><code>$a = "5"</code> → When used in math, becomes integer <code>5</code></li>
+                                <li><code>$b = "2days"</code> → PHP reads until first non-numeric: becomes <code>2</code></li>
+                                <li><code>$a + $b</code> → <code>5 + 2</code> = <code>7</code></li>
+                            </ul>
+
+                            <strong>Step 2: Function Call with Missing Parameter</strong>
+                            <ul style="margin: 10px 0;">
+                                <li><code>rm(7)</code> called, but function expects 2 parameters</li>
+                                <li>PHP automatically sets missing <code>$b = NULL</code></li>
+                                <li>Inside function: <code>return 7 + NULL</code></li>
+                            </ul>
+
+                            <strong>Step 3: NULL Arithmetic Behavior</strong>
+                            <ul style="margin: 10px 0;">
+                                <li>In PHP: <code>number + NULL = number</code></li>
+                                <li>So: <code>7 + NULL = 7</code></li>
+                                <li><strong>Final Output: 7</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Why Interviewers Love This Question?</h5>
+                        <ul style="margin: 0;">
+                            <li><strong>PHP Internals:</strong> Tests deep understanding of PHP's type system</li>
+                            <li><strong>Debugging Skills:</strong> Ability to trace complex execution paths</li>
+                            <li><strong>Gotcha Awareness:</strong> Common source of bugs in PHP applications</li>
+                            <li><strong>Best Practices:</strong> Leads to discussion about strict typing and validation</li>
+                        </ul>
+                    </div>
+
+                    <div class="why-section">
+                        <h5>🎯 Prevention Strategies</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 10px;">
+                            <div style="background: #ffebee; padding: 12px; border-radius: 6px;">
+                                <strong>❌ Bad Practice (causes bugs):</strong>
+                                <pre class="code-block" style="margin: 8px 0; font-size: 0.85em;">$result = $userInput + 0;  // Type juggling
+function calculate($a, $b) { // Missing validation
+    return $a * $b;
+}</pre>
+                            </div>
+                            <div style="background: #e8f5e8; padding: 12px; border-radius: 6px;">
+                                <strong>✅ Good Practice (prevents bugs):</strong>
+                                <pre class="code-block" style="margin: 8px 0; font-size: 0.85em;">$result = (int) $userInput;  // Explicit casting
+function calculate(int $a, int $b = 0) { // Type hints
+    return $a * $b;
+}</pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p><strong>Interview Tips:</strong> Tests understanding of PHP's loose typing, type juggling with +, function parameter defaults, and NULL arithmetic behavior. Common gotcha in interviews!</p>
+
             </div>
 
             <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🧠 ALGORITHM THINKING PATTERNS</h3>
