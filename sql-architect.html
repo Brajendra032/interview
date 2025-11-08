@@ -313,6 +313,61 @@
             font-size: 0.95em;
             line-height: 1.6;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none; /* Hidden by default */
+        }
+
+        .code-block.show {
+            display: block;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+            transition: background 0.2s ease;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
         }
 
         .code-block::-webkit-scrollbar {
@@ -384,6 +439,14 @@
             font-size: 0.9em;
             overflow-x: auto;
             margin: 10px 0;
+        }
+
+        .example-section .code-block {
+            display: none;
+        }
+
+        .example-section .code-block.show {
+            display: block;
         }
 
         .explanation-box {
@@ -496,7 +559,7 @@
             <div class="nav-links">
                 <a href="#architecture" class="nav-link">Architecture</a>
                 <a href="#performance" class="nav-link">Performance</a>
-                <a href="#patterns" class="nav-link">Patterns</a>
+                <a href="#quick-reference" class="nav-link">Quick Reference</a>
                 <a href="index.html" class="back-button">← Back to Main</a>
             </div>
         </div>
@@ -1273,6 +1336,217 @@ ORDER BY created_at DESC;
                     </div>
                 </div>
             </div>
+
+            <!-- Quick Reference Table Section -->
+            <div class="section" id="quick-reference">
+                <div class="section-header">
+                    <i class="fas fa-table section-icon"></i>
+                    <div>
+                        <h2 class="section-title">📊 Quick Reference Table - All Topics</h2>
+                        <p class="section-description">Complete reference table for quick lookup of all SQL Architect concepts</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Topic</th>
+                                <th style="width: 30%">Definition</th>
+                                <th style="width: 30%">Key Points</th>
+                                <th style="width: 20%">Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Multi-Tenant Schema</td>
+                                <td class="definition">Database design for SaaS apps where multiple companies share infrastructure but data is isolated</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Always include tenant_id in all tables</li>
+                                        <li>Partition by tenant_id for performance</li>
+                                        <li>Use stored procedures for tenant isolation</li>
+                                        <li>Three approaches: Separate DB, Shared DB, Hybrid</li>
+                                    </ul>
+                                </td>
+                                <td>SaaS platforms, multi-company systems, white-label applications</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Composite Index</td>
+                                <td class="definition">Index on multiple columns matching query patterns</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Order columns by selectivity</li>
+                                        <li>Match WHERE clause order</li>
+                                        <li>Include ORDER BY columns</li>
+                                    </ul>
+                                </td>
+                                <td>Multi-column WHERE clauses, complex queries</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Covering Index</td>
+                                <td class="definition">Index that contains all columns needed by query</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Query reads only index, not table</li>
+                                        <li>10x faster than table access</li>
+                                        <li>Include all SELECT columns in index</li>
+                                    </ul>
+                                </td>
+                                <td>Frequently accessed columns, read-heavy queries</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Partial Index</td>
+                                <td class="definition">Index only specific rows (e.g., active users only)</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Reduces index size</li>
+                                        <li>Faster queries on filtered data</li>
+                                        <li>Use WHERE clause in index definition</li>
+                                    </ul>
+                                </td>
+                                <td>Filtered queries, status-based lookups</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Functional Index</td>
+                                <td class="definition">Index on computed/derived values</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Index on expressions (SUBSTRING, UPPER, etc.)</li>
+                                        <li>Useful for segmentation queries</li>
+                                        <li>MySQL 8.0+ supports functional indexes</li>
+                                    </ul>
+                                </td>
+                                <td>Email domain queries, computed columns</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Spatial Index</td>
+                                <td class="definition">Index for geographic/location data</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Uses R-tree structure</li>
+                                        <li>Fast distance calculations</li>
+                                        <li>Use ST_Distance, ST_Contains functions</li>
+                                    </ul>
+                                </td>
+                                <td>Location-based apps, mapping, delivery services</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Range Partitioning</td>
+                                <td class="definition">Partition table by value ranges (e.g., by year)</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Perfect for time-series data</li>
+                                        <li>Easy to drop old partitions</li>
+                                        <li>Queries scan only relevant partitions</li>
+                                    </ul>
+                                </td>
+                                <td>Logs, events, transactions, time-based data</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Hash Partitioning</td>
+                                <td class="definition">Partition table using hash function for even distribution</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Even data distribution</li>
+                                        <li>No natural partition key needed</li>
+                                        <li>Good for load balancing</li>
+                                    </ul>
+                                </td>
+                                <td>Sessions, user data, evenly distributed data</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">List Partitioning</td>
+                                <td class="definition">Partition table by specific values (e.g., regions, types)</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Partition by known categories</li>
+                                        <li>Each partition has specific values</li>
+                                        <li>Fast queries on specific categories</li>
+                                    </ul>
+                                </td>
+                                <td>Notifications by type, regions, categories</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Subpartitioning</td>
+                                <td class="definition">Combine two partitioning strategies (Range + Hash)</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>First partition by range, then by hash</li>
+                                        <li>For very large tables</li>
+                                        <li>Better distribution within ranges</li>
+                                    </ul>
+                                </td>
+                                <td>Massive tables needing both time and distribution</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Query Optimization</td>
+                                <td class="definition">Improve query performance through analysis and indexing</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Always use EXPLAIN first</li>
+                                        <li>Replace correlated subqueries with JOINs</li>
+                                        <li>Use seek method for pagination</li>
+                                        <li>MATCH AGAINST for text search</li>
+                                    </ul>
+                                </td>
+                                <td>Slow queries, performance tuning, optimization</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Role-Based Access</td>
+                                <td class="definition">Grant permissions based on roles, not individual users</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Principle of least privilege</li>
+                                        <li>Create roles: readonly, readwrite, admin</li>
+                                        <li>Assign roles to users</li>
+                                        <li>Easier permission management</li>
+                                    </ul>
+                                </td>
+                                <td>Multi-user systems, security compliance</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Row-Level Security</td>
+                                <td class="definition">Restrict data access at row level (e.g., tenant isolation)</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Use views with tenant filtering</li>
+                                        <li>Functions to get current tenant</li>
+                                        <li>Automatic data isolation</li>
+                                    </ul>
+                                </td>
+                                <td>Multi-tenant systems, data isolation</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Data Encryption</td>
+                                <td class="definition">Encrypt sensitive data at rest using AES</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Use AES_ENCRYPT/AES_DECRYPT</li>
+                                        <li>Store encrypted data in VARBINARY</li>
+                                        <li>Create encryption functions</li>
+                                        <li>Always encrypt SSN, credit cards</li>
+                                    </ul>
+                                </td>
+                                <td>Healthcare, finance, PII data, compliance</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Audit Logging</td>
+                                <td class="definition">Track all database changes for compliance and security</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Use triggers for automatic logging</li>
+                                        <li>Store old and new values in JSON</li>
+                                        <li>Include user_id, IP, timestamp</li>
+                                        <li>Required for HIPAA, GDPR compliance</li>
+                                    </ul>
+                                </td>
+                                <td>Compliance, security, change tracking</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1287,10 +1561,11 @@ ORDER BY created_at DESC;
             button.addEventListener('click', function() {
                 const codeBlock = this.nextElementSibling;
                 if (codeBlock && codeBlock.classList.contains('code-block')) {
-                    codeBlock.style.display = codeBlock.style.display === 'none' ? 'block' : 'none';
-                    this.innerHTML = codeBlock.style.display === 'none' 
-                        ? '<i class="fas fa-code"></i> Show Code Example'
-                        : '<i class="fas fa-code"></i> Hide Code Example';
+                    codeBlock.classList.toggle('show');
+                    const isVisible = codeBlock.classList.contains('show');
+                    this.innerHTML = isVisible 
+                        ? '<i class="fas fa-code"></i> Hide Code Example'
+                        : '<i class="fas fa-code"></i> Show Code Example';
                 }
             });
         });
