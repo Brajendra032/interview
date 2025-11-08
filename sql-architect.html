@@ -4,9 +4,486 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🗄️ SQL Architect Interview Guide - Full Stack Developer Edition</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #5568d3;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: white;
+            border-radius: 15px;
+            padding: 50px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        /* Content Section */
+        .content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section-icon {
+            font-size: 2.5em;
+            color: #667eea;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .section-description {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        /* Question Grid */
+        .question-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #667eea;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .question-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .question-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .question-content {
+            margin-bottom: 25px;
+        }
+
+        .question-content p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+
+        .highlight-box.info {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .highlight-box.success {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .highlight-box.warning {
+            background: #fff3e0;
+            border-color: #ff9800;
+        }
+
+        .highlight-box.danger {
+            background: #ffebee;
+            border-color: #f44336;
+        }
+
+        .highlight-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .highlight-icon {
+            font-size: 1.3em;
+        }
+
+        .highlight-box ul {
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        .highlight-box li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .code-block::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: #1e1e1e;
+            border-radius: 4px;
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .code-block::-webkit-scrollbar-thumb:hover {
+            background: #5568d3;
+        }
+
+        /* Code Toggle Button */
+        .code-toggle-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .code-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .code-toggle-btn i {
+            font-size: 1.1em;
+        }
+
+        /* Example Sections */
+        .example-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .example-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .example-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .explanation-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .explanation-box strong {
+            color: #e65100;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1em;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .section-header {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .code-block {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+        }
+
+        /* Additional Styling */
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .comparison-item.slow {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .comparison-item.fast {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+
+        .comparison-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .comparison-item.slow .comparison-label {
+            color: #c62828;
+        }
+
+        .comparison-item.fast .comparison-label {
+            color: #2e7d32;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -20,8 +497,7 @@
                 <a href="#architecture" class="nav-link">Architecture</a>
                 <a href="#performance" class="nav-link">Performance</a>
                 <a href="#patterns" class="nav-link">Patterns</a>
-                <a href="#fullstack" class="nav-link">Full Stack</a>
-                <a href="index.html" class="back-button">← Back</a>
+                <a href="index.html" class="back-button">← Back to Main</a>
             </div>
         </div>
     </nav>
@@ -57,20 +533,7 @@
         </section>
 
         <div class="content">
-            <!-- Code Modal -->
-            <div id="codeModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 id="modalTitle" class="modal-title">Code Example</h2>
-                        <button class="modal-close" onclick="closeCodeModal()">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalCode" class="code-modal-content" data-lang="sql"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
+            <div class="section" id="architecture">
                 <div class="section-header">
                     <i class="fas fa-database section-icon"></i>
                     <div>
@@ -80,7 +543,8 @@
                 </div>
 
                 <div class="question-grid">
-                    <div class="question-card fade-in-up">
+                    <!-- Question 1: Multi-Tenant Database Schema -->
+                    <div class="question-card">
                         <div class="question-header">
                             <div class="question-number">1</div>
                             <h3 class="question-title">Multi-Tenant Database Schema Design</h3>
@@ -91,7 +555,7 @@
                             <span class="question-badge">Senior</span>
                         </div>
                         <div class="question-content">
-                            <p>Design a database schema for a multi-tenant SaaS application with proper indexing and partitioning strategies.</p>
+                            <p><strong>Problem:</strong> Design a database schema for a multi-tenant SaaS application where multiple companies share the same infrastructure but their data must be completely isolated.</p>
 
                             <div class="highlight-box info">
                                 <div class="highlight-header">
@@ -99,23 +563,24 @@
                                     <strong>Key Considerations:</strong>
                                 </div>
                                 <ul>
-                                    <li>Data isolation and security</li>
-                                    <li>Scalability and performance</li>
-                                    <li>Resource optimization</li>
-                                    <li>Maintenance complexity</li>
+                                    <li><strong>Data Isolation:</strong> Each tenant's data must be completely separate and secure</li>
+                                    <li><strong>Scalability:</strong> System must handle thousands of tenants efficiently</li>
+                                    <li><strong>Performance:</strong> Queries should be fast even with millions of records</li>
+                                    <li><strong>Resource Optimization:</strong> Minimize database overhead per tenant</li>
+                                    <li><strong>Maintenance:</strong> Easy to add/remove tenants without affecting others</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <button class="code-toggle-btn">
-                            <i class="fas fa-code"></i> View Code Example
-                        </button>
+                            <div class="example-section">
+                                <div class="example-title">📋 Complete Solution: Multi-Tenant Schema</div>
+                                
+                                <div class="code-block">
+-- ============================================
+-- MULTI-TENANT SAAS DATABASE SCHEMA
+-- ============================================
 
-                        <div class="code-block" data-lang="sql" data-title="Multi-Tenant Database Schema">
--- Multi-Tenant SaaS Database Schema
--- Using separate database per tenant approach
-
--- Tenant Management
+-- Step 1: Tenant Management Table
+-- This table stores information about each tenant (company)
 CREATE TABLE tenants (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -128,7 +593,8 @@ CREATE TABLE tenants (
     INDEX idx_status (status)
 );
 
--- User Management (Central)
+-- Step 2: User Management (Central)
+-- All users belong to a tenant
 CREATE TABLE users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     tenant_id BIGINT NOT NULL,
@@ -143,12 +609,11 @@ CREATE TABLE users (
     FOREIGN KEY (tenant_id) REFERENCES tenants(id) ON DELETE CASCADE
 );
 
--- Per-tenant tables (example structure)
--- This would be created for each tenant's database
-
+-- Step 3: Per-tenant tables (example: Posts)
+-- This table includes tenant_id for data isolation
 CREATE TABLE posts (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    tenant_id BIGINT NOT NULL, -- For shared table approach
+    tenant_id BIGINT NOT NULL, -- Critical: Every row has tenant_id
     user_id BIGINT NOT NULL,
     title VARCHAR(500) NOT NULL,
     content TEXT,
@@ -157,7 +622,7 @@ CREATE TABLE posts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    -- Partitioning by tenant_id for large datasets
+    -- Indexes for performance
     INDEX idx_tenant_status (tenant_id, status),
     INDEX idx_user_created (user_id, created_at),
     INDEX idx_published (published_at),
@@ -165,34 +630,62 @@ CREATE TABLE posts (
     -- Fulltext search index
     FULLTEXT idx_title_content (title, content),
 
+    -- Foreign keys for data integrity
     FOREIGN KEY (tenant_id) REFERENCES tenants(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) PARTITION BY HASH(tenant_id) PARTITIONS 64;
 
--- Partition management
-ALTER TABLE posts ADD PARTITION (PARTITION p_new VALUES LESS THAN MAXVALUE);
-
--- Optimized queries with tenant isolation
+-- Step 4: Optimized Stored Procedure
+-- This ensures tenant isolation at the database level
 DELIMITER //
 CREATE PROCEDURE get_tenant_posts(IN tenantId BIGINT, IN limitCount INT)
 BEGIN
     SELECT p.*, u.email as author_email
     FROM posts p
     JOIN users u ON p.user_id = u.id
-    WHERE p.tenant_id = tenantId
+    WHERE p.tenant_id = tenantId  -- Always filter by tenant_id
     AND p.status = 'published'
     ORDER BY p.published_at DESC
     LIMIT limitCount;
 END //
 DELIMITER ;
 
--- Tenant-specific indexes for better performance
+-- Step 5: Tenant-specific indexes for better performance
 CREATE INDEX idx_tenant_posts_recent ON posts (tenant_id, published_at DESC, status);
 CREATE INDEX idx_tenant_user_posts ON posts (tenant_id, user_id, created_at DESC);
+                                </div>
+
+                                <div class="explanation-box">
+                                    <strong>🧠 How It Works:</strong><br>
+                                    <strong>1. Tenant Isolation:</strong> Every table includes tenant_id. All queries MUST filter by tenant_id first.<br>
+                                    <strong>2. Partitioning:</strong> Tables are partitioned by tenant_id for faster queries and easier maintenance.<br>
+                                    <strong>3. Security:</strong> Stored procedures enforce tenant isolation at database level.<br>
+                                    <strong>4. Performance:</strong> Composite indexes on (tenant_id, other_columns) make queries fast.
+                                </div>
+
+                                <div class="example-section">
+                                    <div class="example-title">💡 Real-World Example Query</div>
+                                    <div class="code-block">
+-- Get all published posts for tenant ID 5
+-- This query is automatically isolated to tenant 5
+CALL get_tenant_posts(5, 20);
+
+-- Or using direct query (always include tenant_id in WHERE)
+SELECT p.*, u.email 
+FROM posts p
+JOIN users u ON p.user_id = u.id
+WHERE p.tenant_id = 5  -- CRITICAL: Always filter by tenant_id
+AND p.status = 'published'
+ORDER BY p.published_at DESC
+LIMIT 20;
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="question-card fade-in-up">
+                    <!-- Question 2: Advanced Indexing -->
+                    <div class="question-card">
                         <div class="question-header">
                             <div class="question-number">2</div>
                             <h3 class="question-title">Advanced Indexing Strategies</h3>
@@ -203,7 +696,7 @@ CREATE INDEX idx_tenant_user_posts ON posts (tenant_id, user_id, created_at DESC
                             <span class="question-badge">Senior</span>
                         </div>
                         <div class="question-content">
-                            <p>How do you design and implement advanced indexing strategies for high-performance database queries?</p>
+                            <p><strong>Problem:</strong> How do you design and implement advanced indexing strategies for high-performance database queries?</p>
 
                             <div class="highlight-box success">
                                 <div class="highlight-header">
@@ -211,46 +704,73 @@ CREATE INDEX idx_tenant_user_posts ON posts (tenant_id, user_id, created_at DESC
                                     <strong>Indexing Best Practices:</strong>
                                 </div>
                                 <ul>
-                                    <li>Index foreign keys automatically</li>
-                                    <li>Use composite indexes for multi-column WHERE clauses</li>
-                                    <li>Consider covering indexes for common query patterns</li>
-                                    <li>Monitor index usage and remove unused indexes</li>
+                                    <li><strong>Index Foreign Keys:</strong> Automatically index all foreign key columns</li>
+                                    <li><strong>Composite Indexes:</strong> Use for multi-column WHERE clauses</li>
+                                    <li><strong>Covering Indexes:</strong> Include all query columns in index for maximum speed</li>
+                                    <li><strong>Monitor Usage:</strong> Regularly check and remove unused indexes</li>
+                                    <li><strong>Partial Indexes:</strong> Index only specific rows to save space</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <button class="code-toggle-btn">
-                            <i class="fas fa-code"></i> View Code Example
-                        </button>
+                            <div class="example-section">
+                                <div class="example-title">📋 Complete Indexing Strategies</div>
+                                
+                                <div class="code-block">
+-- ============================================
+-- ADVANCED INDEXING STRATEGIES
+-- ============================================
 
-                        <div class="code-block" data-lang="sql" data-title="Advanced Indexing Strategies">
--- Advanced Indexing Strategies for High Performance
-
--- 1. Composite Index for Common Query Patterns
--- Query: SELECT * FROM orders WHERE customer_id = ? AND order_date >= ? AND status = 'active'
+-- 1. COMPOSITE INDEX for Common Query Patterns
+-- Query Pattern: SELECT * FROM orders WHERE customer_id = ? AND order_date >= ? AND status = 'active'
 CREATE INDEX idx_orders_customer_date_status
 ON orders (customer_id, order_date DESC, status)
 WHERE status = 'active';
 
--- 2. Covering Index (includes all columns needed by query)
+-- Example Usage:
+SELECT * FROM orders 
+WHERE customer_id = 123 
+AND order_date >= '2024-01-01' 
+AND status = 'active';
+-- This query uses the composite index efficiently
+
+-- 2. COVERING INDEX (includes all columns needed by query)
 -- Query: SELECT customer_id, order_date, total FROM orders WHERE status = 'shipped'
+-- Covering index means query reads ONLY from index, not table (10x faster!)
 CREATE INDEX idx_orders_covering
 ON orders (status, customer_id, order_date, total)
 WHERE status = 'shipped';
 
--- 3. Partial Index for specific conditions
+-- Example Usage:
+SELECT customer_id, order_date, total 
+FROM orders 
+WHERE status = 'shipped';
+-- Database reads only from index, never touches table!
+
+-- 3. PARTIAL INDEX for specific conditions
 -- Only index active users to reduce index size
 CREATE INDEX idx_active_users_email
 ON users (email)
 WHERE status = 'active' AND deleted_at IS NULL;
 
--- 4. Functional Index for computed values
+-- Example Usage:
+SELECT * FROM users 
+WHERE email = 'john@example.com' 
+AND status = 'active' 
+AND deleted_at IS NULL;
+-- Index is smaller and faster because it only contains active users
+
+-- 4. FUNCTIONAL INDEX for computed values
 -- Index on email domain for segmentation queries
 CREATE INDEX idx_users_email_domain
 ON users (SUBSTRING_INDEX(email, '@', -1));
 
--- 5. Spatial Index for location-based queries
--- For geo-location features
+-- Example Usage:
+SELECT * FROM users 
+WHERE SUBSTRING_INDEX(email, '@', -1) = 'gmail.com';
+-- This query uses the functional index
+
+-- 5. SPATIAL INDEX for location-based queries
+-- For geo-location features (Uber, food delivery apps)
 CREATE TABLE locations (
     id BIGINT PRIMARY KEY,
     name VARCHAR(255),
@@ -258,14 +778,19 @@ CREATE TABLE locations (
     SPATIAL INDEX idx_coordinates (coordinates)
 );
 
--- Query nearby locations
-SELECT name, ST_Distance(coordinates, ST_PointFromText('POINT(40.7128 -74.0060)')) as distance
+-- Example: Find nearby locations (within 1km)
+SELECT name, 
+       ST_Distance(coordinates, ST_PointFromText('POINT(40.7128 -74.0060)')) as distance
 FROM locations
-WHERE ST_Contains(ST_Buffer(ST_PointFromText('POINT(40.7128 -74.0060)'), 1000), coordinates)
+WHERE ST_Contains(
+    ST_Buffer(ST_PointFromText('POINT(40.7128 -74.0060)'), 1000), 
+    coordinates
+)
 ORDER BY distance;
+-- Returns all locations within 1km of New York City coordinates
 
--- 6. Index Maintenance and Monitoring
--- Check index usage
+-- 6. INDEX MAINTENANCE and MONITORING
+-- Check which indexes are being used
 SELECT
     object_schema,
     object_name,
@@ -277,7 +802,7 @@ FROM performance_schema.table_io_waits_summary_by_index_usage
 WHERE object_schema NOT IN ('mysql', 'sys', 'performance_schema')
 ORDER BY (count_read + count_write) DESC;
 
--- Find unused indexes
+-- Find UNUSED indexes (candidates for removal)
 SELECT
     object_schema,
     object_name,
@@ -287,10 +812,22 @@ SELECT
 FROM performance_schema.table_io_waits_summary_by_index_usage
 WHERE count_read = 0 AND count_write = 0
 AND object_schema NOT IN ('mysql', 'sys', 'performance_schema');
+-- These indexes are wasting space and slowing down writes!
+                                </div>
+
+                                <div class="explanation-box">
+                                    <strong>🎯 Key Takeaways:</strong><br>
+                                    <strong>Covering Index:</strong> If index contains all columns in SELECT, query is 10x faster (no table access).<br>
+                                    <strong>Composite Index Order:</strong> Index columns in order of selectivity (most selective first).<br>
+                                    <strong>Partial Index:</strong> Reduces index size by only indexing relevant rows.<br>
+                                    <strong>Monitor Regularly:</strong> Unused indexes slow down INSERT/UPDATE operations.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="question-card fade-in-up">
+                    <!-- Question 3: Partitioning & Sharding -->
+                    <div class="question-card">
                         <div class="question-header">
                             <div class="question-number">3</div>
                             <h3 class="question-title">Database Partitioning & Sharding</h3>
@@ -301,7 +838,7 @@ AND object_schema NOT IN ('mysql', 'sys', 'performance_schema');
                             <span class="question-badge">Senior</span>
                         </div>
                         <div class="question-content">
-                            <p>Implement database partitioning and sharding strategies for handling massive datasets and high concurrency.</p>
+                            <p><strong>Problem:</strong> Implement database partitioning and sharding strategies for handling massive datasets and high concurrency.</p>
 
                             <div class="highlight-box warning">
                                 <div class="highlight-header">
@@ -309,21 +846,22 @@ AND object_schema NOT IN ('mysql', 'sys', 'performance_schema');
                                     <strong>Partitioning vs Sharding:</strong>
                                 </div>
                                 <ul>
-                                    <li><strong>Partitioning:</strong> Divide table into smaller pieces within the same database</li>
-                                    <li><strong>Sharding:</strong> Distribute data across multiple database instances</li>
-                                    <li><strong>Hybrid:</strong> Combine both for optimal performance</li>
+                                    <li><strong>Partitioning:</strong> Divide table into smaller pieces within the same database (faster queries, easier maintenance)</li>
+                                    <li><strong>Sharding:</strong> Distribute data across multiple database instances (horizontal scaling, requires application logic)</li>
+                                    <li><strong>Hybrid:</strong> Combine both for optimal performance at massive scale</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <button class="code-toggle-btn">
-                            <i class="fas fa-code"></i> View Code Example
-                        </button>
+                            <div class="example-section">
+                                <div class="example-title">📋 Complete Partitioning Examples</div>
+                                
+                                <div class="code-block">
+-- ============================================
+-- DATABASE PARTITIONING STRATEGIES
+-- ============================================
 
-                        <div class="code-block" data-lang="sql" data-title="Database Partitioning & Sharding">
--- Database Partitioning & Sharding Strategies
-
--- 1. Range Partitioning (by date)
+-- 1. RANGE PARTITIONING (by date) - Most Common
+-- Perfect for time-series data (logs, events, transactions)
 CREATE TABLE user_activity (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
@@ -339,12 +877,19 @@ CREATE TABLE user_activity (
     PARTITION p_future VALUES LESS THAN MAXVALUE
 );
 
--- Add new partition for next year
+-- Add new partition for next year (maintenance task)
 ALTER TABLE user_activity ADD PARTITION (
     PARTITION p2024 VALUES LESS THAN (2025)
 );
 
--- 2. Hash Partitioning (for even distribution)
+-- Query only scans relevant partition (much faster!)
+SELECT * FROM user_activity 
+WHERE created_at >= '2024-01-01' 
+AND created_at < '2025-01-01';
+-- Only scans p2024 partition, ignores all other years!
+
+-- 2. HASH PARTITIONING (for even distribution)
+-- Distributes data evenly across partitions
 CREATE TABLE sessions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
@@ -355,8 +900,10 @@ CREATE TABLE sessions (
     INDEX idx_token (session_token),
     INDEX idx_expires (expires_at)
 ) PARTITION BY HASH(id) PARTITIONS 64;
+-- Data distributed evenly across 64 partitions
 
--- 3. List Partitioning (by category)
+-- 3. LIST PARTITIONING (by category)
+-- Partition by specific values (regions, types, etc.)
 CREATE TABLE notifications (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
@@ -373,7 +920,14 @@ CREATE TABLE notifications (
     PARTITION p_inapp VALUES IN ('in_app')
 );
 
--- 4. Subpartitioning (Range + Hash)
+-- Query specific notification type (only scans one partition)
+SELECT * FROM notifications 
+WHERE type = 'email' 
+AND created_at >= '2024-01-01';
+-- Only scans p_email partition!
+
+-- 4. SUBPARTITIONING (Range + Hash) - Advanced
+-- Combines two partitioning strategies
 CREATE TABLE orders (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     customer_id BIGINT NOT NULL,
@@ -397,10 +951,23 @@ SUBPARTITION BY HASH(customer_id) SUBPARTITIONS 4 (
         SUBPARTITION p2024_h3
     )
 );
+-- First partitioned by year, then by customer_id hash
+-- Total: 8 subpartitions (2 years × 4 hash partitions)
+                                </div>
+
+                                <div class="explanation-box">
+                                    <strong>💡 When to Use Each Type:</strong><br>
+                                    <strong>Range Partitioning:</strong> Time-series data, logs, events (drop old partitions easily).<br>
+                                    <strong>Hash Partitioning:</strong> Even distribution, no natural partition key.<br>
+                                    <strong>List Partitioning:</strong> Known categories, regions, types.<br>
+                                    <strong>Subpartitioning:</strong> Very large tables needing both time and distribution partitioning.
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="question-card fade-in-up">
+                    <!-- Question 4: Query Optimization -->
+                    <div class="question-card">
                         <div class="question-header">
                             <div class="question-number">4</div>
                             <h3 class="question-title">Query Optimization & Performance Tuning</h3>
@@ -411,7 +978,7 @@ SUBPARTITION BY HASH(customer_id) SUBPARTITIONS 4 (
                             <span class="question-badge">Senior</span>
                         </div>
                         <div class="question-content">
-                            <p>How do you analyze and optimize slow database queries for enterprise applications?</p>
+                            <p><strong>Problem:</strong> How do you analyze and optimize slow database queries for enterprise applications?</p>
 
                             <div class="highlight-box info">
                                 <div class="highlight-header">
@@ -419,23 +986,24 @@ SUBPARTITION BY HASH(customer_id) SUBPARTITIONS 4 (
                                     <strong>Optimization Workflow:</strong>
                                 </div>
                                 <ul>
-                                    <li>Enable slow query log and analyze patterns</li>
-                                    <li>Use EXPLAIN to understand query execution plans</li>
-                                    <li>Identify bottlenecks (missing indexes, table scans)</li>
-                                    <li>Implement appropriate optimizations</li>
-                                    <li>Monitor performance improvements</li>
+                                    <li><strong>Step 1:</strong> Enable slow query log and analyze patterns</li>
+                                    <li><strong>Step 2:</strong> Use EXPLAIN to understand query execution plans</li>
+                                    <li><strong>Step 3:</strong> Identify bottlenecks (missing indexes, table scans, N+1 queries)</li>
+                                    <li><strong>Step 4:</strong> Implement appropriate optimizations</li>
+                                    <li><strong>Step 5:</strong> Monitor performance improvements</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <button class="code-toggle-btn">
-                            <i class="fas fa-code"></i> View Code Example
-                        </button>
+                            <div class="example-section">
+                                <div class="example-title">📋 Query Optimization Techniques</div>
+                                
+                                <div class="code-block">
+-- ============================================
+-- QUERY OPTIMIZATION TECHNIQUES
+-- ============================================
 
-                        <div class="code-block" data-lang="sql" data-title="Query Optimization Techniques">
--- Query Optimization & Performance Tuning
-
--- 1. Analyze Query Performance
+-- 1. ANALYZE QUERY PERFORMANCE
+-- Always use EXPLAIN to see execution plan
 EXPLAIN FORMAT=JSON
 SELECT u.name, COUNT(o.id) as order_count, SUM(o.total) as total_spent
 FROM users u
@@ -446,46 +1014,108 @@ GROUP BY u.id
 HAVING total_spent > 1000
 ORDER BY total_spent DESC
 LIMIT 50;
+-- Look for: type (ALL = bad, index = good), rows scanned, key used
+                                </div>
 
--- 2. Common Optimization Patterns
-
--- a) Replace correlated subquery with JOIN
--- SLOW: Correlated subquery
+                                <div class="comparison-box">
+                                    <div class="comparison-item slow">
+                                        <div class="comparison-label">❌ SLOW: Correlated Subquery</div>
+                                        <div class="example-code">
+-- This runs subquery for EACH user row!
 SELECT u.name,
-       (SELECT COUNT(*) FROM orders o WHERE o.customer_id = u.id) as order_count
+       (SELECT COUNT(*) 
+        FROM orders o 
+        WHERE o.customer_id = u.id) as order_count
 FROM users u;
-
--- FAST: JOIN with aggregation
+-- If you have 10,000 users, this runs 10,000 subqueries!
+                                        </div>
+                                    </div>
+                                    <div class="comparison-item fast">
+                                        <div class="comparison-label">✅ FAST: JOIN with Aggregation</div>
+                                        <div class="example-code">
+-- This runs ONE query for all users
 SELECT u.name, COUNT(o.id) as order_count
 FROM users u
 LEFT JOIN orders o ON u.id = o.customer_id
 GROUP BY u.id;
+-- Single query, much faster!
+                                        </div>
+                                    </div>
+                                </div>
 
--- b) Optimize pagination for large datasets
--- SLOW: OFFSET for deep pages
-SELECT * FROM products ORDER BY created_at DESC LIMIT 50 OFFSET 999950;
-
--- FAST: Seek method (requires unique index)
+                                <div class="comparison-box">
+                                    <div class="comparison-item slow">
+                                        <div class="comparison-label">❌ SLOW: OFFSET for Deep Pages</div>
+                                        <div class="example-code">
+-- OFFSET scans all previous rows
+SELECT * FROM products 
+ORDER BY created_at DESC 
+LIMIT 50 OFFSET 999950;
+-- Database must scan 999,950 rows before returning results!
+                                        </div>
+                                    </div>
+                                    <div class="comparison-item fast">
+                                        <div class="comparison-label">✅ FAST: Seek Method</div>
+                                        <div class="example-code">
+-- Uses index to jump directly to position
 SELECT * FROM products
 WHERE (created_at, id) < ('2024-01-01', 1000000)
 ORDER BY created_at DESC, id DESC
 LIMIT 50;
+-- Jumps directly to position using index!
+                                        </div>
+                                    </div>
+                                </div>
 
--- c) Optimize complex WHERE conditions
--- Create composite index for complex conditions
+                                <div class="code-block">
+-- 3. OPTIMIZE COMPLEX WHERE CONDITIONS
+-- Create composite index matching query pattern
 CREATE INDEX idx_users_complex
 ON users (status, created_at, last_login_at)
 WHERE status IN ('active', 'premium');
 
--- d) Optimize full-text search
--- Use MATCH AGAINST instead of LIKE for text search
+-- Query uses this index efficiently
+SELECT * FROM users
+WHERE status = 'active'
+AND created_at >= '2024-01-01'
+AND last_login_at >= '2024-01-01';
+
+-- 4. OPTIMIZE FULL-TEXT SEARCH
+-- ❌ SLOW: Using LIKE (scans entire table)
+SELECT * FROM articles
+WHERE title LIKE '%database optimization%'
+OR content LIKE '%database optimization%';
+-- Scans every row, very slow on large tables
+
+-- ✅ FAST: Using MATCH AGAINST (uses fulltext index)
 SELECT * FROM articles
 WHERE MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUAGE MODE)
 ORDER BY MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUAGE MODE) DESC;
+-- Uses fulltext index, 100x faster!
+
+-- 5. AVOID SELECT * (only select needed columns)
+-- ❌ SLOW: Selects all columns
+SELECT * FROM users WHERE id = 123;
+
+-- ✅ FAST: Select only needed columns
+SELECT id, name, email FROM users WHERE id = 123;
+-- Less data transfer, faster query
+                                </div>
+
+                                <div class="explanation-box">
+                                    <strong>🎯 Optimization Rules:</strong><br>
+                                    <strong>1. Always EXPLAIN first</strong> - Understand what the database is doing<br>
+                                    <strong>2. Replace correlated subqueries</strong> - Use JOINs instead<br>
+                                    <strong>3. Use seek method for pagination</strong> - OFFSET is slow for deep pages<br>
+                                    <strong>4. MATCH AGAINST for text search</strong> - 100x faster than LIKE<br>
+                                    <strong>5. Select only needed columns</strong> - Reduces data transfer
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="question-card fade-in-up">
+                    <!-- Question 5: Security & Access Control -->
+                    <div class="question-card">
                         <div class="question-header">
                             <div class="question-number">5</div>
                             <h3 class="question-title">Database Security & Access Control</h3>
@@ -496,7 +1126,7 @@ ORDER BY MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUA
                             <span class="question-badge">Senior</span>
                         </div>
                         <div class="question-content">
-                            <p>Design comprehensive database security measures including access control, encryption, and audit trails.</p>
+                            <p><strong>Problem:</strong> Design comprehensive database security measures including access control, encryption, and audit trails.</p>
 
                             <div class="highlight-box danger">
                                 <div class="highlight-header">
@@ -505,22 +1135,22 @@ ORDER BY MATCH(title, content) AGAINST('database optimization' IN NATURAL LANGUA
                                 </div>
                                 <ul>
                                     <li><strong>Network Security:</strong> SSL/TLS encryption for data in transit</li>
-                                    <li><strong>Access Control:</strong> Principle of least privilege</li>
+                                    <li><strong>Access Control:</strong> Principle of least privilege (grant minimum required access)</li>
                                     <li><strong>Data Protection:</strong> Encryption at rest and in use</li>
                                     <li><strong>Audit & Monitoring:</strong> Comprehensive logging and alerting</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <button class="code-toggle-btn">
-                            <i class="fas fa-code"></i> View Code Example
-                        </button>
+                            <div class="example-section">
+                                <div class="example-title">📋 Complete Security Implementation</div>
+                                
+                                <div class="code-block">
+-- ============================================
+-- DATABASE SECURITY & ACCESS CONTROL
+-- ============================================
 
-                        <div class="code-block" data-lang="sql" data-title="Database Security Implementation">
--- Database Security & Access Control Implementation
-
--- 1. User and Role Management
--- Create roles with minimal privileges
+-- 1. USER AND ROLE MANAGEMENT
+-- Create roles with minimal privileges (Principle of Least Privilege)
 CREATE ROLE 'app_readonly' IDENTIFIED BY 'secure_password';
 CREATE ROLE 'app_readwrite' IDENTIFIED BY 'secure_password';
 CREATE ROLE 'app_admin' IDENTIFIED BY 'secure_password';
@@ -531,19 +1161,19 @@ GRANT SELECT, INSERT, UPDATE ON ecommerce.* TO 'app_readwrite';
 GRANT ALL PRIVILEGES ON ecommerce.* TO 'app_admin' WITH GRANT OPTION;
 
 -- Create users and assign roles
-CREATE USER 'ecommerce_app'@'%' IDENTIFIED BY 'strong_password';
+CREATE USER 'ecommerce_app'@'%' IDENTIFIED BY 'strong_password_here';
 GRANT 'app_readwrite' TO 'ecommerce_app'@'%';
 
--- 2. Row Level Security (RLS)
--- Implement tenant isolation
+-- 2. ROW LEVEL SECURITY (RLS) - Tenant Isolation
+-- Implement tenant isolation at database level
 DELIMITER //
 CREATE FUNCTION current_tenant_id() RETURNS BIGINT
 BEGIN
-    RETURN @current_tenant_id; -- Set by application
+    RETURN @current_tenant_id; -- Set by application before queries
 END //
 DELIMITER ;
 
--- Add tenant_id to all tables and create policies
+-- Add tenant_id to all tables
 ALTER TABLE users ADD COLUMN tenant_id BIGINT NOT NULL DEFAULT 1;
 ALTER TABLE orders ADD COLUMN tenant_id BIGINT NOT NULL DEFAULT 1;
 
@@ -552,9 +1182,10 @@ CREATE VIEW user_orders AS
 SELECT o.* FROM orders o
 JOIN users u ON o.customer_id = u.id
 WHERE u.tenant_id = current_tenant_id();
+-- Users can only see orders from their tenant
 
--- 3. Data Encryption
--- Encrypt sensitive data at rest
+-- 3. DATA ENCRYPTION at Rest
+-- Encrypt sensitive data (SSN, credit cards, etc.)
 ALTER TABLE users ADD COLUMN encrypted_ssn VARBINARY(255);
 ALTER TABLE payment_methods ADD COLUMN encrypted_card_number VARBINARY(255);
 
@@ -575,8 +1206,12 @@ BEGIN
 END //
 DELIMITER ;
 
--- 4. Audit Logging
--- Create comprehensive audit trail
+-- Usage Example:
+-- INSERT INTO users (encrypted_ssn) VALUES (encrypt_data('123-45-6789', 'secret_key'));
+-- SELECT decrypt_data(encrypted_ssn, 'secret_key') as ssn FROM users WHERE id = 1;
+
+-- 4. COMPREHENSIVE AUDIT LOGGING
+-- Create audit trail table
 CREATE TABLE audit_log (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     table_name VARCHAR(100) NOT NULL,
@@ -592,7 +1227,7 @@ CREATE TABLE audit_log (
     INDEX idx_timestamp (created_at)
 );
 
--- Audit trigger for users table
+-- Audit trigger for users table (UPDATE)
 DELIMITER //
 CREATE TRIGGER audit_users_update
     AFTER UPDATE ON users
@@ -605,6 +1240,7 @@ BEGIN
         @current_user_id);
 END //
 
+-- Audit trigger for users table (DELETE)
 CREATE TRIGGER audit_users_delete
     AFTER DELETE ON users
     FOR EACH ROW
@@ -615,6 +1251,24 @@ BEGIN
         @current_user_id);
 END //
 DELIMITER ;
+
+-- Query audit log
+SELECT * FROM audit_log 
+WHERE table_name = 'users' 
+AND record_id = 123
+ORDER BY created_at DESC;
+-- See complete history of changes to user 123
+                                </div>
+
+                                <div class="explanation-box">
+                                    <strong>🔒 Security Best Practices:</strong><br>
+                                    <strong>1. Principle of Least Privilege:</strong> Grant minimum required access only<br>
+                                    <strong>2. Encrypt Sensitive Data:</strong> Always encrypt SSN, credit cards, passwords<br>
+                                    <strong>3. Audit Everything:</strong> Log all changes for compliance (HIPAA, GDPR)<br>
+                                    <strong>4. Row-Level Security:</strong> Use views/functions for tenant isolation<br>
+                                    <strong>5. Regular Reviews:</strong> Audit user permissions quarterly
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -622,9 +1276,38 @@ DELIMITER ;
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
-    <script src="scripts.js"></script>
+    <!-- Footer -->
+    <div class="footer">
+        <p>🗄️ SQL Architect Interview Guide - Master Database Design, Optimization & Security at Architect Level</p>
+    </div>
+
+    <script>
+        // Toggle code blocks
+        document.querySelectorAll('.code-toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.nextElementSibling;
+                if (codeBlock && codeBlock.classList.contains('code-block')) {
+                    codeBlock.style.display = codeBlock.style.display === 'none' ? 'block' : 'none';
+                    this.innerHTML = codeBlock.style.display === 'none' 
+                        ? '<i class="fas fa-code"></i> Show Code Example'
+                        : '<i class="fas fa-code"></i> Hide Code Example';
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
