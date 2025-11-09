@@ -1543,8 +1543,446 @@ ORDER BY created_at DESC;
                                 </td>
                                 <td>Compliance, security, change tracking</td>
                             </tr>
+                            <tr>
+                                <td class="topic">GROUP BY</td>
+                                <td class="definition">Used to group data by a column and use functions like COUNT, SUM, etc.</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT city, COUNT(*) AS total_users<br>
+                                        FROM users<br>
+                                        GROUP BY city;
+                                    </div>
+                                    <strong>Tip:</strong> GROUP BY = Make summary
+                                </td>
+                                <td>Aggregating data, creating summaries, reports</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">HAVING vs WHERE</td>
+                                <td class="definition">WHERE filters before grouping, HAVING filters after grouping</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT city, COUNT(*) AS total_users<br>
+                                        FROM users<br>
+                                        GROUP BY city<br>
+                                        HAVING total_users > 5;
+                                    </div>
+                                    <strong>Tip:</strong> HAVING = filter after GROUP BY
+                                </td>
+                                <td>Filtering grouped results, conditional aggregation</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">LIMIT</td>
+                                <td class="definition">Used to get limited number of records</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM users LIMIT 5;
+                                    </div>
+                                    <strong>Tip:</strong> LIMIT = Cut the list
+                                </td>
+                                <td>Pagination, top N records, limiting results</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">DISTINCT</td>
+                                <td class="definition">Used to remove duplicate values</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT DISTINCT city FROM users;
+                                    </div>
+                                    <strong>Tip:</strong> DISTINCT = No repeat
+                                </td>
+                                <td>Getting unique values, removing duplicates</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Subquery</td>
+                                <td class="definition">A query inside another query</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM users<br>
+                                        WHERE id IN (SELECT user_id FROM orders);
+                                    </div>
+                                    <strong>Tip:</strong> Subquery = query inside query
+                                </td>
+                                <td>Complex filtering, conditional queries, nested logic</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">2nd Highest Salary</td>
+                                <td class="definition">Finding the second highest value using subquery</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT MAX(salary)<br>
+                                        FROM employees<br>
+                                        WHERE salary < (SELECT MAX(salary) FROM employees);
+                                    </div>
+                                    <strong>Tip:</strong> Use &lt; MAX() to find next one
+                                </td>
+                                <td>Ranking queries, finding Nth highest/lowest</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Index</td>
+                                <td class="definition">Index helps to find data faster (like an index in a book)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        CREATE INDEX idx_name ON users(name);
+                                    </div>
+                                    <strong>Tip:</strong> Index = shortcut to find data
+                                </td>
+                                <td>Performance optimization, fast lookups, query speed</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Eloquent Query</td>
+                                <td class="definition">Laravel Eloquent ORM query builder (SQL in PHP style)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        User::where('city', 'Delhi')<br>
+                                        &nbsp;&nbsp;->orderBy('name')<br>
+                                        &nbsp;&nbsp;->get();
+                                    </div>
+                                    <strong>Tip:</strong> Eloquent = SQL in PHP style
+                                </td>
+                                <td>Laravel applications, ORM queries, PHP database access</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">INNER JOIN</td>
+                                <td class="definition">Shows only data that exists in both tables (most common join)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT users.name, orders.amount<br>
+                                        FROM users<br>
+                                        INNER JOIN orders ON users.id = orders.user_id;
+                                    </div>
+                                    <strong>Tip:</strong> INNER JOIN = Common data from both
+                                </td>
+                                <td>Joining related data, matching records from both tables</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">LEFT JOIN</td>
+                                <td class="definition">Shows all users, even if they have no orders</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT users.name, orders.amount<br>
+                                        FROM users<br>
+                                        LEFT JOIN orders ON users.id = orders.user_id;
+                                    </div>
+                                    <strong>Tip:</strong> LEFT = Keep everyone from left table
+                                </td>
+                                <td>Including all records from left table, optional relationships</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">RIGHT JOIN</td>
+                                <td class="definition">Shows all orders, even if the user record is missing</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT users.name, orders.amount<br>
+                                        FROM users<br>
+                                        RIGHT JOIN orders ON users.id = orders.user_id;
+                                    </div>
+                                    <strong>Tip:</strong> RIGHT = Keep everyone from right table
+                                </td>
+                                <td>Including all records from right table, orphaned records</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">UNION</td>
+                                <td class="definition">Combines results of two queries (must have same number of columns)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT name, email FROM customers<br>
+                                        UNION<br>
+                                        SELECT name, email FROM vendors;
+                                    </div>
+                                    <strong>Tip:</strong> UNION = Combine results (removes duplicates)
+                                </td>
+                                <td>Combining similar data from multiple tables, merging results</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">EXISTS</td>
+                                <td class="definition">Checks if a subquery returns any data</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT name FROM users<br>
+                                        WHERE EXISTS (SELECT 1 FROM orders WHERE users.id = orders.user_id);
+                                    </div>
+                                    <strong>Tip:</strong> EXISTS = True if data found (faster than IN for large datasets)
+                                </td>
+                                <td>Checking existence, conditional filtering, performance optimization</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">BETWEEN</td>
+                                <td class="definition">Used to filter data in a range (inclusive)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM orders WHERE amount BETWEEN 500 AND 1000;
+                                    </div>
+                                    <strong>Tip:</strong> BETWEEN = From–To (inclusive both ends)
+                                </td>
+                                <td>Range queries, date ranges, price ranges, age filters</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">IN Operator</td>
+                                <td class="definition">Used to check multiple values (shorter than multiple ORs)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM users WHERE city IN ('Delhi', 'Mumbai', 'Pune');
+                                    </div>
+                                    <strong>Tip:</strong> IN = Match from list (cleaner than multiple OR conditions)
+                                </td>
+                                <td>Multiple value matching, category filtering, list-based queries</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">IS NULL / IS NOT NULL</td>
+                                <td class="definition">Used to check if a value is missing or available</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM users WHERE phone IS NULL;<br>
+                                        SELECT * FROM users WHERE phone IS NOT NULL;
+                                    </div>
+                                    <strong>Tip:</strong> NULL = empty or no data (use IS NULL, not = NULL)
+                                </td>
+                                <td>Finding missing data, data validation, incomplete records</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">CASE Statement</td>
+                                <td class="definition">Used for conditional logic (like IF-ELSE in SQL)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT name,<br>
+                                        CASE<br>
+                                        &nbsp;&nbsp;WHEN salary > 50000 THEN 'High Salary'<br>
+                                        &nbsp;&nbsp;ELSE 'Low Salary'<br>
+                                        END AS salary_type<br>
+                                        FROM employees;
+                                    </div>
+                                    <strong>Tip:</strong> CASE = If-Else in SQL (great for data transformation)
+                                </td>
+                                <td>Conditional columns, data categorization, dynamic labels</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Aggregate Functions</td>
+                                <td class="definition">Used to do calculations on columns (COUNT, SUM, AVG, MAX, MIN)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT<br>
+                                        &nbsp;&nbsp;COUNT(*) AS total_orders,<br>
+                                        &nbsp;&nbsp;SUM(amount) AS total_amount,<br>
+                                        &nbsp;&nbsp;AVG(amount) AS avg_amount<br>
+                                        FROM orders;
+                                    </div>
+                                    <strong>Tip:</strong> COUNT = how many, SUM = total, AVG = average
+                                </td>
+                                <td>Statistics, summaries, calculations, reports</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">GROUP BY with HAVING</td>
+                                <td class="definition">Used to group and filter summary data</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT city, COUNT(*) AS total_users<br>
+                                        FROM users<br>
+                                        GROUP BY city<br>
+                                        HAVING total_users > 3;
+                                    </div>
+                                    <strong>Tip:</strong> HAVING works after GROUP BY (WHERE works before)
+                                </td>
+                                <td>Filtering grouped results, conditional aggregation</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">LIMIT & OFFSET</td>
+                                <td class="definition">Used for pagination (show limited results per page)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT * FROM users LIMIT 5 OFFSET 10;
+                                    </div>
+                                    <strong>Tip:</strong> LIMIT = how many, OFFSET = skip (for pagination)
+                                </td>
+                                <td>Pagination, limiting results, page navigation</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">View</td>
+                                <td class="definition">A view is like a saved query (virtual table)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        CREATE VIEW active_users AS<br>
+                                        SELECT * FROM users WHERE status = 'active';<br><br>
+                                        SELECT * FROM active_users;
+                                    </div>
+                                    <strong>Tip:</strong> View = Virtual table (simplifies complex queries)
+                                </td>
+                                <td>Simplifying queries, reusable logic, security (hide columns)</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Transaction</td>
+                                <td class="definition">Used when you want all queries to succeed or none (ACID)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        START TRANSACTION;<br>
+                                        UPDATE accounts SET balance = balance - 1000 WHERE id = 1;<br>
+                                        UPDATE accounts SET balance = balance + 1000 WHERE id = 2;<br>
+                                        COMMIT;
+                                    </div>
+                                    <strong>Tip:</strong> Transaction = All or nothing (use ROLLBACK if fails)
+                                </td>
+                                <td>Financial operations, data integrity, multi-step operations</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Eloquent Query Builder</td>
+                                <td class="definition">Laravel query builder for complex queries</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        DB::table('users')<br>
+                                        &nbsp;&nbsp;->where('city', 'Delhi')<br>
+                                        &nbsp;&nbsp;->whereBetween('age', [20, 30])<br>
+                                        &nbsp;&nbsp;->orderBy('name')<br>
+                                        &nbsp;&nbsp;->get();
+                                    </div>
+                                    <strong>Tip:</strong> Query Builder = Easy SQL in PHP (method chaining)
+                                </td>
+                                <td>Laravel applications, complex queries, dynamic conditions</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Eloquent Relationships</td>
+                                <td class="definition">Show users with their related posts (eager loading)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        User::with('posts')->get();
+                                    </div>
+                                    <strong>Tip:</strong> with() = load related table (prevents N+1 queries)
+                                </td>
+                                <td>Eager loading, preventing N+1 queries, relationship data</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Eloquent Aggregates</td>
+                                <td class="definition">Simple aggregate functions in Laravel</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        Order::sum('amount');  // total<br>
+                                        User::count();          // count<br>
+                                        Order::max('amount');   // maximum
+                                    </div>
+                                    <strong>Tip:</strong> Use Eloquent for simple stats (cleaner than raw SQL)
+                                </td>
+                                <td>Laravel statistics, quick calculations, ORM aggregates</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Query Optimization</td>
+                                <td class="definition">Steps to make SQL faster</td>
+                                <td>
+                                    <ul style="margin: 0; padding-left: 20px;">
+                                        <li>Use LIMIT to reduce results</li>
+                                        <li>Add INDEX on searchable columns</li>
+                                        <li>Avoid SELECT * — use only needed columns</li>
+                                        <li>Use EXPLAIN to see how query runs</li>
+                                    </ul>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        EXPLAIN SELECT * FROM users WHERE email = 'test@gmail.com';
+                                    </div>
+                                    <strong>Tip:</strong> Think "less data = faster query"
+                                </td>
+                                <td>Performance tuning, slow query optimization, database speed</td>
+                            </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Joins Quick Summary Table -->
+                <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🔗 Joins Quick Summary</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Type</th>
+                                <th style="width: 35%">Meaning</th>
+                                <th style="width: 40%">Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">INNER JOIN</td>
+                                <td class="definition">Common in both tables - only matching rows</td>
+                                <td>Users with orders (only users who have orders)</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">LEFT JOIN</td>
+                                <td class="definition">All from left table + matching from right</td>
+                                <td>All users even if they have no orders</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">RIGHT JOIN</td>
+                                <td class="definition">All from right table + matching from left</td>
+                                <td>All orders even if user doesn't exist</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">FULL JOIN</td>
+                                <td class="definition">All from both tables (not directly in MySQL)</td>
+                                <td>All users and all orders (use UNION of LEFT and RIGHT)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding: 15px; background: #e3f2fd; border-radius: 5px; margin-top: 15px;">
+                        <strong>🧠 Tip:</strong> LEFT = keep left, RIGHT = keep right, INNER = only matches
+                    </div>
+                </div>
+
+                <!-- Aggregate Functions Table -->
+                <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">📊 Aggregate Functions</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Function</th>
+                                <th style="width: 30%">Meaning</th>
+                                <th style="width: 50%">Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">COUNT()</td>
+                                <td class="definition">Count rows</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT COUNT(*) FROM users;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="topic">SUM()</td>
+                                <td class="definition">Add values</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT SUM(amount) FROM orders;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="topic">AVG()</td>
+                                <td class="definition">Average value</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT AVG(salary) FROM employees;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="topic">MAX()</td>
+                                <td class="definition">Highest value</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT MAX(price) FROM products;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="topic">MIN()</td>
+                                <td class="definition">Lowest value</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT MIN(age) FROM users;
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding: 15px; background: #e8f5e9; border-radius: 5px; margin-top: 15px;">
+                        <strong>🧠 Tip:</strong> Aggregate = Math on many rows. Always use with GROUP BY for grouped calculations.
+                    </div>
                 </div>
             </div>
         </div>
