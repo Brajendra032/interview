@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Interview Asked Questions - Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .company-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        .company-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .question-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #4caf50;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .answer-section {
+            margin-top: 15px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .code-block.sql {
+            background: #1e1e1e;
+        }
+
+        .code-block.php {
+            background: #4F5B93;
+        }
+
+        .explanation {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .tip-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .example-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .badge-sql {
+            background: #2196f3;
+            color: white;
+        }
+
+        .badge-php {
+            background: #4F5B93;
+            color: white;
+        }
+
+        .badge-laravel {
+            background: #ff2d20;
+            color: white;
+        }
+
+        .badge-aws {
+            background: #ff9900;
+            color: white;
+        }
+
+        .badge-threading {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .badge-algorithm {
+            background: #4caf50;
+            color: white;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .question-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Interview Asked Questions</h1>
+            <p>Collection of Real Interview Questions from Companies</p>
+        </div>
+
+        <div class="content">
+            <!-- Encoura Company Section -->
+            <div class="company-section">
+                <h2 class="company-title">🏢 Encoura Company Interview</h2>
+
+                <!-- Question 1: SQL Employee Salary -->
+                <div class="question-item">
+                    <span class="question-number">Question 1</span>
+                    <span class="category-badge badge-sql">SQL</span>
+                    <div class="question-text">Get employee list where employee salary > manager salary</div>
+                    <div class="answer-section">
+                        <div class="example-box">
+                            <strong>Table Structure:</strong>
+                            <div class="code-block sql">
+employees(id, name, manager_id, salary)
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <strong>✅ Query:</strong>
+                            <div class="code-block sql">
+SELECT e.name AS EmployeeName, 
+       e.salary AS EmployeeSalary, 
+       m.name AS ManagerName, 
+       m.salary AS ManagerSalary
+FROM employees e
+JOIN employees m ON e.manager_id = m.id
+WHERE e.salary > m.salary;
+                            </div>
+                        </div>
+                        <div class="explanation">
+                            <strong>💡 Explanation:</strong><br>
+                            We are joining the employee table with itself (self-join).<br>
+                            Then, we compare the employee's salary with their manager's salary.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2: Group Anagrams -->
+                <div class="question-item">
+                    <span class="question-number">Question 2</span>
+                    <span class="category-badge badge-algorithm">Algorithm</span>
+                    <span class="category-badge badge-php">PHP</span>
+                    <div class="question-text">Group Anagrams</div>
+                    <div class="answer-section">
+                        <div class="example-box">
+                            <strong>Input:</strong>
+                            <div class="code-block php">
+["eat", "tea", "tan", "ate", "nat", "bat"]
+                            </div>
+                            <strong>Output:</strong>
+                            <div class="code-block php">
+[
+  ["eat", "tea", "ate"],
+  ["tan", "nat"],
+  ["bat"]
+]
+                            </div>
+                        </div>
+                        <div class="answer-section">
+                            <strong>✅ Solution:</strong>
+                            <div class="code-block php">
+&lt;?php
+$words = ["eat", "tea", "tan", "ate", "nat", "bat"];
+
+function groupAnagrams($words) {
+    $map = [];
+
+    foreach ($words as $word) {
+        // Sort each word alphabetically — this will be the grouping key
+        $key = str_split($word);
+        sort($key);
+        $key = implode('', $key);
+
+        // Add word to its anagram group
+        $map[$key][] = $word;
+    }
+
+    // Re-index the array (to remove associative keys)
+    return array_values($map);
+}
+
+$result = groupAnagrams($words);
+
+print_r($result);
+?&gt;
+                            </div>
+                        </div>
+                        <div class="explanation">
+                            <strong>💡 Easy explanation:</strong><br>
+                            If two words have the same sorted letters → they are anagrams.<br>
+                            So we group them by that key.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3: Multiple Threads -->
+                <div class="question-item">
+                    <span class="question-number">Question 3</span>
+                    <span class="category-badge badge-threading">Threading</span>
+                    <div class="question-text">Can we use multiple threads inside a thread?</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ Answer:</strong><br>
+                            Yes, we can create multiple threads inside a thread.<br>
+                            A thread is just like a function — it can start more threads.
+                        </div>
+                        <div class="example-box">
+                            <strong>💡 Example (Java):</strong>
+                            <div class="code-block">
+class MyThread extends Thread {
+  public void run() {
+    new Thread(() -> System.out.println("Inner thread")).start();
+  }
+}
+                            </div>
+                        </div>
+                        <div class="explanation">
+                            So yes — one thread can start other threads (called nested threads).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4: Laravel hasMany and belongsToMany -->
+                <div class="question-item">
+                    <span class="question-number">Question 4</span>
+                    <span class="category-badge badge-laravel">Laravel</span>
+                    <div class="question-text">What is hasMany and belongsToMany in Laravel?</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ hasMany</strong><br>
+                            → Used when one model has many related models.<br><br>
+                            <strong>Example:</strong> One User has many Posts.
+                        </div>
+                        <div class="code-block php">
+// In User model
+public function posts() {
+    return $this->hasMany(Post::class);
+}
+
+// In Post model
+public function user() {
+    return $this->belongsTo(User::class);
+}
+                        </div>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>✅ belongsToMany</strong><br>
+                            → Used for many-to-many relationship (pivot table in between).<br><br>
+                            <strong>Example:</strong> A User can belong to many Roles, and a Role can belong to many Users.
+                        </div>
+                        <div class="code-block php">
+// In User model
+public function roles() {
+    return $this->belongsToMany(Role::class);
+}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5: Many-to-Many in Laravel -->
+                <div class="question-item">
+                    <span class="question-number">Question 5</span>
+                    <span class="category-badge badge-laravel">Laravel</span>
+                    <div class="question-text">How to use Many-to-Many in Laravel</div>
+                    <div class="answer-section">
+                        <div class="example-box">
+                            <strong>✅ Example:</strong><br>
+                            We have 3 tables:<br>
+                            • users<br>
+                            • roles<br>
+                            • role_user (pivot table: user_id, role_id)
+                        </div>
+                        <div class="code-block php">
+// User.php
+public function roles() {
+    return $this->belongsToMany(Role::class);
+}
+
+// Role.php
+public function users() {
+    return $this->belongsToMany(User::class);
+}
+                        </div>
+                        <div class="tip-box">
+                            <strong>Attach or Sync Example:</strong>
+                            <div class="code-block php">
+$user = User::find(1);
+$user->roles()->attach(2); // add role id 2
+$user->roles()->sync([1,2]); // replace with these roles
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 6: Synchronous Process in Laravel -->
+                <div class="question-item">
+                    <span class="question-number">Question 6</span>
+                    <span class="category-badge badge-laravel">Laravel</span>
+                    <div class="question-text">How to handle synchronous process in Laravel</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ Meaning:</strong><br>
+                            Sometimes you want to run tasks one after another (not parallel) — this is synchronous.
+                        </div>
+                        <div class="example-box">
+                            <strong>Ways to handle:</strong><br>
+                            Use Jobs & Queues: for async,<br>
+                            but for synchronous, you can run code directly without dispatching to queue.
+                        </div>
+                        <div class="code-block php">
+// Normal synchronous call
+$user = User::find(1);
+Mail::to($user->email)->send(new WelcomeMail());
+
+// This waits until the mail is sent before continuing.
+
+// If you want async: use queue
+Mail::to($user->email)->queue(new WelcomeMail());
+                        </div>
+                        <div class="explanation">
+                            So, synchronous = wait for each step to complete.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 7: AWS Lambda Drawbacks -->
+                <div class="question-item">
+                    <span class="question-number">Question 7</span>
+                    <span class="category-badge badge-aws">AWS</span>
+                    <div class="question-text">Drawback of AWS Lambda</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ Main Drawbacks:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>Cold Start:</strong> first execution takes time (slow response)</li>
+                                <li><strong>Limited Runtime:</strong> max 15 mins</li>
+                                <li><strong>Limited memory:</strong> up to 10 GB</li>
+                                <li><strong>Not good for long-running or heavy compute tasks</strong></li>
+                                <li><strong>Debugging and monitoring is harder</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 8: Lambda for Long-running Tasks -->
+                <div class="question-item">
+                    <span class="question-number">Question 8</span>
+                    <span class="category-badge badge-aws">AWS</span>
+                    <div class="question-text">Can we use Lambda for long-running task?</div>
+                    <div class="answer-section">
+                        <div class="tip-box" style="background: #ffebee; border-left-color: #f44336;">
+                            <strong>❌ No, not good for that.</strong><br>
+                            AWS Lambda has a max execution limit of 15 minutes.
+                        </div>
+                        <div class="example-box">
+                            <strong>For long-running tasks, use:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>AWS ECS</strong> (Elastic Container Service)</li>
+                                <li><strong>AWS Batch</strong></li>
+                                <li><strong>AWS EC2</strong> instance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template for adding new company sections -->
+            <div class="company-section" style="opacity: 0.6; border-style: dashed;">
+                <h2 class="company-title">🏢 [Company Name] Interview</h2>
+                <p style="color: #6c757d; font-style: italic;">Add new interview questions here...</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📝 Interview Asked Questions Collection - Keep adding questions from your interviews!</p>
+            <p style="margin-top: 10px; opacity: 0.8;">💡 Tip: Document questions immediately after interviews for better retention</p>
+        </div>
+    </div>
+</body>
+</html>
+
