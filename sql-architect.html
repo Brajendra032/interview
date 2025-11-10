@@ -1652,7 +1652,7 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> INNER JOIN = Common data from both
                                 </td>
-                                <td>Joining related data, matching records from both tables</td>
+                                <td>Joining related tables, getting matching records</td>
                             </tr>
                             <tr>
                                 <td class="topic">LEFT JOIN</td>
@@ -1665,7 +1665,7 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> LEFT = Keep everyone from left table
                                 </td>
-                                <td>Including all records from left table, optional relationships</td>
+                                <td>Including all left records, optional relationships</td>
                             </tr>
                             <tr>
                                 <td class="topic">RIGHT JOIN</td>
@@ -1678,24 +1678,24 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> RIGHT = Keep everyone from right table
                                 </td>
-                                <td>Including all records from right table, orphaned records</td>
+                                <td>Including all right records, orphaned data</td>
                             </tr>
                             <tr>
                                 <td class="topic">UNION</td>
-                                <td class="definition">Combines results of two queries (must have same number of columns)</td>
+                                <td class="definition">Combines results of two queries (must have same number of columns, removes duplicates)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         SELECT name, email FROM customers<br>
                                         UNION<br>
                                         SELECT name, email FROM vendors;
                                     </div>
-                                    <strong>Tip:</strong> UNION = Combine results (removes duplicates)
+                                    <strong>Tip:</strong> UNION = Combine results (no duplicates)
                                 </td>
-                                <td>Combining similar data from multiple tables, merging results</td>
+                                <td>Combining similar data from multiple tables</td>
                             </tr>
                             <tr>
                                 <td class="topic">EXISTS</td>
-                                <td class="definition">Checks if a subquery returns any data</td>
+                                <td class="definition">Checks if a subquery returns any data (returns true/false)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         SELECT name FROM users<br>
@@ -1703,41 +1703,43 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> EXISTS = True if data found (faster than IN for large datasets)
                                 </td>
-                                <td>Checking existence, conditional filtering, performance optimization</td>
+                                <td>Checking existence, conditional filtering</td>
                             </tr>
                             <tr>
                                 <td class="topic">BETWEEN</td>
-                                <td class="definition">Used to filter data in a range (inclusive)</td>
+                                <td class="definition">Used to filter data in a range (inclusive of both ends)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        SELECT * FROM orders WHERE amount BETWEEN 500 AND 1000;
+                                        SELECT * FROM orders<br>
+                                        WHERE amount BETWEEN 500 AND 1000;
                                     </div>
-                                    <strong>Tip:</strong> BETWEEN = From–To (inclusive both ends)
+                                    <strong>Tip:</strong> BETWEEN = From–To (inclusive)
                                 </td>
-                                <td>Range queries, date ranges, price ranges, age filters</td>
+                                <td>Range queries, date ranges, numeric ranges</td>
                             </tr>
                             <tr>
                                 <td class="topic">IN Operator</td>
-                                <td class="definition">Used to check multiple values (shorter than multiple ORs)</td>
+                                <td class="definition">Used to check multiple values (shorthand for multiple OR conditions)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        SELECT * FROM users WHERE city IN ('Delhi', 'Mumbai', 'Pune');
+                                        SELECT * FROM users<br>
+                                        WHERE city IN ('Delhi', 'Mumbai', 'Pune');
                                     </div>
-                                    <strong>Tip:</strong> IN = Match from list (cleaner than multiple OR conditions)
+                                    <strong>Tip:</strong> IN = Match from list (cleaner than multiple OR)
                                 </td>
-                                <td>Multiple value matching, category filtering, list-based queries</td>
+                                <td>Multiple value matching, list filtering</td>
                             </tr>
                             <tr>
                                 <td class="topic">IS NULL / IS NOT NULL</td>
                                 <td class="definition">Used to check if a value is missing or available</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        SELECT * FROM users WHERE phone IS NULL;<br>
-                                        SELECT * FROM users WHERE phone IS NOT NULL;
+                                        SELECT * FROM users<br>
+                                        WHERE phone IS NULL;
                                     </div>
                                     <strong>Tip:</strong> NULL = empty or no data (use IS NULL, not = NULL)
                                 </td>
-                                <td>Finding missing data, data validation, incomplete records</td>
+                                <td>Finding missing data, optional fields, data validation</td>
                             </tr>
                             <tr>
                                 <td class="topic">CASE Statement</td>
@@ -1745,15 +1747,15 @@ ORDER BY created_at DESC;
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         SELECT name,<br>
-                                        CASE<br>
-                                        &nbsp;&nbsp;WHEN salary > 50000 THEN 'High Salary'<br>
-                                        &nbsp;&nbsp;ELSE 'Low Salary'<br>
-                                        END AS salary_type<br>
+                                        &nbsp;&nbsp;CASE<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;WHEN salary > 50000 THEN 'High Salary'<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;ELSE 'Low Salary'<br>
+                                        &nbsp;&nbsp;END AS salary_type<br>
                                         FROM employees;
                                     </div>
-                                    <strong>Tip:</strong> CASE = If-Else in SQL (great for data transformation)
+                                    <strong>Tip:</strong> CASE = If-Else in SQL
                                 </td>
-                                <td>Conditional columns, data categorization, dynamic labels</td>
+                                <td>Conditional columns, data categorization, labels</td>
                             </tr>
                             <tr>
                                 <td class="topic">Aggregate Functions</td>
@@ -1768,11 +1770,11 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> COUNT = how many, SUM = total, AVG = average
                                 </td>
-                                <td>Statistics, summaries, calculations, reports</td>
+                                <td>Statistics, summaries, calculations on groups</td>
                             </tr>
                             <tr>
                                 <td class="topic">GROUP BY with HAVING</td>
-                                <td class="definition">Used to group and filter summary data</td>
+                                <td class="definition">Used to group and filter summary data (HAVING filters after grouping)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         SELECT city, COUNT(*) AS total_users<br>
@@ -1789,7 +1791,8 @@ ORDER BY created_at DESC;
                                 <td class="definition">Used for pagination (show limited results per page)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        SELECT * FROM users LIMIT 5 OFFSET 10;
+                                        SELECT * FROM users<br>
+                                        LIMIT 5 OFFSET 10;
                                     </div>
                                     <strong>Tip:</strong> LIMIT = how many, OFFSET = skip (for pagination)
                                 </td>
@@ -1802,29 +1805,29 @@ ORDER BY created_at DESC;
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         CREATE VIEW active_users AS<br>
                                         SELECT * FROM users WHERE status = 'active';<br><br>
-                                        SELECT * FROM active_users;
+                                        -- Then use: SELECT * FROM active_users;
                                     </div>
                                     <strong>Tip:</strong> View = Virtual table (simplifies complex queries)
                                 </td>
-                                <td>Simplifying queries, reusable logic, security (hide columns)</td>
+                                <td>Simplifying queries, security, reusable query logic</td>
                             </tr>
                             <tr>
                                 <td class="topic">Transaction</td>
-                                <td class="definition">Used when you want all queries to succeed or none (ACID)</td>
+                                <td class="definition">Used when you want all queries to succeed or none (all or nothing)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         START TRANSACTION;<br>
                                         UPDATE accounts SET balance = balance - 1000 WHERE id = 1;<br>
                                         UPDATE accounts SET balance = balance + 1000 WHERE id = 2;<br>
-                                        COMMIT;
+                                        COMMIT; -- or ROLLBACK; if error
                                     </div>
-                                    <strong>Tip:</strong> Transaction = All or nothing (use ROLLBACK if fails)
+                                    <strong>Tip:</strong> Transaction = All or nothing (ACID properties)
                                 </td>
-                                <td>Financial operations, data integrity, multi-step operations</td>
+                                <td>Financial operations, data integrity, critical operations</td>
                             </tr>
                             <tr>
                                 <td class="topic">Eloquent Query Builder</td>
-                                <td class="definition">Laravel query builder for complex queries</td>
+                                <td class="definition">Laravel Query Builder for complex queries (easier than raw SQL)</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         DB::table('users')<br>
@@ -1835,22 +1838,23 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> Query Builder = Easy SQL in PHP (method chaining)
                                 </td>
-                                <td>Laravel applications, complex queries, dynamic conditions</td>
+                                <td>Laravel applications, complex queries, readable code</td>
                             </tr>
                             <tr>
                                 <td class="topic">Eloquent Relationships</td>
-                                <td class="definition">Show users with their related posts (eager loading)</td>
+                                <td class="definition">Show users with their related posts using eager loading</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        User::with('posts')->get();
+                                        User::with('posts')->get();<br><br>
+                                        -- Avoids N+1 query problem
                                     </div>
-                                    <strong>Tip:</strong> with() = load related table (prevents N+1 queries)
+                                    <strong>Tip:</strong> with() = load related table (eager loading prevents N+1)
                                 </td>
-                                <td>Eager loading, preventing N+1 queries, relationship data</td>
+                                <td>Laravel relationships, avoiding N+1 queries, performance</td>
                             </tr>
                             <tr>
                                 <td class="topic">Eloquent Aggregates</td>
-                                <td class="definition">Simple aggregate functions in Laravel</td>
+                                <td class="definition">Use Eloquent for simple statistics and aggregations</td>
                                 <td>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
                                         Order::sum('amount');  // total<br>
@@ -1859,24 +1863,257 @@ ORDER BY created_at DESC;
                                     </div>
                                     <strong>Tip:</strong> Use Eloquent for simple stats (cleaner than raw SQL)
                                 </td>
-                                <td>Laravel statistics, quick calculations, ORM aggregates</td>
+                                <td>Laravel statistics, quick aggregations, simple calculations</td>
                             </tr>
                             <tr>
                                 <td class="topic">Query Optimization</td>
-                                <td class="definition">Steps to make SQL faster</td>
+                                <td class="definition">Steps to make SQL faster: Use LIMIT, add INDEX, avoid SELECT *, use EXPLAIN</td>
                                 <td>
-                                    <ul style="margin: 0; padding-left: 20px;">
-                                        <li>Use LIMIT to reduce results</li>
-                                        <li>Add INDEX on searchable columns</li>
-                                        <li>Avoid SELECT * — use only needed columns</li>
-                                        <li>Use EXPLAIN to see how query runs</li>
-                                    </ul>
                                     <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
-                                        EXPLAIN SELECT * FROM users WHERE email = 'test@gmail.com';
+                                        EXPLAIN SELECT * FROM users<br>
+                                        WHERE email = 'test@gmail.com';<br><br>
+                                        -- Shows execution plan
                                     </div>
-                                    <strong>Tip:</strong> Think "less data = faster query"
+                                    <strong>Tip:</strong> Think "less data = faster query" (LIMIT, specific columns, indexes)
                                 </td>
-                                <td>Performance tuning, slow query optimization, database speed</td>
+                                <td>Performance tuning, slow query optimization, database optimization</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Window Functions (ROW_NUMBER)</td>
+                                <td class="definition">Gives each row a unique number based on ordering (MySQL 8+)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT name, salary,<br>
+                                        &nbsp;&nbsp;ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_no<br>
+                                        FROM employees;
+                                    </div>
+                                    <strong>Tip:</strong> ROW_NUMBER() = position number in sorted list
+                                </td>
+                                <td>Ranking, pagination, unique row numbering</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">RANK() vs DENSE_RANK()</td>
+                                <td class="definition">RANK() skips numbers on ties, DENSE_RANK() doesn't skip</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT name, salary,<br>
+                                        &nbsp;&nbsp;RANK() OVER (ORDER BY salary DESC) AS rnk,<br>
+                                        &nbsp;&nbsp;DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rnk<br>
+                                        FROM employees;
+                                    </div>
+                                    <strong>Tip:</strong> RANK() = 1,2,2,4 | DENSE_RANK() = 1,2,2,3
+                                </td>
+                                <td>Ranking with ties, competition rankings</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">2nd Highest Salary (RANK)</td>
+                                <td class="definition">Find 2nd highest salary using RANK() window function</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT salary FROM (<br>
+                                        &nbsp;&nbsp;SELECT salary,<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;RANK() OVER (ORDER BY salary DESC) AS rnk<br>
+                                        &nbsp;&nbsp;FROM employees<br>
+                                        ) t WHERE rnk = 2;
+                                    </div>
+                                    <strong>Tip:</strong> Works even with duplicate salaries
+                                </td>
+                                <td>Finding Nth highest/lowest, ranking queries</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">CTE (Common Table Expression)</td>
+                                <td class="definition">Temporary result set you can reuse (makes queries easier to read)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        WITH HighSalary AS (<br>
+                                        &nbsp;&nbsp;SELECT * FROM employees<br>
+                                        &nbsp;&nbsp;WHERE salary > 2000<br>
+                                        )<br>
+                                        SELECT name, salary FROM HighSalary;
+                                    </div>
+                                    <strong>Tip:</strong> WITH = make a short-term helper table
+                                </td>
+                                <td>Complex queries, recursive queries, query simplification</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Find Employees Without Orders</td>
+                                <td class="definition">Find users who never placed an order using LEFT JOIN</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT u.name<br>
+                                        FROM users u<br>
+                                        LEFT JOIN orders o ON u.id = o.user_id<br>
+                                        WHERE o.id IS NULL;
+                                    </div>
+                                    <strong>Tip:</strong> LEFT JOIN + IS NULL = find missing relationships
+                                </td>
+                                <td>Finding orphaned records, missing relationships</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Department with Highest Salary</td>
+                                <td class="definition">Find department with highest total salary using GROUP BY</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT dept, SUM(salary) AS total_sal<br>
+                                        FROM employees<br>
+                                        GROUP BY dept<br>
+                                        ORDER BY total_sal DESC<br>
+                                        LIMIT 1;
+                                    </div>
+                                    <strong>Tip:</strong> GROUP BY + SUM + ORDER BY + LIMIT = top performer
+                                </td>
+                                <td>Top performers, department analysis, aggregations</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Find Duplicate Emails</td>
+                                <td class="definition">Find duplicate email addresses using GROUP BY and HAVING</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT email, COUNT(*)<br>
+                                        FROM users<br>
+                                        GROUP BY email<br>
+                                        HAVING COUNT(*) > 1;
+                                    </div>
+                                    <strong>Tip:</strong> GROUP BY + HAVING COUNT > 1 = find duplicates
+                                </td>
+                                <td>Data quality, duplicate detection, data cleaning</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Delete Duplicate Rows</td>
+                                <td class="definition">Delete duplicate rows keeping only one record</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        DELETE e1 FROM employees e1<br>
+                                        JOIN employees e2<br>
+                                        ON e1.name = e2.name<br>
+                                        AND e1.id > e2.id;
+                                    </div>
+                                    <strong>Tip:</strong> Self-join + keep lowest ID = remove duplicates
+                                </td>
+                                <td>Data cleaning, removing duplicates, data maintenance</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Laravel: Use select()</td>
+                                <td class="definition">Limit columns to improve performance (avoid SELECT *)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        User::select('id', 'name')->get();<br><br>
+                                        -- Avoid User::all() if not needed
+                                    </div>
+                                    <strong>Tip:</strong> Select only needed columns (faster queries)
+                                </td>
+                                <td>Laravel optimization, reducing data transfer</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Laravel: Use with()</td>
+                                <td class="definition">Eager loading to avoid N+1 query problem</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        Post::with('comments')->get();<br><br>
+                                        -- Loads all comments in one go
+                                    </div>
+                                    <strong>Tip:</strong> with() = eager loading (prevents N+1 queries)
+                                </td>
+                                <td>Laravel performance, avoiding N+1, relationship loading</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Laravel: Use chunking</td>
+                                <td class="definition">Process large datasets in chunks to avoid memory issues</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        User::chunk(100, function ($users) {<br>
+                                        &nbsp;&nbsp;// process each 100 users<br>
+                                        });
+                                    </div>
+                                    <strong>Tip:</strong> chunk() = process in batches (prevents memory overflow)
+                                </td>
+                                <td>Large datasets, memory management, batch processing</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Laravel: Use caching</td>
+                                <td class="definition">Cache query results to improve performance</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        $users = Cache::remember('active_users', 60, function () {<br>
+                                        &nbsp;&nbsp;return User::where('status', 'active')->get();<br>
+                                        });
+                                    </div>
+                                    <strong>Tip:</strong> Cache expensive queries (stores for 60 minutes)
+                                </td>
+                                <td>Performance optimization, reducing database load</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Laravel: Query Logging</td>
+                                <td class="definition">Debug queries to see actual SQL and check performance</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        DB::enableQueryLog();<br>
+                                        $users = User::where('city', 'Delhi')->get();<br>
+                                        dd(DB::getQueryLog());
+                                    </div>
+                                    <strong>Tip:</strong> Use logs to see real SQL and check joins
+                                </td>
+                                <td>Debugging, query analysis, performance monitoring</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">3rd Highest Salary</td>
+                                <td class="definition">Find 3rd highest salary using LIMIT and OFFSET</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT DISTINCT salary<br>
+                                        FROM employees<br>
+                                        ORDER BY salary DESC<br>
+                                        LIMIT 1 OFFSET 2;
+                                    </div>
+                                    <strong>Tip:</strong> OFFSET 2 = skip first 2, get 3rd
+                                </td>
+                                <td>Ranking queries, Nth highest/lowest</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Remove Duplicates (ROW_NUMBER)</td>
+                                <td class="definition">Delete duplicates keeping one record using ROW_NUMBER()</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        DELETE FROM employees<br>
+                                        WHERE id IN (<br>
+                                        &nbsp;&nbsp;SELECT id FROM (<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;SELECT id, ROW_NUMBER() OVER (PARTITION BY email ORDER BY id) AS rn<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;FROM employees<br>
+                                        &nbsp;&nbsp;) t WHERE rn > 1<br>
+                                        );
+                                    </div>
+                                    <strong>Tip:</strong> ROW_NUMBER() + PARTITION BY = find duplicates
+                                </td>
+                                <td>Data cleaning, duplicate removal, data maintenance</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Department-wise Top 2 Salaries</td>
+                                <td class="definition">Show top 2 salaries per department using window functions</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        SELECT dept, name, salary FROM (<br>
+                                        &nbsp;&nbsp;SELECT dept, name, salary,<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;RANK() OVER (PARTITION BY dept ORDER BY salary DESC) AS rnk<br>
+                                        &nbsp;&nbsp;FROM employees<br>
+                                        ) t WHERE rnk <= 2;
+                                    </div>
+                                    <strong>Tip:</strong> PARTITION BY = group within window function
+                                </td>
+                                <td>Top N per group, department rankings</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">JOIN vs UNION</td>
+                                <td class="definition">JOIN combines columns (side by side), UNION combines rows (one below another)</td>
+                                <td>
+                                    <div class="example-code" style="background: #f5f5f5; color: #333; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                                        -- JOIN: Side by side<br>
+                                        SELECT u.name, o.amount FROM users u JOIN orders o ON u.id = o.user_id;<br><br>
+                                        -- UNION: One below another<br>
+                                        SELECT name FROM users UNION SELECT name FROM vendors;
+                                    </div>
+                                    <strong>Tip:</strong> JOIN = horizontal, UNION = vertical
+                                </td>
+                                <td>Understanding query types, combining data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1983,6 +2220,62 @@ ORDER BY created_at DESC;
                     <div style="padding: 15px; background: #e8f5e9; border-radius: 5px; margin-top: 15px;">
                         <strong>🧠 Tip:</strong> Aggregate = Math on many rows. Always use with GROUP BY for grouped calculations.
                     </div>
+                </div>
+
+                <!-- Final Quick Recap Table -->
+                <h3 style="color: #2c3e50; margin: 40px 0 20px; font-size: 1.5em; border-bottom: 2px solid #3498db; padding-bottom: 10px;">💡 Final Quick Recap</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Concept</th>
+                                <th style="width: 40%">Meaning</th>
+                                <th style="width: 30%">Easy Word</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">Window Function</td>
+                                <td class="definition">Do math by row position (ROW_NUMBER, RANK, DENSE_RANK)</td>
+                                <td>Rank or count</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">CTE</td>
+                                <td class="definition">Temporary table (WITH clause)</td>
+                                <td>Helper query</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">JOIN</td>
+                                <td class="definition">Combine tables side by side</td>
+                                <td>Side-by-side</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">GROUP BY</td>
+                                <td class="definition">Group rows together for summaries</td>
+                                <td>Summary</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">LIMIT + OFFSET</td>
+                                <td class="definition">Pagination - show limited results</td>
+                                <td>Skip some</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">INDEX</td>
+                                <td class="definition">Speed up searches</td>
+                                <td>Shortcut</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">TRANSACTION</td>
+                                <td class="definition">All queries succeed or none (ACID)</td>
+                                <td>Safe group</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">Eloquent</td>
+                                <td class="definition">PHP style SQL (Laravel ORM)</td>
+                                <td>Laravel helper</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
