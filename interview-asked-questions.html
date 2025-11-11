@@ -476,6 +476,74 @@ Mail::to($user->email)->queue(new WelcomeMail());
                         </div>
                     </div>
                 </div>
+
+                <!-- Question 9: 2nd/3rd Highest Salary -->
+                <div class="question-item">
+                    <span class="question-number">Question 9</span>
+                    <span class="category-badge badge-sql">SQL</span>
+                    <div class="question-text">2nd / 3rd Highest Salary</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ Using LIMIT:</strong>
+                        </div>
+                        <div class="code-block sql">
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;  -- 2nd
+
+LIMIT 1 OFFSET 2;  -- 3rd
+                        </div>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>✅ Using Subquery:</strong>
+                        </div>
+                        <div class="code-block sql">
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+                        </div>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>✅ Using DENSE_RANK():</strong>
+                        </div>
+                        <div class="code-block sql">
+SELECT name, salary
+FROM (
+  SELECT name, salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+  FROM employees
+) t
+WHERE rnk = 2;
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 10: PHP Type Juggling Trick -->
+                <div class="question-item">
+                    <span class="question-number">Question 10</span>
+                    <span class="category-badge badge-php">PHP</span>
+                    <div class="question-text">PHP Trick — echo "5" + "2days";</div>
+                    <div class="answer-section">
+                        <div class="tip-box">
+                            <strong>✅ Output: 7</strong><br>
+                            👉 PHP converts both to numbers:
+                        </div>
+                        <div class="example-box">
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>"5"</strong> → 5</li>
+                                <li><strong>"2days"</strong> → 2</li>
+                                <li>So → <strong>5 + 2 = 7</strong></li>
+                            </ul>
+                        </div>
+                        <div class="explanation">
+                            <strong>📌 If string starts with letters, becomes 0.</strong>
+                        </div>
+                        <div class="code-block php">
+Expression              Output
+"5" + "2days"           7
+"5abc" + "10xyz"        15
+"abc" + "5"             5
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Template for adding new company sections -->
