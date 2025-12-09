@@ -339,140 +339,174 @@
                 </p>
             </div>
 
-            <!-- Encapsulation -->
+          <!-- Encapsulation -->
             <div class="fade-in">
-                <h2 class="section-title">1. 🔐 Encapsulation (Data Protection)</h2>
+                <h2 class="section-title">1. 🔐 Encapsulation (Keep Data Safe)</h2>
+
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
-                    <p>Wrap (bind) data and functions together in one unit (class), and hide the internal details from outside. You only allow controlled access using getters/setters.</p>
+                    <p>
+                        Encapsulation means **hiding data** inside a class and giving **limited, safe access**
+                        using simple functions.  
+                        Outside code cannot touch the data directly.
+                    </p>
                 </div>
 
                 <div class="warning-box">
-                    <h4 style="color: #ffd700;">Example (Real-life):</h4>
-                    <p>A mobile phone – you can use buttons (functions), but you don't know the complex internal circuit (hidden data).</p>
+                    <h4 style="color: #ffd700;">Easy Example:</h4>
+                    <p>
+                        A mobile phone: you press buttons, but you cannot see or change the internal parts.
+                        The inside system is hidden.
+                    </p>
                 </div>
 
                 <div class="code-example">
-class BankAccount {
-    private $balance = 0;  // hidden data
+            class BankAccount {
+                private $balance = 0;  // hidden data
 
-    public function deposit($amount) {
-        $this->balance += $amount;
-    }
+                public function deposit($amount) {
+                    $this->balance += $amount;  // safe update
+                }
 
-    public function getBalance() {
-        return $this->balance;  // controlled access
-    }
-}
+                public function getBalance() {
+                    return $this->balance;  // safe access
+                }
+            }
 
-$acc = new BankAccount();
-$acc->deposit(1000);
-echo $acc->getBalance(); // ✅ You can get balance but not directly change it
+            $acc = new BankAccount();
+            $acc->deposit(1000);
+            echo $acc->getBalance(); // You can see the balance, but cannot change it directly
                 </div>
             </div>
+
 
             <!-- Inheritance -->
             <div class="fade-in">
-                <h2 class="section-title">2. 📈 Inheritance (Code Reuse)</h2>
+                <h2 class="section-title">2. 📈 Inheritance (Reuse Code)</h2>
+
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
-                    <p>Child class can use properties and methods of parent class. Helps in code reusability.</p>
+                    <p>
+                        One class (child) can use the properties and functions of another class (parent).
+                        This helps us reuse code instead of writing again.
+                    </p>
                 </div>
 
                 <div class="warning-box">
-                    <h4 style="color: #ffd700;">Example (Real-life):</h4>
-                    <p>A Car inherits common features from Vehicle (like wheels, engine), but adds its own (like airbag, music system).</p>
+                    <h4 style="color: #ffd700;">Easy Example:</h4>
+                    <p>
+                        A Car is a type of Vehicle.  
+                        Vehicle has wheels, engine.  
+                        Car adds its own features like AC or music.
+                    </p>
                 </div>
 
                 <div class="code-example">
-class Vehicle {
-    public function start() {
-        echo "Starting vehicle...";
-    }
-}
+            class Vehicle {
+                public function start() {
+                    echo "Vehicle is starting...";
+                }
+            }
 
-class Car extends Vehicle {
-    public function playMusic() {
-        echo "Playing music...";
-    }
-}
+            class Car extends Vehicle {
+                public function playMusic() {
+                    echo "Music is playing...";
+                }
+            }
 
-$car = new Car();
-$car->start();      // from parent
-$car->playMusic();  // from child
+            $car = new Car();
+            $car->start();      // from parent
+            $car->playMusic();  // from child
                 </div>
             </div>
+
 
             <!-- Polymorphism -->
             <div class="fade-in">
-                <h2 class="section-title">3. 🎭 Polymorphism (Many Forms)</h2>
+                <h2 class="section-title">3. 🎭 Polymorphism (Same Function, Different Result)</h2>
+
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
-                    <p>Same function name but works differently for each class.</p>
+                    <p>
+                        Polymorphism means **same function name**, but **different output** depending on the class.
+                    </p>
                 </div>
 
                 <div class="warning-box">
-                    <h4 style="color: #ffd700;">Example (Real-life):</h4>
-                    <p>"Drive" action — a car drives differently than a bike.</p>
+                    <h4 style="color: #ffd700;">Easy Example:</h4>
+                    <p>
+                        “Start” action:  
+                        A bike starts differently, a car starts differently — but the action name is same.
+                    </p>
                 </div>
 
                 <div class="code-example">
-class Vehicle {
-    public function start() {
-        echo "Vehicle starts\n";
-    }
-}
+            class Vehicle {
+                public function start() {
+                    echo "Vehicle starts\n";
+                }
+            }
 
-class Bike extends Vehicle {
-    public function start() {
-        echo "Bike starts with kick\n";
-    }
-}
+            class Bike extends Vehicle {
+                public function start() {
+                    echo "Bike starts with kick\n";
+                }
+            }
 
-class Car extends Vehicle {
-    public function start() {
-        echo "Car starts with key\n";
-    }
-}
+            class Car extends Vehicle {
+                public function start() {
+                    echo "Car starts with key\n";
+                }
+            }
 
-$vehicles = [new Bike(), new Car()];
-foreach ($vehicles as $v) {
-    $v->start();  // same function, different behavior
-}
+            $vehicles = [new Bike(), new Car()];
+            foreach ($vehicles as $v) {
+                $v->start();  // same function name, different result
+            }
                 </div>
             </div>
+
 
             <!-- Abstraction -->
             <div class="fade-in">
-                <h2 class="section-title">4. 🎯 Abstraction (Show Only What's Needed)</h2>
+                <h2 class="section-title">4. 🎯 Abstraction (Show Only Important Things)</h2>
+
                 <div class="success-box">
                     <h4 style="color: #ffd700;">Meaning:</h4>
-                    <p>Show only essential details; hide unnecessary background code.</p>
+                    <p>
+                        Abstraction means showing **only useful details** and hiding the unnecessary internal code.
+                    </p>
                 </div>
 
                 <div class="warning-box">
-                    <h4 style="color: #ffd700;">Example (Real-life):</h4>
-                    <p>When you "click a button" on ATM to withdraw money, you don't know the backend process — only what's required is visible.</p>
+                    <h4 style="color: #ffd700;">Easy Example:</h4>
+                    <p>
+                        In an ATM, you only see buttons and money.  
+                        You don’t see how the internal process works.
+                    </p>
                 </div>
 
                 <div class="code-example">
-abstract class Animal {
-    abstract public function sound(); // only method structure
-}
+            abstract class Animal {
+                abstract public function sound(); // only method name, no body
+            }
 
-class Dog extends Animal {
-    public function sound() {
-        echo "Bark";
-    }
-}
-$dog = new Dog();
-$dog->sound();
+            class Dog extends Animal {
+                public function sound() {
+                    echo "Bark";
+                }
+            }
+
+            $dog = new Dog();
+            $dog->sound();
                 </div>
             </div>
 
+
             <!-- Abstract vs Interface -->
             <div class="fade-in">
-                <h2 class="section-title">5. ⚖️ Abstract Class vs Interface</h2>
+                <h2 class="section-title">5. ⚖️ Abstract Class vs Interface (Easy Difference)</h2>
+
                 <div class="table-container">
                     <table>
                         <thead>
@@ -490,7 +524,7 @@ $dog->sound();
                             </tr>
                             <tr>
                                 <td>Can have method body?</td>
-                                <td>✅ Yes (some methods can be implemented)</td>
+                                <td>✅ Yes</td>
                                 <td>❌ No (only method names)</td>
                             </tr>
                             <tr>
@@ -500,36 +534,43 @@ $dog->sound();
                             </tr>
                             <tr>
                                 <td>Multiple inheritance</td>
-                                <td>❌ No</td>
-                                <td>✅ Yes (can implement multiple interfaces)</td>
+                                <td>❌ Not allowed</td>
+                                <td>✅ Allowed</td>
                             </tr>
                             <tr>
-                                <td>Usage</td>
-                                <td>For shared base class</td>
-                                <td>For defining contract / rule</td>
+                                <td>Use</td>
+                                <td>When classes share common code</td>
+                                <td>When you want rules for classes</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="code-example">
-abstract class Animal {
-    abstract public function sound();
-    public function sleep() {
-        echo "Sleeping\n";
-    }
-}
+            abstract class Animal {
+                abstract public function sound();
 
-interface Pet {
-    public function play();
-}
+                public function sleep() {
+                    echo "Sleeping...\n";
+                }
+            }
 
-class Dog extends Animal implements Pet {
-    public function sound() { echo "Bark\n"; }
-    public function play() { echo "Playing fetch\n"; }
-}
+            interface Pet {
+                public function play();
+            }
+
+            class Dog extends Animal implements Pet {
+                public function sound() {
+                    echo "Bark\n";
+                }
+                
+                public function play() {
+                    echo "Dog is playing\n";
+                }
+            }
                 </div>
             </div>
+
 
             <!-- Design Patterns -->
             <div class="fade-in">
