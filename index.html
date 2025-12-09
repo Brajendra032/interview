@@ -245,8 +245,6 @@
                 <!-- Core PHP Learning Path -->
                 <button class="tab-button active" onclick="openTab('phase1')">Phase 1: PHP Basics</button>
                 <button class="tab-button" onclick="openTab('laravel')">Laravel Lead Cheat Sheet</button>
-                <button class="tab-button" onclick="openTab('phase4')">Phase 4: PHP in Framework Context</button>
-                
                 <!-- Deep Technical Growth -->
                 <button class="tab-button" onclick="window.open('advanced_php_oop.html', '_blank')">🧬 Advanced PHP OOP Guide</button>
                 <button class="tab-button" onclick="window.open('php-architect.html', '_blank')">🐘 PHP Architect Guide</button>
@@ -358,84 +356,7 @@
             </div>
         </div>
 
-        <!-- Phase 4 Content -->
-        <div id="phase4" class="tab-content">
-            <h2 class="phase-title">PHASE 4 � PHP IN FRAMEWORK CONTEXT</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 20%">Topic</th>
-                            <th style="width: 30%">Definition</th>
-                            <th style="width: 30%">Example</th>
-                            <th style="width: 20%">Lead Tip</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="topic">MVC</td>
-                            <td class="definition"><strong>Easy:</strong> Restaurant kitchen organization - Chef (Controller) takes order, Cook (Model) prepares food, Waiter (View) serves to customer</td>
-                            <td><div class="example"><strong>Real-world:</strong> User clicks "Save Profile" ��� Controller validates data ��� Model saves to DB ��� View shows success message</div></td>
-                            <td><div class="lead-tip">MVC prevents spaghetti code. Controllers stay thin, Models handle business logic, Views just display data</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Service Container</td>
-                            <td class="definition"><strong>Easy:</strong> Restaurant's walk-in fridge - stores all ingredients (services), chefs grab what they need automatically</td>
-                            <td><div class="example"><strong>Real-world:</strong> Constructor needs Logger? Container automatically creates/provides it. No manual "new Logger()"</div></td>
-                            <td><div class="lead-tip">Dependency Injection container. Enables testability, flexibility. Laravel's most powerful feature</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">ORM (Eloquent)</td>
-                            <td class="definition"><strong>Easy:</strong> Database as LEGO blocks - instead of SQL strings, you work with objects and relationships</td>
-                            <td><div class="example"><strong>Real-world:</strong> $user->posts()->where('published', true)->get() instead of complex JOIN queries</div></td>
-                            <td><div class="lead-tip">Active Record pattern. Great for 80% of queries, but know when to drop to raw SQL for performance</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Middleware</td>
-                            <td class="definition"><strong>Easy:</strong> Bouncer at nightclub door - checks ID, dress code, VIP status before letting you in</td>
-                            <td><div class="example"><strong>Real-world:</strong> Auth middleware checks if logged in, Throttle middleware prevents API abuse, CORS middleware handles cross-origin requests</div></td>
-                            <td><div class="lead-tip">Request filters run before/after controllers. Perfect for authentication, logging, rate limiting</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Jobs & Queues</td>
-                            <td class="definition"><strong>Easy:</strong> Restaurant order tickets - take order instantly, cook prepares in background, customer gets food when ready</td>
-                            <td><div class="example"><strong>Real-world:</strong> User uploads video ��� Queue job to process/compress ��� User gets instant response, processing happens later</div></td>
-                            <td><div class="lead-tip">Makes apps feel fast. Essential for email sending, file processing, API calls. Use Redis/Beanstalkd for queues</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Events & Listeners</td>
-                            <td class="definition"><strong>Easy:</strong> Party announcements - "Cake cutting time!" triggers multiple reactions (guests gather, photographer shoots, music plays)</td>
-                            <td><div class="example"><strong>Real-world:</strong> User registers ��� Event fires ��� Multiple listeners: send welcome email, create profile, log analytics, update CRM</div></td>
-                            <td><div class="lead-tip">Loose coupling through events. Perfect for extensible systems. One action, multiple side effects</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Service Providers</td>
-                            <td class="definition"><strong>Easy:</strong> Restaurant setup crew - arrives early, sets up tables, stocks fridge, prepares kitchen before customers arrive</td>
-                            <td><div class="example"><strong>Real-world:</strong> AppServiceProvider registers: DB connections, cache drivers, custom validation rules, event listeners</div></td>
-                            <td><div class="lead-tip">Bootstrapping code. Perfect for third-party package setup, custom bindings, global configurations</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Route Caching</td>
-                            <td class="definition"><strong>Easy:</strong> GPS pre-calculating route - loads all routes into memory once instead of looking them up every request</td>
-                            <td><div class="example"><strong>Real-world:</strong> Laravel app with 200 routes: uncached takes 50ms per request, cached takes 5ms - 10x performance boost</div></td>
-                            <td><div class="lead-tip">php artisan route:cache on production. Re-cache after route changes. Essential for high-traffic apps</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">API Resources</td>
-                            <td class="definition"><strong>Easy:</strong> Sushi chef presentation - transforms raw ingredients into beautiful, consistent plates every time</td>
-                            <td><div class="example"><strong>Real-world:</strong> User model has password/internal fields ��� UserResource only exposes name, email, avatar for API responses</div></td>
-                            <td><div class="lead-tip">Standardizes API output. Handles data transformation, conditional fields, relationships. Version your APIs</div></td>
-                        </tr>
-                        <tr>
-                            <td class="topic">Testing</td>
-                            <td class="definition"><strong>Easy:</strong> Car safety testing - crash test dummies ensure car protects passengers before real people drive it</td>
-                            <td><div class="example"><strong>Real-world:</strong> Unit test payment logic, Feature test user registration flow, Browser test checkout process</div></td>
-                            <td><div class="lead-tip">TDD: Write test first, then code. PHPUnit + Mockery for mocking. 70%+ coverage shows professional quality</div></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
 
         <!-- Phase 5 Content -->
         <div id="phase5" class="tab-content">
