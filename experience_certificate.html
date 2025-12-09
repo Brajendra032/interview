@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Certificate - THINK360</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f5f5f0;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: #000;
+        }
+
+        .certificate-container {
+            position: relative;
+            margin: 20px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+            min-height: 70px;
+            gap: 13px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            height: 100%;
+            justify-content: center;
+            flex: 0 0 auto;
+        }
+
+        .logo-section img {
+            height: 55px;
+            width: auto;
+            display: block;
+        }
+
+        .company-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            width: 230px;
+        }
+
+        .tagline {
+            font-size: 11px;
+            color: #000;
+            font-style: italic;
+            margin-top: 0;
+            line-height: 1.2;
+            text-align: right;
+            width: 100%;
+            margin-top: -13px;
+            margin-right: 34px;
+        }
+
+        .vertical-line {
+            border-left: 1.5px solid #999;
+            height: 70px;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            flex: 0 0 auto;
+            text-align: left;
+        }
+
+        .contact-info p {
+            margin: 0;
+        }
+
+        /* Date and Reference Section */
+        .document-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            margin-top: 20px;
+            font-size: 14px;
+            align-items: baseline;
+        }
+
+        .date, .reference {
+            font-weight: normal;
+        }
+
+        /* Title Section */
+        .certificate-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 45px;
+            padding-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        /* Main Content */
+        .certificate-content {
+            font-size: 14px;
+            line-height: 2.2;
+            text-align: justify;
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+
+        .certificate-content p {
+            margin-bottom: 18px;
+            text-indent: 0;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .signature-content {
+            position: relative;
+            display: inline-block;
+            min-height: 140px;
+        }
+
+        .designation {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 20px;
+        }
+
+        .company-name-bottom {
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .stamp-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 110px;
+            height: 110px;
+            border: 3px solid #0066cc;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1;
+            font-size: 9px;
+            text-align: center;
+            padding: 8px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stamp-text {
+            font-weight: bold;
+            color: #0066cc;
+            line-height: 1.4;
+            font-size: 9px;
+        }
+
+        .stamp-text div {
+            margin: 2px 0;
+        }
+
+        .signature-line {
+            position: relative;
+            z-index: 2;
+            margin-top: 15px;
+            border-top: 2px solid #0066cc;
+            width: 180px;
+            margin-left: 130px;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            .certificate-container {
+                box-shadow: none;
+                padding: 50px 60px;
+                max-width: 100%;
+            }
+            .header {
+                justify-content: center;
+                gap: 40px;
+                page-break-inside: avoid;
+            }
+            .logo-section {
+                margin-left: 0;
+                flex: 0 0 auto;
+            }
+            .vertical-line {
+                margin: 0 20px;
+                flex-shrink: 0;
+            }
+            .contact-info {
+                margin-right: 0;
+                flex: 0 0 auto;
+                font-size: 11px;
+                text-align: left;
+            }
+            .contact-info p {
+                margin: 2px 0;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo-section">
+                <img src="think360logo.svg" alt="THINK360 Logo">
+                <div class="company-info">
+                    <div class="tagline">Defining your UX journey</div>
+                </div>
+            </div>
+            <div class="vertical-line"></div>
+            <div class="contact-info">
+                <p>SCO 106, 2nd Floor</p>
+                <p>Sec 40C, Chandigarh - 160036</p>
+                <p>team@think360studio.com</p>
+                <p>www.think360studio.com</p>
+                <p>9915106790</p>
+                <p>98884 95549</p>
+            </div>
+        </div>
+
+        <!-- Date and Reference -->
+        <div class="document-meta">
+            <div class="date">Date: 15 Oct 2021</div>
+            <div class="reference">Reff. No. 2021/10/01</div>
+        </div>
+
+        <!-- Certificate Title -->
+        <div class="certificate-title">
+            Experience Certificate
+        </div>
+
+        <!-- Main Content -->
+        <div class="certificate-content">
+            <p>
+                This is to certify that <strong>Mr. Brajendra Singh Sengar</strong>, S/O Manohar Singh Sengar, has worked with 
+                <strong>Think 360 Solutions Pvt. Ltd., S.C.O 106, Top Floor, Sector 40 C, Chandigarh</strong> as a 
+                <strong>PHP Developer</strong> from <strong>29 July 2019</strong> to <strong>15 October 2021</strong>.
+            </p>
+        
+            <p>
+                During his tenure, he has consistently demonstrated excellent technical skills in PHP, MVC frameworks, and 
+                front-end development. He has worked on multiple projects involving module development, API integration, 
+                database management, and UI enhancements.
+            </p>
+        
+          
+        
+            <p>
+                We appreciate his contributions to the company and wish him all the very best for his future endeavours.
+            </p>
+        </div>
+        
+        
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-content">
+               
+                <div class="designation">HR HEAD</div>
+                <div class="company-name-bottom">Think 360 Solutions Pvt. Ltd.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

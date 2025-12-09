@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSJMU Marksheet</title>
+
+<style>
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; margin: 1px 10px; }
+
+    /* -------------------------------------------------------
+       ✔ 100% Working Watermark Background (Your Chosen Version)
+       -------------------------------------------------------*/
+    body {
+        margin: 10px 20px;
+        font-family: Arial, sans-serif;
+        background-color: #eee8d4;
+
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='26'><text x='0' y='14' font-family='Arial' font-size='6.5' fill='rgba(120,120,120,0.07)' font-weight='600' letter-spacing='0.8'>CHHATRAPATI SHAHU JI MAHARAJ UNIVERSITY, KANPUR</text></svg>");
+        background-repeat: repeat;
+        background-size: 200px 26px;
+    }
+
+    .result-section{
+        font-size: 12px;
+    }
+
+    /* -------------------------------------------------------
+       PAGE CONTAINER
+       -------------------------------------------------------*/
+    .marksheet-container {
+            /* width: 210mm; */
+        /* min-height: 297mm; */
+        margin: 0 auto;
+        padding: 9mm 0mm;
+        position: relative;
+        background: transparent;
+        z-index: 2;
+    }
+
+    .content { position: relative; z-index: 5; }
+    
+    /* Faded Logo in Center */
+    .center-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        z-index: 1;
+        opacity: 0.08;
+        pointer-events: none;
+    }
+    
+    .center-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* -------------------------------------------------------
+       HEADER
+       -------------------------------------------------------*/
+    .header { text-align: center; margin-bottom: 15px; }
+
+    .header-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+    }
+
+    .university-logo {
+        position: absolute;
+        left: 0;
+        top: -10px;
+        width: 70px;
+        height: 73px;
+    }
+
+    .university-logo img {
+        width: 100%; height: 100%; object-fit: contain;
+    }
+
+    .university-name {
+        font-size: 27px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #d32f2f;
+        padding-right: 17px;
+        text-align: right;
+    }
+
+    .statement-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 2px;
+        color: #d32f2f;
+    }
+
+    .serial-number {
+        font-size: 25px;
+        text-align: right;
+        margin-top: -15px;
+        /* padding-right: 52px; */
+        font-family: 'Times New Roman', serif;
+    }
+
+    .course-batch {
+        font-size: 14px;
+        margin-top: 39px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* -------------------------------------------------------
+       STUDENT DETAILS
+       -------------------------------------------------------*/
+    .student-section {
+        display: flex;
+        justify-content: flex-start;
+        margin: 20px 0;
+        align-items: flex-start;
+    }
+
+    .student-details {
+        flex: 1;
+        font-size: 13px;
+        line-height: 1.8;
+        display: flex;
+    }
+
+    .detail-label {
+        font-weight: bold;
+        display: inline-block;
+        width: 97px;
+    }
+
+    .student-photo {
+        width: 100px;
+        height: 125px;
+        
+        background: #f0f0f0;
+        margin-left: auto;
+        margin-top: -20px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .student-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* -------------------------------------------------------
+       MARKS SECTION
+       -------------------------------------------------------*/
+    .marks-section { margin: 20px 0; }
+
+    .top-rule { border-top: 2px solid #9a9a9a; margin: 6px 0 8px 0; }
+
+    .marks-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .col-left { width: 9%; }
+    .col-mid { width: 50%;  }
+    .col-right { width: 41%; text-align: center; }
+
+    .marks-title {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+    .marks-title::before { content: "<----------" ; color: #777; }
+    .marks-title::after  { content: " ---------->"; color: #777; }
+
+    .marks-cols {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .under-rule { border-bottom: 2px solid #9a9a9a; margin: 10px 0; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+    }
+
+    th { padding: 6px 4px; font-weight: bold; text-align: left; }
+    td { padding: 5px 4px; vertical-align: top; }
+
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6) { text-align: center; }
+
+    .subject-name {
+        text-transform: uppercase;
+        padding-left: 8px;
+        font-size: 10.5px;
+        width: 650px;
+    }
+
+    .subtotal-row {
+        border-top: 1px solid #999;
+        padding-top: 8px;
+        /* font-weight: bold; */
+    }
+
+    /* -------------------------------------------------------
+       FOOTER
+       -------------------------------------------------------*/
+
+    .checkers-table th,
+    .checkers-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .verification-note{
+        width: 80%;                 /* controls how wide the box is */
+        margin: 100px auto;          /* centers it horizontally */
+        padding: 10px 15px;
+        font-size: 12px;
+        text-align: center;         /* center-align the text */
+        border: 1px solid #000;     /* thin border like marksheet */
+        background: transparent;    /* no background color */
+        line-height: 1.4;
+    }
+
+    .marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;   /* THE MAGIC FIX */
+  font-size: 12px;
+}
+
+.marks-table td,
+.marks-table th {
+  padding: 4px 6px;
+  vertical-align: top;
+}
+
+.subject-name {
+  text-transform: uppercase;
+  font-size: 11px;
+  padding-left: 6px;
+}
+
+.right {
+  text-align: right;
+}
+
+.subtotal-row td {
+  border-top: 1px solid #000;
+  font-weight: bold;
+}
+
+
+
+
+
+
+.result-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 11px;
+}
+
+.result-left, 
+.result-right {
+    line-height: 1.6;
+}
+.result-right{
+    text-align: right;
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="marksheet-container">
+    <!-- Faded Center Logo -->
+    <div class="center-logo">
+        <img src="csjmu-logo.png" alt="CSJMU Logo">
+    </div>
+    
+<div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-top">
+            <div class="university-logo">
+                <img src="csjmu-logo.png" alt="Logo">
+            </div>
+
+            <div>
+                <div class="university-name">
+                    * CHHATRAPATI SHAHU JI MAHARAJ UNIVERSITY, KANPUR *
+                </div>
+                <div class="statement-title">* STATEMENT OF MARKS *</div>
+                <div class="serial-number"><strong style="color:red;">03</strong> - 18081368</div>
+                <div class="course-batch">B.C.A. III YEAR Batch 2015-18</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENT DETAILS -->
+    <div class="student-section">
+        <div class="student-details">
+            <div>
+                <div><span class="detail-label">Name</span> : <strong>BRAJENDRA SINGH SENGAR</strong></div>
+                <div><span class="detail-label">Father's Name</span> : MNOHAR SINGH SENGAR</div>
+            </div>
+
+            <div style="padding-left: 44px;">
+                <div><span class="detail-label">Exam</span> : (REGULAR)</div>
+                <div><span class="detail-label">Enroll No.</span> : CSJMA15001302217</div>
+            </div>
+        </div>
+
+        <div class="student-photo">
+            <img src="student_photo.png" alt="Student Photo" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+    </div>
+
+    <!-- MARKS SECTION (KEEP YOUR TABLES HERE) -->
+    <div class="marks-section">
+        <div class="top-rule"></div>
+      
+        <div class="marks-header">
+          <div class="col-left">
+            <div class="sl1">SL.</div>
+            <div class="sl2">No.</div>
+          </div>
+      
+          <div class="col-mid">SUBJECT/PAPERS</div>
+      
+          <div class="col-right">
+            <div class="marks-title">MARKS OBTAINED</div>
+            <div class="marks-cols">
+              <div style="flex:1;text-align:right;">Theory</div>
+              <div style="flex:1;text-align:right;">Sessional</div>
+              <div style="flex:1;text-align:right;">Practical</div>
+              <div style="flex:1;text-align:right;">Sub. Total</div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="under-rule"></div>
+      
+        <div class="semester-info-row" style="font-weight: bold; font-size: 12px;    display: flex;">
+          <div class="semester-header" style=" width: 1000px; ">PART-III &nbsp;&nbsp;&nbsp; SEMESTER - V &nbsp;&nbsp;&nbsp; SESSION (2017-18)</div>
+          <div class="roll-number">ROLL NO: 0703225</div>
+        </div>
+      
+        <div class="college-info" style=" padding: 7px 1px;"><span style="font-size: 13px;">College/Centre </span> 
+            <span style="font-size: 14px; padding-left: 25px;">:   AXIS INSTITUTE OF HIGHER EDUCATION, HATHIPUR, MAHARAJPUR, KANPUR</span></div>
+      
+           <!-- Semester I (First year) marks – copied exactly from your PDF -->
+            <!-- Semester V (copied exactly from your CSJMU-5.pdf) -->
+            <table class="marks-table">
+                <colgroup>
+                <col style="width:6%">
+                <col style="width:54%">
+                <col style="width:12%">
+                <col style="width:12%">
+                <col style="width:8%">
+                <col style="width:8%">
+                </colgroup>
+            
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th class="right">Theory</th>
+                    <th class="right">Sessional</th>
+                    <th class="right">Practical</th>
+                    <th class="right">Sub.Total</th>
+                </tr>
+                </thead>
+            
+                <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td class="subject-name">INTRODUCTION TO DBMS</td>
+                    <td class="right">30/75</td>
+                    <td class="right">20/25</td>
+                    <td class="right">-</td>
+                    <td class="right">50/100</td>
+                </tr>
+            
+                <tr>
+                    <td>2.</td>
+                    <td class="subject-name">JAVA PROGRAMMING AND DYNAMIC WEBPAGE DESIGN</td>
+                    <td class="right">18/75</td>
+                    <td class="right">20/25</td>
+                    <td class="right">-</td>
+                    <td class="right">38/100</td>
+                </tr>
+            
+                <tr>
+                    <td>3.</td>
+                    <td class="subject-name">COMPUTER NETWORK</td>
+                    <td class="right">36/75</td>
+                    <td class="right">20/25</td>
+                    <td class="right">-</td>
+                    <td class="right">56/100</td>
+                </tr>
+            
+                <tr>
+                    <td>4.</td>
+                    <td class="subject-name">NUMERICAL METHODS</td>
+                    <td class="right">37/75</td>
+                    <td class="right">20/25</td>
+                    <td class="right">-</td>
+                    <td class="right">57/100</td>
+                </tr>
+            
+                <tr>
+                    <td>5.</td>
+                    <td class="subject-name">MINOR PROJECT</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">32/50</td>
+                    <td class="right">32/50</td>
+                </tr>
+            
+                <tr>
+                    <td>6.</td>
+                    <td class="subject-name">VIVA -VOICE ON SUMMER TRAINING</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">31/50</td>
+                    <td class="right">31/50</td>
+                </tr>
+            
+                <tr>
+                    <td>7.</td>
+                    <td class="subject-name">COMPUTER LABORATORY &amp; PRACTICAL WORK OF DBMS</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">29/50</td>
+                    <td class="right">29/50</td>
+                </tr>
+            
+                <tr>
+                    <td>8.</td>
+                    <td class="subject-name">COMPUTER LABORATORY &amp; PRACTICAL WORK OF JAVA PROGRAMMING &amp; DYNAMIC WEBPAGE DESIGN</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">28/50</td>
+                    <td class="right">28/50</td>
+                </tr>
+            
+                <tr class="subtotal-row">
+                    <td colspan="5" style="text-align:right; padding-right:12px;">
+                        <span style=" text-align: left; font-size: 11px; font-weight: 400; float: left; ">RESULT : PASSED</span>    
+                    <span>SUB TOTAL</span></td>
+                    <td class="right"><span>321/600</span></td>
+                </tr>
+                </tbody>
+            </table>
+  
+  <!-- Totals line (from PDF) -->
+  <!-- <p style="font-weight:700; margin-top:6px;">
+    Total : 321/600 &nbsp;&nbsp; Previous Marks : 1162/2400 &nbsp;&nbsp; Grand Total : 1483/3000 &nbsp;&nbsp; Result : PASSED
+  </p> -->
+  
+  
+              
+      </div>
+
+
+        <!-- Semester IV -->
+        <div class="marks-section">
+
+          </div>
+          <div class="semester-info-row" style="font-weight: bold; font-size: 12px;    display: flex;">
+            <div class="semester-header" style=" width: 1000px; ">PART-III &nbsp;&nbsp;&nbsp; SEMESTER - VI &nbsp;&nbsp;&nbsp; SESSION (2017-18)</div>
+            <div class="roll-number">ROLL NO: 0703225</div>
+          </div>
+        
+          <div class="college-info" style=" padding: 7px 1px;"><span style="font-size: 13px;">College/Centre </span> 
+              <span style="font-size: 14px; padding-left: 25px;">:   AXIS INSTITUTE OF HIGHER EDUCATION, HATHIPUR, MAHARAJPUR, KANPUR</span></div>
+
+
+
+
+
+              <table class="marks-table">
+                <colgroup>
+                  <col style="width:6%">
+                  <col style="width:54%">
+                  <col style="width:12%">
+                  <col style="width:12%">
+                  <col style="width:8%">
+                  <col style="width:8%">
+                </colgroup>
+              
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th class="right">Theory</th>
+                    <th class="right">Sessional</th>
+                    <th class="right">Practical</th>
+                    <th class="right">Sub.Total</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+              
+                  <tr>
+                    <td>1.</td>
+                    <td class="subject-name">COMPUTER NETWORK SECURITY</td>
+                    <td class="right">37/75</td>
+                    <td class="right">21/25</td>
+                    <td class="right">-</td>
+                    <td class="right">58/100</td>
+                  </tr>
+              
+                  <tr>
+                    <td>2.</td>
+                    <td class="subject-name">INFORMATION SYSTEM ANALYSIS DESIGN AND IMPLEMENTATION</td>
+                    <td class="right">36/75</td>
+                    <td class="right">18/25</td>
+                    <td class="right">-</td>
+                    <td class="right">54/100</td>
+                  </tr>
+              
+                  <tr>
+                    <td>3.</td>
+                    <td class="subject-name">E-COMMERCE</td>
+                    <td class="right">31/75</td>
+                    <td class="right">19/25</td>
+                    <td class="right">-</td>
+                    <td class="right">50/100</td>
+                  </tr>
+              
+                  <tr>
+                    <td>4.</td>
+                    <td class="subject-name">KNOWLEDGE MANAGEMENT</td>
+                    <td class="right">35/75</td>
+                    <td class="right">20/25</td>
+                    <td class="right">-</td>
+                    <td class="right">55/100</td>
+                  </tr>
+              
+                  <tr>
+                    <td>5.</td>
+                    <td class="subject-name">MAJOR PROJECT</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">83/150</td>
+                    <td class="right">83/150</td>
+                  </tr>
+              
+                  <tr>
+                    <td>6.</td>
+                    <td class="subject-name">PRESENTATION / SEMINAR BASED ON MAJOR PROJECT</td>
+                    <td class="right">-</td>
+                    <td class="right">-</td>
+                    <td class="right">28/50</td>
+                    <td class="right">28/50</td>
+                  </tr>
+              
+                  <tr class="subtotal-row">
+                    <td colspan="5" style="text-align:right; padding-right:12px;">
+                      <span>SUB TOTAL</span>
+                    </td>
+                    <td class="right"><span>328/600</span></td>
+                  </tr>
+              
+                </tbody>
+              </table>
+              
+              <!-- Totals (appearing below table in PDF) -->
+              <!-- <p style="font-weight:700; margin-top:6px;">
+                Total : 328/600 &nbsp;&nbsp; Previous Marks : 1483/3000 &nbsp;&nbsp; Grand Total : 1811/3600 &nbsp;&nbsp; Result : R.D.
+              </p> -->
+              
+              
+              
+        </div>
+
+        <!-- Result Section -->
+        <div class="result-section">
+            <div class="result-left">
+                <div><span class="result-label">RESULT :</span> PASSED</div>
+                <div><span class="result-label">DIVISION :</span> SECOND</div>
+            </div>
+        
+            <div class="result-right">
+                <div><span class="result-label">TOTAL :</span> 649/1200</div>
+                <div><span class="result-label">PRE MARKS :</span> 1483/3000</div>
+                <div><span class="result-label">GRAND TOTAL :</span> 1811/3600</div>
+            </div>
+        </div>
+        
+
+        <!-- Verification Note -->
+        <div class="verification-note">
+            THE ABOVE STATEMENT OF MARKS IS COMPUTER GENERATED AND IT CAN BE VERIFIED FROM OUR RECORDS AVAILABLE IN UNIVERSITY WEBSITE - www.kanpuruniversity.org
+        </div>
+
+    <!-- Add this CSS into your <style> (or at top of page) -->
+<style>
+/* footer container: three columns (left, center, right) */
+.footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 160px;
+  font-family: Arial, sans-serif;
+  color: #111;
+  font-size: 13px;
+}
+
+/* left column: date */
+.footer-left {
+  flex: 0 0 auto;
+  min-width: 180px;   /* reserve reasonable width for DATE */
+}
+.footer-left .date {
+
+  margin-bottom: 6px;
+}
+
+/* center column: checkers (this is the important part: it expands and centers content) */
+.footer-center {
+  flex: 1 1 auto;             /* take remaining space */
+  display: flex;
+  justify-content: center;    /* center the checkers block horizontally */
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+/* constrain the checkers box so it doesn't stretch too wide */
+.checkers {
+  width: 560px;               /* adjust to match your page — change if needed */
+  max-width: 100%;
+}
+
+/* checker title */
+.checkers-title {
+  /* font-weight: 700; */
+  margin-bottom: 6px;
+}
+
+/* small header row */
+.checkers-header {
+    display: flex;
+    /* gap: 1px; */
+    /* font-weight: 700; */
+    font-size: 12px;
+    margin-bottom: 6px;
+    align-items: center;
+}
+
+/* spacing columns for values under labels */
+.checkers-rows {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* numbering on left */
+.checker-numbers {
+
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* columns */
+.checker-col {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* empty line placeholders */
+.checker-col div {
+  border-bottom: 1px solid #000;
+  height: 14px;
+  width: 120px; /* default width */
+}
+
+/* signature column wider */
+.checker-col.signature div {
+  width: 190px;
+  height: 26px; /* more vertical space for signature */
+}
+
+/* emp code column narrower */
+.checker-col.empcode div { width: 100px; }
+
+/* date column narrower */
+.checker-col.datecol div { width: 90px; }
+
+/* RIGHT column: controller signature */
+.footer-right {
+  flex: 0 0 220px;
+  text-align: center;
+  padding-top: 6px;
+}
+.signature-line {
+  margin: 0 auto 6px auto;
+  width: 180px;
+  border-top: 1px solid #000;
+  height: 1px;
+}
+
+/* print friendly */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+
+    </style>
+    
+    <!-- Replace your footer HTML with this -->
+    <div class="footer">
+
+        <!-- LEFT: DATE -->
+        <div class="footer-left">
+          <div class="date"><span style="font-size: 13px;">DATE :</span> 12-09-2018</div>
+        </div>
+      
+        <!-- CENTER: CHECKERS (centered between left and right) -->
+        <div class="footer-center">
+          <div class="checkers">
+            <div class="checkers-title">CHECKERS :</div>
+      
+            <div class="checkers-header">
+                   <!-- spacer for numbering -->
+              <div style="width:40px;">Sl</div>
+              <div style="width:80px;">Emp. Code</div>
+              <div style="width:80px;">Signature</div>
+              <div style="width:40px;">Date</div>
+            </div>
+      
+            <div class="checkers-rows">
+              <!-- numbering -->
+              <div class="checker-numbers">
+                <div>1</div>
+                <div>2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- RIGHT: CONTROLLER SIGNATURE -->
+        <div class="footer-right">
+          <div><span style="font-size: 13px;">CONTROLLER OF EXAMINATION</span></div>
+        </div>
+      </div>
+      
+    
+    
+</div>
+</div>
+
+</body>
+</html>

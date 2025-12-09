@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📨 Zookeeper & Kafka Architect Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #0f3460;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e94560;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background: linear-gradient(135deg, #e94560 0%, #0f3460 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #fff0f3;
+            transition: background 0.2s ease;
+        }
+
+        .topic {
+            font-weight: 600;
+            color: #0f3460;
+            font-size: 1.1em;
+        }
+
+        .definition {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .example {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .lead-tip {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px 15px;
+            margin: 5px 0;
+            font-style: italic;
+            color: #e65100;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .code-block {
+            background: #1a1a2e;
+            color: #00ff88;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe0e6 100%);
+            border-left: 5px solid #e94560;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 20px 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid #e94560;
+        }
+
+        .card h4 {
+            color: #0f3460;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 1em;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📨 Zookeeper & Kafka Architect Guide</h1>
+            <p>Complete Lead-Level Guide for Distributed Messaging & Coordination Systems</p>
+        </div>
+
+        <div class="content">
+            <!-- ZOOKEEPER SECTION -->
+            <div class="section">
+                <h2 class="section-title">🦓 What is ZooKeeper?</h2>
+                
+                <div class="highlight-box">
+                    <p style="font-size: 1.2em;"><strong>💬 Apache ZooKeeper</strong> is a service that helps many servers in a system work together properly.</p>
+                    <p style="margin-top: 10px;">Think of it like a <strong>manager or coordinator</strong> for distributed systems.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4 style="color: #1976d2; margin-bottom: 10px;">🎯 In One Line:</h4>
+                    <p style="font-size: 1.1em;"><strong>ZooKeeper helps multiple servers stay in sync and share information safely.</strong></p>
+                </div>
+            </div>
+
+            <!-- Simple Story Example -->
+            <div class="section">
+                <h2 class="section-title">🧩 Example (Very Simple Story)</h2>
+                
+                <div class="success-box">
+                    <p><strong>Imagine you have:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
+                        <li>3 servers handling user requests</li>
+                        <li>1 server goes down, others should know about it</li>
+                    </ul>
+                    
+                    <p style="margin-top: 15px;"><strong>ZooKeeper will keep track of which servers are:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
+                        <li>✅ Alive</li>
+                        <li>❌ Down</li>
+                    </ul>
+                    <p style="margin-top: 10px;">...and tell others about the changes.</p>
+                    
+                    <p style="margin-top: 15px; font-size: 1.1em; color: #2e7d32;"><strong>So, all servers know what's going on — without confusion.</strong></p>
+                </div>
+            </div>
+
+            <!-- Real-world Analogy -->
+            <div class="section">
+                <h2 class="section-title">🧠 Real-world Analogy</h2>
+                
+                <div class="warning-box">
+                    <h4 style="color: #e65100; margin-bottom: 15px;">Think of ZooKeeper like a Group Chat Admin 👇</h4>
+                    <ul style="margin-left: 20px; line-height: 2.2;">
+                        <li>👤 The admin knows <strong>who joined</strong>, <strong>who left</strong>, and <strong>who's online</strong></li>
+                        <li>📋 The admin makes sure <strong>everyone has the same information</strong></li>
+                        <li>🔔 If someone new joins, the admin <strong>notifies others</strong></li>
+                    </ul>
+                    <p style="margin-top: 15px; font-size: 1.1em;"><strong>That's exactly what ZooKeeper does for servers!</strong></p>
+                </div>
+            </div>
+
+            <!-- What ZooKeeper Actually Does -->
+            <div class="section">
+                <h2 class="section-title">⚙️ What ZooKeeper Actually Does (in easy words)</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Function</th>
+                                <th style="width: 70%">Simple Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">🔄 Coordination</td>
+                                <td class="definition">Makes sure all servers work in sync</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">📝 Configuration Management</td>
+                                <td class="definition">Stores and shares common settings between servers</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">🏷️ Naming Service</td>
+                                <td class="definition">Keeps unique names or IDs for services</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">👑 Leader Election</td>
+                                <td class="definition">Chooses one leader among servers automatically</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">🚨 Failure Detection</td>
+                                <td class="definition">Detects when a server goes down</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Example Use Case -->
+            <div class="section">
+                <h2 class="section-title">💻 Example Use Case: Leader Election</h2>
+                
+                <div class="info-box">
+                    <p><strong>Let's say you have a microservice app with multiple servers:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 15px; line-height: 2;">
+                        <li>👑 One server must be the <strong>leader</strong> (to assign tasks)</li>
+                        <li>👥 Others are <strong>followers</strong></li>
+                        <li>⚠️ If leader fails, ZooKeeper <strong>automatically picks a new leader</strong></li>
+                    </ul>
+                    <div class="lead-tip" style="margin-top: 15px;">
+                        That's called <strong>leader election</strong> — a key feature of ZooKeeper!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Used With -->
+            <div class="section">
+                <h2 class="section-title">🧱 ZooKeeper is Used With</h2>
+                
+                <div class="grid-container">
+                    <div class="card">
+                        <h4>🧃 Apache Kafka</h4>
+                        <p>For cluster coordination and broker management</p>
+                    </div>
+                    <div class="card">
+                        <h4>💾 Hadoop / HBase</h4>
+                        <p>For distributed storage coordination</p>
+                    </div>
+                    <div class="card">
+                        <h4>⚙️ Apache Solr</h4>
+                        <p>For search cluster management</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example in Kafka -->
+            <div class="section">
+                <h2 class="section-title">🔐 Example in Kafka</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Before Kafka 2.8</strong>, ZooKeeper was used to manage:</p>
+                    <ul style="margin-left: 20px; margin-top: 15px; line-height: 2;">
+                        <li>🖥️ <strong>Brokers</strong> (servers)</li>
+                        <li>📂 <strong>Topics and partitions</strong></li>
+                        <li>👑 <strong>Leader election</strong> for each partition</li>
+                    </ul>
+                    
+                    <div class="warning-box" style="margin-top: 20px;">
+                        <p>👉 <strong>New versions of Kafka (KRaft mode)</strong> can run without ZooKeeper, but many systems still use it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="section">
+                <h2 class="section-title">✅ In Simple Words</h2>
+                
+                <div class="success-box">
+                    <p style="font-size: 1.2em; text-align: center;">
+                        <strong>ZooKeeper is like a shared notebook for all your servers.</strong><br>
+                        Everyone writes and reads from it, so they stay updated and agree on the same information.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Easy Way to Remember -->
+            <div class="section">
+                <h2 class="section-title">🧠 Easy Way to Remember</h2>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                    <p style="font-size: 1.5em; margin-bottom: 10px;">🦓 ZooKeeper = "Server Manager" for distributed systems</p>
+                    <p style="font-size: 1.1em; opacity: 0.9;">It keeps all servers <strong>organized</strong>, <strong>synchronized</strong>, and <strong>updated</strong>.</p>
+                </div>
+            </div>
+
+            <!-- DEEP DIVE SECTION -->
+            <div style="margin-top: 60px; padding-top: 40px; border-top: 4px solid #e94560;">
+                <h2 style="text-align: center; font-size: 2.2em; color: #0f3460; margin-bottom: 40px;">🔬 ZooKeeper & Kafka Deep Dive</h2>
+            </div>
+
+            <!-- 1. What Problem Does ZooKeeper Solve -->
+            <div class="section">
+                <h2 class="section-title">1️⃣ What Problem Does ZooKeeper Solve?</h2>
+                
+                <div class="highlight-box">
+                    <p style="font-size: 1.1em;"><strong>Imagine you have many servers working together in a cluster.</strong></p>
+                </div>
+
+                <div class="warning-box">
+                    <h4 style="color: #e65100; margin-bottom: 15px;">❌ Problems without coordination:</h4>
+                    <ul style="margin-left: 20px; line-height: 2.2;">
+                        <li>❓ Who is the leader?</li>
+                        <li>❓ Which server is alive?</li>
+                        <li>❓ Which server should handle which work?</li>
+                        <li>❓ What happens if one server crashes?</li>
+                        <li>❓ How do all servers get the same configuration?</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <p style="font-size: 1.2em; text-align: center;"><strong>✅ ZooKeeper solves ALL these problems!</strong></p>
+                </div>
+            </div>
+
+            <!-- 2. What Does ZooKeeper Actually Do -->
+            <div class="section">
+                <h2 class="section-title">2️⃣ What Does ZooKeeper Actually Do? (Simple Language)</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Feature</th>
+                                <th style="width: 70%">Meaning in Simple English</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">🔍 Service Discovery</td>
+                                <td class="definition">Servers can find each other</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">👑 Leader Election</td>
+                                <td class="definition">ZooKeeper chooses one leader server</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">📝 Configuration Management</td>
+                                <td class="definition">Stores common settings for all servers</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">💓 Health Monitoring</td>
+                                <td class="definition">Detects which server is alive/dead</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">🔒 Distributed Lock</td>
+                                <td class="definition">Prevents two servers from doing the same job twice</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">🔄 Synchronization</td>
+                                <td class="definition">Keeps all servers in sync</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. Why Kafka Needed ZooKeeper -->
+            <div class="section">
+                <h2 class="section-title">3️⃣ Why Kafka Needed ZooKeeper? (Before Kafka 2.8)</h2>
+                
+                <div class="info-box">
+                    <p style="font-size: 1.1em;"><strong>Kafka is a distributed messaging system with many moving parts.</strong></p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4 style="color: #c2185b; margin-bottom: 15px;">Kafka uses ZooKeeper for:</h4>
+                    <ul style="margin-left: 20px; line-height: 2.2;">
+                        <li>🖥️ Managing which brokers exist</li>
+                        <li>📂 Tracking topics and partitions</li>
+                        <li>👑 Choosing a leader partition</li>
+                        <li>🚨 Detecting broker failures</li>
+                        <li>💾 Storing metadata</li>
+                    </ul>
+                </div>
+
+                <div class="lead-tip">
+                    🧠 Think of ZooKeeper as the <strong>brain of Kafka</strong> before 2.8.
+                </div>
+
+                <!-- Kafka Components Table -->
+                <h3 style="color: #0f3460; margin: 30px 0 20px; font-size: 1.4em;">📦 Kafka Components (Very Easy)</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Component</th>
+                                <th style="width: 70%">Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="topic">📤 Producer</td>
+                                <td class="definition">Sends messages to Kafka</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">🖥️ Broker</td>
+                                <td class="definition">Kafka server</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">📂 Topic</td>
+                                <td class="definition">Category of messages</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">📊 Partition</td>
+                                <td class="definition">Splits topic into multiple logs</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">📥 Consumer</td>
+                                <td class="definition">Reads messages</td>
+                            </tr>
+                            <tr>
+                                <td class="topic">👥 Consumer Group</td>
+                                <td class="definition">Set of consumers sharing work</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. How ZooKeeper Works With Kafka -->
+            <div class="section">
+                <h2 class="section-title">4️⃣ How ZooKeeper Works With Kafka (Simple Flow)</h2>
+                
+                <div class="code-block">
+Kafka Broker 1 ────┐
+                   │
+Kafka Broker 2 ────┼────►  ZooKeeper  (Coordinator)
+                   │
+Kafka Broker 3 ────┘
+                </div>
+
+                <div class="info-box">
+                    <h4 style="color: #1976d2; margin-bottom: 15px;">ZooKeeper Responsibilities:</h4>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>✅ Knows how many brokers are running</li>
+                        <li>✅ Stores topic and partition information</li>
+                        <li>✅ Elects partition leaders</li>
+                        <li>✅ If a broker dies → tells Kafka → new leader is elected</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. Leader Election -->
+            <div class="section">
+                <h2 class="section-title">5️⃣ Leader Election (Very Common Interview Question)</h2>
+                
+                <div class="success-box">
+                    <h4 style="color: #2e7d32; margin-bottom: 15px;">Simple Example:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8; list-style: none;">
+                        <li>📂 <strong>Topic:</strong> payments</li>
+                        <li>📊 <strong>Partitions:</strong> 3</li>
+                        <li>🖥️ <strong>Brokers:</strong> 3</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4 style="color: #c2185b; margin-bottom: 15px;">ZooKeeper decides:</h4>
+                    <div class="code-block" style="background: #2d3436; margin-top: 10px;">
+Partition 0 → Leader = Broker 1
+Partition 1 → Leader = Broker 3
+Partition 2 → Leader = Broker 2
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <p style="font-size: 1.1em;">💥 <strong>If Broker 1 goes down</strong> → ZooKeeper detects → promotes follower to leader.</p>
+                    <p style="margin-top: 10px;">🧠 <strong>This keeps Kafka running without downtime.</strong></p>
+                </div>
+            </div>
+
+            <!-- 6. ZooKeeper Architecture -->
+            <div class="section">
+                <h2 class="section-title">6️⃣ ZooKeeper Architecture (Easy)</h2>
+                
+                <div class="info-box">
+                    <p><strong>ZooKeeper uses 3 or 5 servers to form a cluster (called ensemble).</strong></p>
+                </div>
+
+                <div class="code-block">
+ZK Server 1
+ZK Server 2
+ZK Server 3  → Majority needed (quorum)
+                </div>
+
+                <div class="success-box">
+                    <p style="font-size: 1.1em;">🧠 <strong>If 2 of 3 servers are alive → ZooKeeper still works!</strong></p>
+                </div>
+
+                <div class="grid-container">
+                    <div class="card">
+                        <h4>🔒 Consistency</h4>
+                        <p>All nodes see the same data</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔄 High Availability</h4>
+                        <p>Survives node failures</p>
+                    </div>
+                    <div class="card">
+                        <h4>⚡ Fast Read Performance</h4>
+                        <p>Quick data retrieval</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. How ZooKeeper Stores Data (ZNodes) -->
+            <div class="section">
+                <h2 class="section-title">7️⃣ How ZooKeeper Stores Data (ZNodes)</h2>
+                
+                <div class="info-box">
+                    <p><strong>ZooKeeper stores data in a tree-like structure, like folders:</strong></p>
+                </div>
+
+                <div class="code-block">
+/
+ ├── kafka
+ │    ├── brokers
+ │    │      ├── 1
+ │    │      ├── 2
+ │    │      └── 3
+ │    ├── topics
+ │    │      └── payments
+ │    └── config
+                </div>
+
+                <div class="highlight-box">
+                    <p><strong>Each node is called a ZNode.</strong></p>
+                    <p style="margin-top: 10px;">ZNodes store:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
+                        <li>📋 metadata</li>
+                        <li>🆔 broker IDs</li>
+                        <li>📊 partition info</li>
+                        <li>👑 leader info</li>
+                    </ul>
+                </div>
+
+                <div class="lead-tip">
+                    🧠 Think: ZooKeeper = <strong>JSON storage for Kafka metadata</strong>.
+                </div>
+            </div>
+
+            <!-- 8. Why Kafka Removed ZooKeeper -->
+            <div class="section">
+                <h2 class="section-title">8️⃣ Why Kafka Removed ZooKeeper? (Kafka 2.8+)</h2>
+                
+                <div class="info-box">
+                    <p style="font-size: 1.1em;"><strong>Kafka introduced KRaft mode (Kafka Raft).</strong></p>
+                </div>
+
+                <div class="success-box">
+                    <h4 style="color: #2e7d32; margin-bottom: 15px;">Reasons:</h4>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>✅ Fewer moving parts</li>
+                        <li>✅ Faster cluster recovery</li>
+                        <li>✅ Easier scaling</li>
+                        <li>✅ Simpler deployment</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <p><strong>⚠️ But many companies still run Kafka + ZooKeeper, so you must know it!</strong></p>
+                </div>
+            </div>
+
+            <!-- 9. Common Interview Questions -->
+            <div class="section">
+                <h2 class="section-title">9️⃣ Common Interview Questions (with easy answers)</h2>
+                
+                <!-- Q1 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q1. What is ZooKeeper?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        ZooKeeper is a distributed coordination service.<br>
+                        It helps servers stay in sync, manage configuration, and elect leaders.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q2. Why did Kafka use ZooKeeper?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        Kafka used ZooKeeper to store metadata, track brokers, detect failures, and choose leaders for partitions.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q3. What is leader election in Kafka?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        Kafka partitions need a leader broker to read/write data.<br>
+                        ZooKeeper automatically selects the leader and changes it when a broker fails.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q4. What is a ZNode?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        A ZNode is a small data node stored in ZooKeeper.<br>
+                        Kafka keeps brokers, topics, partitions, leaders—all inside ZNodes.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="warning-box">
+                    <h4 style="color: #e65100;">❓ Q5. What happens if ZooKeeper goes down?</h4>
+                    <div class="example" style="margin-top: 10px; background: #fff8e1;">
+                        <strong>Answer:</strong><br>
+                        • Kafka brokers continue working (temporary)<br>
+                        • But no new leader election happens<br>
+                        • Cluster cannot rebalance<br>
+                        • Some features stop working<br><br>
+                        <strong>⚠️ ZooKeeper must be running for a healthy Kafka cluster.</strong>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="highlight-box">
+                    <h4 style="color: #c2185b;">❓ Q6. Difference between Kafka with ZooKeeper and Kafka without ZooKeeper?</h4>
+                    <div class="table-container" style="margin-top: 15px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>With ZK</th>
+                                    <th>Without ZK (KRaft)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Extra component</td>
+                                    <td>No extra component</td>
+                                </tr>
+                                <tr>
+                                    <td>More complex</td>
+                                    <td>Simpler setup</td>
+                                </tr>
+                                <tr>
+                                    <td>Slower leader election</td>
+                                    <td>Faster leader election</td>
+                                </tr>
+                                <tr>
+                                    <td>Widely used</td>
+                                    <td>New architecture</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q7. Does ZooKeeper store actual Kafka data?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        <strong>No.</strong> ZooKeeper only stores metadata, not messages.
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q8. Why does ZooKeeper require an odd number of nodes?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        To maintain <strong>quorum</strong> — more than half must agree.
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="success-box">
+                    <h4 style="color: #2e7d32;">❓ Q9. What is quorum?</h4>
+                    <div class="example" style="margin-top: 10px; background: #e8f5e9;">
+                        <strong>Answer:</strong><br>
+                        Minimum number of ZooKeeper servers that must agree to make decisions.<br><br>
+                        <strong>Example:</strong><br>
+                        • In 3-node cluster → quorum = 2<br>
+                        • In 5-node cluster → quorum = 3
+                    </div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="info-box">
+                    <h4 style="color: #1976d2;">❓ Q10. What happens when a Kafka broker fails?</h4>
+                    <div class="example" style="margin-top: 10px;">
+                        <strong>Answer:</strong><br>
+                        • ZooKeeper detects broker failure<br>
+                        • Chooses a new leader for partitions<br>
+                        • Kafka cluster continues working smoothly
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Simple Diagram -->
+            <div class="section">
+                <h2 class="section-title">🔟 Simple Diagram to Explain in Interview</h2>
+                
+                <div class="code-block" style="font-size: 1em;">
++----------------+
+|   Producers    |
++-------+--------+
+        |
+        v
+   +----+----+      ZooKeeper (Coordination)
+   | Broker1 | <--------+
+   +---------+          |
+                        |  Knows leader, brokers, metadata
+   +---------+          |
+   | Broker2 | <--------+
+   +---------+
+                </div>
+            </div>
+
+            <!-- Final Summary -->
+            <div class="section">
+                <h2 class="section-title">🧠 FINAL SUMMARY (Use This in Interviews)</h2>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px;">
+                    <p style="font-size: 1.2em; line-height: 1.8; text-align: center;">
+                        <strong>ZooKeeper is a coordination tool.</strong><br><br>
+                        Kafka used it to keep brokers in sync, store metadata, elect leaders, and detect failures.<br><br>
+                        Kafka now has its own internal consensus system (<strong>KRaft</strong>), but ZooKeeper-based clusters are still <strong>widely used in the industry</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Additional Kafka Content Placeholder -->
+            <div class="section" style="margin-top: 60px;">
+                <h2 class="section-title">📨 More Kafka Content - Coming Soon</h2>
+                <div class="info-box">
+                    <p><strong>Additional Kafka deep-dive content will be added here!</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📨 Zookeeper & Kafka Architect Guide - Master Distributed Messaging Systems!</p>
+            <p>Part of the Lead PHP Interview Mastery Series</p>
+        </div>
+    </div>
+</body>
+</html>
+
